@@ -1,8 +1,5 @@
-package rnk.r10.realm;
+package rnk.utils.security;
 
-//import com.sun.xml.internal.rngom.parse.host.Base;
-//
-//import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.MessageDigest;

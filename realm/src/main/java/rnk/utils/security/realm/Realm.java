@@ -1,15 +1,15 @@
-package rnk.r10.realm;
+package rnk.utils.security.realm;
 
 import com.sun.appserv.security.AppservRealm;
 import com.sun.enterprise.security.auth.realm.BadRealmException;
 import com.sun.enterprise.security.auth.realm.InvalidOperationException;
 import com.sun.enterprise.security.auth.realm.NoSuchRealmException;
 import com.sun.enterprise.security.auth.realm.NoSuchUserException;
+import rnk.utils.security.HashUtils;
 
 import java.util.*;
-import java.util.logging.Level;
 
-public class RnkRealm extends AppservRealm {
+public class Realm extends AppservRealm {
 
     private String jaasCtxName;
     private String dsName;

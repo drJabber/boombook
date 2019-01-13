@@ -1,4 +1,4 @@
-package rnk.r10.realm;
+package rnk.utils.security.realm;
 
 import com.sun.appserv.security.AppservPasswordLoginModule;
 import com.sun.enterprise.security.auth.realm.InvalidOperationException;
@@ -15,20 +15,20 @@ public class RnkLoginModule extends AppservPasswordLoginModule {
     @Override
     protected void authenticateUser() throws LoginException {
 
-        if (!(_currentRealm instanceof RnkRealm)) {
+        if (!(this._currentRealm instanceof Realm)) {
             throw new LoginException("Not supported realm, check login.conf");
         }
-        RnkRealm rnkRealm = (RnkRealm) _currentRealm;
+        Realm realm = (Realm)_currentRealm;
 
 
-        if (!rnkRealm.authenticate(_username, _password)) {
+        if (!realm.authenticate(_username, _password)) {
             throw new LoginException(String.format("Authenthication failed for user %s", _username));
         }
 
         // Get group names for the authenticated user from the Realm class
         Enumeration enumeration = null;
         try {
-            enumeration = rnkRealm.getGroupNames(_username);
+            enumeration = realm.getGroupNames(_username);
         } catch (InvalidOperationException e) {
             throw new LoginException("InvalidOperationException was thrown for getGroupNames() on RnkRealm");
         } catch (NoSuchUserException e) {

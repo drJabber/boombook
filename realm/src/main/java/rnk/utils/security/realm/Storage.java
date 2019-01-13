@@ -1,6 +1,4 @@
-package rnk.r10.realm;
-
-import com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm;
+package rnk.utils.security.realm;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

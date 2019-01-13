@@ -3,13 +3,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.rnk.security</groupId>
-    <artifactId>rnkrealm</artifactId>
-    <version>0.2</version>
+    <groupId>org.rnk.security</groupId>
+    <artifactId>rnkutils</artifactId>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Rnk specific realm</description>
+    <description>Rnk utils</description>
     <url>http://example.com</url>
     <developers>
         <developer>
@@ -30,37 +30,6 @@
         <encoding>UTF-8</encoding>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>org.glassfish.main.security</groupId>
-            <artifactId>security</artifactId>
-            <version>5.0</version>
-            <scope>system</scope>
-            <systemPath>/opt/payara5/glassfish/modules/security.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.main.security</groupId>
-            <artifactId>security-ee</artifactId>
-            <version>5.0</version>
-            <scope>system</scope>
-            <systemPath>/opt/payara5/glassfish/modules/security-ee.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.main.common</groupId>
-            <artifactId>glassfish-ee-api</artifactId>
-            <version>5.0</version>
-            <scope>system</scope>
-            <systemPath>/opt/payara5/glassfish/modules/glassfish-ee-api.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>org.rnk.security</groupId>
-            <artifactId>rnkutils</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>/opt/payara5/glassfish/domains/production/lib/rnkutils-0.1.jar</systemPath>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

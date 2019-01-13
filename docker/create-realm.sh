@@ -1,2 +1,2 @@
-create-auth-realm --classname rnk.r10.realm.RnkRealm --property jaas-context=RnkRealm RnkRealm
+create-auth-realm --classname rnk.utils.security.realm.Realm --property jaas-context=RnkRealm RnkRealm
 

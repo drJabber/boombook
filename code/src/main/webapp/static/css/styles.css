@@ -1,0 +1,386 @@
+
+
+html {
+    color: #000;
+    background: #FFF;
+}
+
+header {
+margin: 0 auto;
+width:100%;
+/* min-width: 1200px;
+max-width: 1200px; */
+}
+
+.head-container {
+  height: 75px;
+  position: relative;
+  margin: 0 auto;
+  width:1200px;
+  }
+
+.head-logo-container {
+  left: 0px;
+  position: absolute;
+}
+
+.head-right-container {
+  height: 73px;
+  position: absolute;
+  left: 180px;
+  top: 7px;
+  width: 620px;
+
+}
+
+.head-search-container {
+  height: 73px;
+  position: absolute;
+  left: 608px;
+  top: 19px;
+  width: 620px;
+}
+
+.head-phone-container {
+  position: absolute;
+  top: 15px;
+  left: -12px;
+}
+
+.phone-logo {
+  background-repeat: no-repeat;
+  padding: 5px 9px 5px 7px;
+}
+
+.phone-logo div {
+  margin-left: 35px;
+  color: #666666;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+div.phone-number {
+  color: #231F20;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.3px;
+  height: 29px;
+  margin-bottom: -6px;
+}
+
+nav {
+  /* margin: 0 auto 30px;
+  min-width: 1200px; */
+  background-repeat: repeat-x;
+  background-position: 0% 0%;
+  background-attachment: scroll;
+  /*background-image:  url("/rnk/static/img/bg-menubar.png");*/
+  background-size: auto auto;
+  background-origin: padding-box;
+  background-clip: border-box;
+
+}
+
+.menubar ul {
+  padding: 1em;
+  margin: 10px auto 30px;
+  width:1200px;
+}
+
+.menubar a:hover {background: #b19040;}
+
+.menubar li {
+  display: inline;
+  padding: 0 3px 0 3px;
+  text-align: center;
+}
+
+.menubar li a {
+    color: #231f20;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: -0.2px;
+    line-height: 19px;
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.search-container {
+  color: #231F20;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  line-height: 29px;
+  margin-left: 0;
+  text-transform: none;
+}
+
+.search-form {
+  position: relative;
+  left:0px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.search-form input,button{
+  border: none;
+  outline: none;
+  border-radius: 3px;  
+}
+
+.search-form input {
+  width: 200px;
+  height: 42px;
+  background: #F9F0DA;
+  padding-left: 15px;
+}
+
+.search-form button {
+  /*background-image: url("/rnk/static/img/search.png");*/
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+}
+
+footer {
+  margin: 0 auto;
+  width:100%;
+  /*background-image: url("/rnk/static/img/bg-footer.png");*/
+  background-repeat: no-repeat;
+  background-position: left bottom;
+ }
+  
+/* .footer-container {
+  margin: 55px auto;
+  width:1200px;
+  position: relative;
+} */
+
+.b-footer {
+  margin: 0 auto;
+  height: 100px;
+  width: 1200px;
+}
+
+.b-width-middle {
+  max-width: 1200px;
+}
+
+.b-footer-inner {
+  max-width: 1200px;
+  min-width: 980px;
+  margin: 0 auto;
+  position : relative;
+}
+
+.b-footer .b-footer-line {
+  height: 4px;
+  width: 100%;
+  /*background-image: url("/rnk/static/img/bg-foot-line.png");*/
+  background-repeat: repeat-x;
+}
+
+.b-contacts-container {
+  float: left;
+  margin-top: 5px;
+  width:70%
+}
+
+.b-contacts p, .b-contacts a, .b-contacts {
+  color: #666666;
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 11px;
+  letter-spacing: -0.1px;
+  line-height: 7px;
+}
+
+.b-copyright-container {
+  /*position: absolute;*/
+  float: right;
+  right: 0px;
+  top: 5px;
+  width:30%
+}
+
+.b-copyright {
+  color: #666666;
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 11px;
+  letter-spacing: 0px;
+  line-height: 17px;
+}
+
+aside{
+  width: 300px;
+  float: right;
+}
+
+main{
+  margin: 0 auto;
+  width:1200px;
+}
+
+form.login-form{
+  windth: 400px;
+}
+
+.admin-form-container{
+  width:400px;
+  height:300px;
+}
+
+.admin-script-response-container{
+  width:400px;
+  height:500px;
+}
+
+.b-rigth-sidebar .b-right-sidebar-item {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+  height: 100px;
+  width:100%;
+  position: relative;
+}
+
+.aside-currencies table {
+  text-align:left;
+  width:100%;
+}
+
+.aside-currencies table tr th,td{
+  padding:3px;
+  margin: 0 auto;
+  width:50%;
+}
+
+.aside-news-header {
+  text-align:center;
+  vertical-align: top;
+  width:100%;
+}
+
+
+.aside-news table {
+  text-align:left;
+  width:100%;
+}
+
+.aside-news table tr th,td{
+  padding:3px;
+  margin: 0 auto;
+  width:100%;
+}
+
+.display-search {
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+  /*margin: 5px 0 5px 0 !important;*/
+}
+
+.display-search-header {
+  background-color: #666;
+  width:20%;
+}
+
+.display-search-header-narrow {
+  background-color: #666;
+  width:8%;
+}
+
+.odd .display-search-column {
+  background-color: #AAA
+}
+
+.even .display-search-column {
+  background-color: #DDD
+}
+
+.stats-report {
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+  /*margin: 5px 0 5px 0 !important;*/
+}
+
+.stats-report-header {
+  background-color: #666;
+  width:20%;
+}
+
+.odd .stats-report-column {
+  background-color: #AAA
+}
+
+.even .stats-report-column {
+  background-color: #DDD
+}
+
+.main-table-class{
+  border: 1px solid #666;
+  width: 80%;
+  table-layout: fixed;
+}
+
+.split-content-left {
+    float: left;
+    width: 49%;
+}
+
+.split-content-right {
+    float: right;
+    width: 49%;
+}
+
+.split-content-full {
+  float: left;
+  width: 100%;
+}
+
+.box {
+    padding: 6px;
+    margin-bottom: 10px;
+    background-color: #f6f6f6;
+    color: #505050;
+    line-height: 1.5em;
+    border: 1px solid #e4e4e4;
+    word-wrap: break-word;
+    border-radius: 3px;
+}
+
+.tabular p {
+    margin: 0;
+    padding: 3px 0 3px 0;
+        padding-left: 0px;
+    padding-left: 180px;
+    min-height: 1.8em;
+    clear: left;
+}
+
+.form-button {
+  border: 1px solid #231f20;
+  background: #ffffff;
+  padding: 10.5px 21px;
+  border-radius: 6px;
+  color: #000000;
+  font-size: 14px;
+  font-family: helvetica, serif;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor:pointer;
+  horiz-align: center;
+
+}
+
+.form-button button:hover,input:hover {
+  background: #aaaaaa;
+}
