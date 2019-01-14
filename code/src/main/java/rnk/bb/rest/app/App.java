@@ -43,5 +43,7 @@ public class App extends ResourceConfig {
 
     private void registerExceptionMapperClasses(){
         register(RuntimeExceptionMapper.class);
+	register(JsonExceptionMapper.class);
+	register(UnrecognizedPropertyExceptionMapper.class);
     }
 }

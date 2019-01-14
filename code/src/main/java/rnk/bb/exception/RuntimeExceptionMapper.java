@@ -12,7 +12,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable exception) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(exception.getLocalizedMessage())
-                .type(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON_TYPE)
                 .build();
     }
 }
