@@ -14,23 +14,23 @@ public interface AuthIntf {
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    Response create(@Valid @BeanParam AuthInfo authInfo) throws InternalServerErrorException;
+    Response create(@Valid @BeanParam AuthInfo authInfo) ;
 
     @POST
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    Response update(@BeanParam AuthInfo authInfo) throws InternalServerErrorException;
+    Response update(@Valid @BeanParam AuthInfo authInfo) ;
 
     @GET
     @Path("auth/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    Response read(@PathParam("login") String login) throws InternalServerErrorException;
+    Response read(@PathParam("login") String login) ;
 
     @DELETE
-    @Path("auth")
+    @Path("auth/{login}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    Response delete(String login) throws InternalServerErrorException;
+    Response delete(@PathParam("login") String login) ;
 
 }

@@ -8,6 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import rnk.bb.auth.rest.AuthImpl;
 import rnk.bb.auth.rest.AuthIntf;
 import rnk.bb.auth.rest.Authenticator;
+import rnk.bb.exception.RuntimeExceptionMapper;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -27,9 +28,10 @@ public class App extends ResourceConfig {
         register(jacksonProvider);
 
         registerResourceClasses();
+        registerExceptionMapperClasses();
 
         logger.setLevel(Level.ALL);
-        register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.HEADERS_ONLY,65536));
+        register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY,65536));
 
         property(ENCODING_PROPERTY, StandardCharsets.UTF_8.toString());
     }
@@ -37,5 +39,9 @@ public class App extends ResourceConfig {
     private void registerResourceClasses(){
         register(Authenticator.class);
         register(AuthIntf.class);
+    }
+
+    private void registerExceptionMapperClasses(){
+        register(RuntimeExceptionMapper.class);
     }
 }

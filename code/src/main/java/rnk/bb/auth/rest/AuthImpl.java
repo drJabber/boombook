@@ -27,14 +27,10 @@ public class AuthImpl implements AuthIntf {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     @Override
-    public Response create(@Valid @BeanParam AuthInfo authInfo) throws InternalServerErrorException {
-        try {
-            Auth auth=createAuth(authInfo);
-            em.persist(auth);
-            return Response.ok().build();
-        }catch (Exception ex){
-            throw new InternalServerErrorException("Cant register account") ;
-        }
+    public Response create(@Valid @BeanParam AuthInfo authInfo) {
+        Auth auth=createAuth(authInfo);
+        em.persist(auth);
+        return Response.ok().build();
     }
 
     @POST
@@ -42,52 +38,43 @@ public class AuthImpl implements AuthIntf {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     @Override
-    public Response update(@BeanParam AuthInfo authInfo) throws InternalServerErrorException{
-        try {
-            Auth auth=createAuth(authInfo);
-            if (auth!=null){
-                em.merge(auth);
-                return Response.ok().build();
-            }else{
-                return Response.serverError().build();
-            }
-        }catch (Exception ex){
-            throw new InternalServerErrorException("Cant update account") ;
+    public Response update(@BeanParam AuthInfo authInfo) {
+        Auth auth=createAuth(authInfo);
+        if (auth!=null){
+            em.merge(auth);
+            return Response.ok().build();
+        }else{
+            return Response.serverError().build();
         }
     }
 
     @GET
     @Path("auth/{login}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("login") String login) throws InternalServerErrorException{
-        try {
-            Auth auth=em.find(Auth.class,login);
-            if (auth!=null){
-                AuthInfo info =new AuthInfo(auth);
-                return Response.ok().entity(info).build();
-            }else{
-                return Response.serverError().build();
-            }
-        }catch (Exception ex){
-            throw new InternalServerErrorException("Cant find account") ;
-        }
+    public Response read(@PathParam("login") String login) {
+
+
+        return Response.ok().entity(new AuthInfo("1","2","3","4")).build();
+//        Auth auth=em.find(Auth.class,login);
+//        if (auth!=null){
+//            AuthInfo info =new AuthInfo(auth);
+//            return Response.ok().entity(info).build();
+//        }else{
+//            return Response.serverError().build();
+//        }
     }
 
     @DELETE
-    @Path("auth")
+    @Path("auth/{login}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(String login) throws InternalServerErrorException{
-        try {
-            Auth auth=em.find(Auth.class,login);
-            if (auth!=null){
-                em.remove(auth);
-                return Response.ok().build();
-            }else{
-                return Response.serverError().build();
-            }
-        }catch (Exception ex){
-            throw new InternalServerErrorException("Cant delete account") ;
+    public Response delete(@PathParam("login") String login) {
+        Auth auth=em.find(Auth.class,login);
+        if (auth!=null){
+            em.remove(auth);
+            return Response.ok().build();
+        }else{
+            return Response.serverError().build();
         }
     }
 
@@ -103,7 +90,7 @@ public class AuthImpl implements AuthIntf {
 
     private Set<Role> createRoles(AuthInfo info){
         Set<Role> roles=new HashSet<>();
-        info.getRoles().stream().forEach(r->roles.add(new Role(r)));
+//        info.getRoles().stream().forEach(r->roles.add(new Role(r)));
         return roles;
     }
 }
