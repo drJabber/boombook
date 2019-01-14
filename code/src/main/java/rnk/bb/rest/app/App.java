@@ -1,14 +1,9 @@
 package rnk.bb.rest.app;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import rnk.bb.auth.rest.AuthImpl;
-import rnk.bb.auth.rest.AuthIntf;
 import rnk.bb.auth.rest.Authenticator;
-import rnk.bb.exception.RuntimeExceptionMapper;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -21,14 +16,7 @@ public class App extends ResourceConfig {
     private static final String ENCODING_PROPERTY = "encoding";
 
     public App(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
-        jacksonProvider.setMapper(objectMapper);
-        register(jacksonProvider);
-	
         registerResourceClasses();
-        registerExceptionMapperClasses();
 
         logger.setLevel(Level.ALL);
         register(new LoggingFeature(logger, Level.INFO, LoggingFeature.Verbosity.PAYLOAD_ANY,65536));
@@ -36,14 +24,14 @@ public class App extends ResourceConfig {
         property(ENCODING_PROPERTY, StandardCharsets.UTF_8.toString());
     }
 
+
     private void registerResourceClasses(){
         register(Authenticator.class);
-        register(AuthIntf.class);
+        register(AuthImpl.class);
     }
 
-    private void registerExceptionMapperClasses(){
-        register(RuntimeExceptionMapper.class);
-	register(JsonExceptionMapper.class);
-	register(UnrecognizedPropertyExceptionMapper.class);
-    }
+//    private void registerExceptionMapperClasses(){
+//        register(RuntimeExceptionMapper.class);
+//	register(UnrecognizedPropertyExceptionMapper.class);
+//    }
 }

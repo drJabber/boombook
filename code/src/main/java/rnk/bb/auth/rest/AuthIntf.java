@@ -1,9 +1,6 @@
 package rnk.bb.auth.rest;
 
-import rnk.bb.auth.rest.bean.AuthInfo;
-
-import javax.security.auth.login.LoginException;
-import javax.validation.Valid;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,13 +11,13 @@ public interface AuthIntf {
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    Response create(@Valid @BeanParam AuthInfo authInfo) ;
+    Response create(@BeanParam  JsonObject info) ;
 
     @POST
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    Response update(@Valid @BeanParam AuthInfo authInfo) ;
+    Response update(JsonObject info) ;
 
     @GET
     @Path("auth/{login}")
