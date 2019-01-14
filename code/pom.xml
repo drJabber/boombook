@@ -88,11 +88,11 @@
       <artifactId>jersey-mvc-jsp</artifactId>
       <version>${jersey.version}</version>
     </dependency>
-    <dependency>
+    <!-- <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
       <version>${jersey.version}</version>
-    </dependency>
+    </dependency> -->
 
 
 
@@ -186,9 +186,6 @@
               <cargo.glassfish.domain.name>production</cargo.glassfish.domain.name>
             </properties>
           </configuration>
-          <!--<deployer>-->
-            <!--<type>remote</type>-->
-          <!--</deployer>-->
         </configuration>
         <dependencies>
           <dependency>

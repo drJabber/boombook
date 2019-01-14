@@ -26,7 +26,7 @@ public class App extends ResourceConfig {
         JacksonJaxbJsonProvider jacksonProvider = new JacksonJaxbJsonProvider();
         jacksonProvider.setMapper(objectMapper);
         register(jacksonProvider);
-
+	
         registerResourceClasses();
         registerExceptionMapperClasses();
 
