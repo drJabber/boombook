@@ -1,9 +1,11 @@
 package rnk.bb.rest.app;
 
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import rnk.bb.auth.rest.AuthImpl;
+import rnk.bb.auth.rest.AuthController;
 import rnk.bb.auth.rest.Authenticator;
+import rnk.bb.user.rest.ClientController;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +18,8 @@ public class App extends ResourceConfig {
     private static final String ENCODING_PROPERTY = "encoding";
 
     public App(){
+
+        register(JacksonFeature.class);
         registerResourceClasses();
 
         logger.setLevel(Level.ALL);
@@ -27,7 +31,8 @@ public class App extends ResourceConfig {
 
     private void registerResourceClasses(){
         register(Authenticator.class);
-        register(AuthImpl.class);
+        register(AuthController.class);
+        register(ClientController.class);
     }
 
 //    private void registerExceptionMapperClasses(){

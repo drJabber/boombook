@@ -2,9 +2,10 @@ package rnk.bb.auth.rest;
 
 
 import rnk.bb.auth.domain.Auth;
-import rnk.bb.util.json.Util;
+import rnk.bb.helper.json.JsonHelper;
 
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,8 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Singleton
+@Startup
 @Path("/v1")
-public class AuthImpl{
+public class AuthController {
 
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
@@ -23,10 +25,9 @@ public class AuthImpl{
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-//    @Override
     public Response create(JsonObject info) {
         try{
-            Auth auth=Util.unmarshal(info,Auth.class);
+            Auth auth= JsonHelper.unmarshal(info,Auth.class);
             em.persist(auth);
             return Response.ok().build();
         }catch(Exception ex){
@@ -38,10 +39,9 @@ public class AuthImpl{
     @Path("auth")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-//    @Override
     public Response update(JsonObject info) {
         try{
-            Auth auth=Util.unmarshal(info,Auth.class);
+            Auth auth= JsonHelper.unmarshal(info,Auth.class);
             em.merge(auth);
             return Response.ok().build();
         }catch(Exception ex){
@@ -57,7 +57,7 @@ public class AuthImpl{
         if (auth!=null){
             return Response.ok().entity(auth).build();
         }else{
-            return Response.serverError().build();
+            return Response.serverError().entity("cant find entity").build();
         }
     }
 
@@ -71,7 +71,7 @@ public class AuthImpl{
             em.remove(auth);
             return Response.ok().build();
         }else{
-            return Response.serverError().build();
+            return Response.serverError().entity("cand find entity").build();
         }
     }
 }
