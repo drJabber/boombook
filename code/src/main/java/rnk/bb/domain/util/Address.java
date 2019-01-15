@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Table(name="address", schema = "public")
 public class Address {
     @Id
+    @SequenceGenerator(name="address_id_seq",sequenceName = "address_id_seq",schema = "public",allocationSize = 1)
     private Integer id;
 
     @OneToOne @JoinColumn(name="country_id")

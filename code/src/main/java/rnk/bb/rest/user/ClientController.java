@@ -2,6 +2,7 @@ package rnk.bb.rest.user;
 
 
 import rnk.bb.domain.user.Client;
+import rnk.bb.rest.user.bean.ClientInfo;
 import rnk.bb.helper.json.JsonHelper;
 
 import javax.ejb.Singleton;
@@ -27,12 +28,23 @@ public class ClientController {
     @Produces(MediaType.TEXT_HTML)
     public Response create(JsonObject info) {
         try{
-            Client client= JsonHelper.unmarshal(info,Client.class);
+            ClientInfo clientInfo= JsonHelper.unmarshal(info,ClientInfo.class);
+	    Client client=createClient(clientInfo);
             em.persist(client);
             return Response.ok().build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
+    }
+
+    private Client createClient(ClientInfo info){
+    	Client client=new Client();
+        client.setName(info.getName());
+	client.setBirthDate(info.getBirthDate());
+	client.setGender(info.getGender());
+	
+	Auth auth=em.find(info.getLogin(),Auth.class);
+	client.setLogin(auth);
     }
 
     @POST
@@ -41,7 +53,8 @@ public class ClientController {
     @Produces(MediaType.TEXT_HTML)
     public Response update(JsonObject info) {
         try{
-            Client client= JsonHelper.unmarshal(info,Client.class);
+            ClientInfo client= JsonHelper.unmarshal(info,ClientInfo.class);
+	    Client client=createClient(clientInfo);
             em.merge(client);
             return Response.ok().build();
         }catch(Exception ex){

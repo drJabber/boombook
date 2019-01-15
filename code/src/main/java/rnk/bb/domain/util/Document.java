@@ -12,6 +12,7 @@ import java.util.Date;
 @Table(name="document",schema="public")
 public class Document {
     @Id
+    @SequenceGenerator(name="document_id_seq",sequenceName = "document_id_seq",schema = "public",allocationSize = 1)
     private Integer id;
 
     @OneToOne

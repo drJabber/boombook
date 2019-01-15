@@ -37,11 +37,9 @@ public class Client implements Serializable {
 
     @OneToOne
     @JoinColumn(name="address_id")
-    @NotNull
     private Address address;
 
     @OneToOne
     @JoinColumn(name="document_id")
-    @NotNull
     private Document document;
 }
