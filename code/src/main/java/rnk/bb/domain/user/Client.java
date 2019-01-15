@@ -1,9 +1,9 @@
-package rnk.bb.user.domain;
+package rnk.bb.domain.user;
 
 import lombok.Data;
-import rnk.bb.auth.domain.Auth;
-import rnk.bb.util.domain.Address;
-import rnk.bb.util.domain.Document;
+import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.util.Address;
+import rnk.bb.domain.util.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,7 +1,7 @@
-package rnk.bb.user.rest;
+package rnk.bb.rest.user;
 
 
-import rnk.bb.user.domain.Client;
+import rnk.bb.domain.user.Client;
 import rnk.bb.helper.json.JsonHelper;
 
 import javax.ejb.Singleton;
@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 @Singleton
 @Startup
+@DependsOn({"rnk.bb.startup.rest.StartupController"})
 @Path("v1")
 public class ClientController {
     @PersistenceContext(unitName="RNK_PU")

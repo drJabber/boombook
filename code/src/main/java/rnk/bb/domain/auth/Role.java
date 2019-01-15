@@ -1,4 +1,4 @@
-package rnk.bb.auth.domain;
+package rnk.bb.domain.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

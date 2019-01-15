@@ -1,4 +1,4 @@
-package rnk.bb.auth.domain;
+package rnk.bb.domain.auth;
 
 import lombok.Data;
 import rnk.utils.security.HashUtils;

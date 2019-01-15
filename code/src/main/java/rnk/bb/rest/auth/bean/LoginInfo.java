@@ -1,4 +1,4 @@
-package rnk.bb.auth.rest.bean;
+package rnk.bb.rest.auth.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

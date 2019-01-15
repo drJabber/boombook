@@ -1,4 +1,4 @@
-package rnk.bb.util.domain;
+package rnk.bb.domain.util;
 
 import lombok.Data;
 
@@ -10,12 +10,11 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
-@Table(name="document_type",schema = "public")
-public class DocumentType {
+@Table(name = "country",schema="public")
+public class Country {
     @Id
     private Integer id;
-
     @NotNull
     @Size(max=500)
-    private String description;
+    private String country;
 }

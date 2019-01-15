@@ -1,4 +1,4 @@
-package rnk.bb.util.domain;
+package rnk.bb.domain.util;
 
 import lombok.Data;
 

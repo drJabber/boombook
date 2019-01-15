@@ -1,6 +1,6 @@
-package rnk.bb.auth.rest;
+package rnk.bb.rest.auth;
 
-import rnk.bb.auth.rest.bean.LoginInfo;
+import rnk.bb.rest.auth.bean.LoginInfo;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
