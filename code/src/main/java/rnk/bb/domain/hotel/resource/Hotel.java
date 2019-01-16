@@ -49,7 +49,7 @@ public class Hotel {
     @JoinColumn(name="policy_id")
     private HotelPaymentPolicy paymenPpolicy;
 
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Staff> staffList;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
