@@ -48,4 +48,8 @@ public class Client implements Serializable {
     @OneToOne
     @JoinColumn(name="document_id")
     private Document document;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
+
 }

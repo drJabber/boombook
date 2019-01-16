@@ -41,6 +41,4 @@ public class Staff {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="hotel_id")
     private Hotel hotel;
-
-
 }
