@@ -4,6 +4,7 @@ package rnk.bb.rest.auth;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.helper.json.JsonHelper;
 
+import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.json.JsonObject;
@@ -15,7 +16,7 @@ import javax.ws.rs.core.Response;
 
 @Singleton
 @Startup
-@DependsOn({"rnk.bb.startup.rest.StartupController"})
+@DependsOn({"StartupController"})
 @Path("/v1")
 public class AuthController {
 

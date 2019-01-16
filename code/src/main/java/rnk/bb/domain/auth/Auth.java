@@ -35,7 +35,7 @@ public class Auth implements Serializable {
     private Boolean blocked=false;
 
     @JoinColumn(name="role")
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "accounts")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "accounts", fetch=FetchType.LAZY )
     private Set<Role> roles=new HashSet<>();
 
     public String getLogin(){

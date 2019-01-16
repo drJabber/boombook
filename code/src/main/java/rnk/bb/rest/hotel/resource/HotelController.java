@@ -1,6 +1,8 @@
-package rnk.bb.rest.user;
+package rnk.bb.rest.hotel.resource;
 
 
+import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.domain.hotel.staff.Staff;
 import rnk.bb.domain.user.Client;
 import rnk.bb.helper.json.JsonHelper;
 
@@ -18,18 +20,18 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class ClientController {
+public class HotelController {
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
 
     @PUT
-    @Path("client")
+    @Path("hotel/resource/hotel")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response create(JsonObject info) {
         try{
-            Client client= JsonHelper.unmarshal(info,Client.class);
-            em.persist(client);
+            Hotel hotel= JsonHelper.unmarshal(info,Hotel.class);
+            em.persist(hotel);
             return Response.ok().build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
@@ -37,13 +39,13 @@ public class ClientController {
     }
 
     @POST
-    @Path("client")
+    @Path("hotel/resource/hotel")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response update(JsonObject info) {
         try{
-            Client client= JsonHelper.unmarshal(info,Client.class);
-            em.merge(client);
+            Hotel hotel= JsonHelper.unmarshal(info,Hotel.class);
+            em.merge(hotel);
             return Response.ok().build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
@@ -51,28 +53,29 @@ public class ClientController {
     }
 
     @GET
-    @Path("/client/{id}")
+    @Path("hotel/resource/hotel/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("id") Integer clientId) {
-        Client client=em.find(Client.class,clientId);
-        if (client!=null){
-            return Response.ok().entity(client).build();
+    public Response read(@PathParam("id") Integer hotelId) {
+        Hotel hotel=em.find(Hotel.class,hotelId);
+        if (hotel!=null){
+            return Response.ok().entity(hotel).build();
         }else{
             return Response.serverError().entity("cant find entity").build();
         }
     }
 
     @DELETE
-    @Path("client/{id}")
+    @Path("hotel/resource/hotel/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("id") Integer clientId) {
-        Client client=em.find(Client.class,clientId);
-        if (client!=null){
-            em.remove(client);
+    public Response delete(@PathParam("id") Integer hotelId) {
+        Hotel hotel=em.find(Hotel.class,hotelId);
+        if (hotel!=null){
+            em.remove(hotel);
             return Response.ok().build();
         }else{
             return Response.serverError().entity("cand find entity").build();
         }
     }
+
 }

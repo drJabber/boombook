@@ -2,6 +2,9 @@ package rnk.bb.rest.auth;
 
 import rnk.bb.rest.auth.bean.LoginInfo;
 
+import javax.ejb.DependsOn;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +17,7 @@ import javax.ws.rs.core.*;
 
 @Singleton
 @Startup
-@DependsOn({"rnk.bb.startup.rest.StartupController"})
+@DependsOn({"StartupController"})
 public class Authenticator implements AuthenticatorIntf {
     @POST
     @Path("/login")

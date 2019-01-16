@@ -13,9 +13,10 @@ import java.util.Date;
 public class Document {
     @Id
     @SequenceGenerator(name="document_id_seq",sequenceName = "document_id_seq",schema = "public",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="document_id_seq")
     private Integer id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="type_id")
     private DocumentType documentType;
 

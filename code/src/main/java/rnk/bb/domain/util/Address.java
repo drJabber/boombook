@@ -12,9 +12,11 @@ import javax.validation.constraints.Size;
 public class Address {
     @Id
     @SequenceGenerator(name="address_id_seq",sequenceName = "address_id_seq",schema = "public",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="address_id_seq")
     private Integer id;
 
-    @OneToOne @JoinColumn(name="country_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="country_id")
     @NotNull
     private Country country;
 
