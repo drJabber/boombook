@@ -1,11 +1,17 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.util.Address;
+import rnk.bb.domain.util.Document;
+import rnk.bb.helper.json.DateAdapter;
+import rnk.bb.domain.book.Order;
 
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
+
 
 @Data
 @Entity
@@ -33,15 +39,15 @@ public class Guest {
     @Size(max=2)
     private String gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="address_id")
     private Address address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="document_id")
     private Document document;
 
-    @OneToOne
-    @JoinColumn(name="document_id")
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name="food_concept_id")
     private FoodConcept foodConcept;
 }

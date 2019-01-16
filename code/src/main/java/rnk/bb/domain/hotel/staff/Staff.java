@@ -27,15 +27,18 @@ public class Staff {
 
     @NotNull
     @Size(max=300)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
+    @Column(nullable = false)
     private Date birthDate;
 
     @NotNull
     @Size(max=2)
+    @Column(nullable = false)
     private String gender;
 
     @ManyToOne(cascade = CascadeType.ALL)

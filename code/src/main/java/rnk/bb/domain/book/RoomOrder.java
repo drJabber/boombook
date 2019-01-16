@@ -1,11 +1,18 @@
-package rnk.bb.domain.hotel.resource;
+package rnk.bb.domain.book;
 
 import lombok.Data;
+import rnk.bb.domain.hotel.resource.RoomFeature;
+import rnk.bb.domain.hotel.resource.RoomPool;
+import rnk.bb.helper.json.DateAdapter;
 
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import rnk.bb.domain.book.Order;
 
 @Data
 @Entity
@@ -33,4 +40,7 @@ public class RoomOrder {
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
     Date checkOutTime;
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roomOrders", fetch = FetchType.LAZY)
+    private Set<RoomFeature> features=new HashSet<>();
 }

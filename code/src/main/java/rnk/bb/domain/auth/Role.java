@@ -16,12 +16,11 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class Role implements Serializable {
-    @NotNull
     @Size(max=100)
     @Id
     private String role;
 
-    @JoinColumn(name="login")
+    @JoinColumn(name="login",nullable = false)
     @ManyToMany(cascade=CascadeType.ALL)
     private Set<Auth> accounts=new HashSet<>();
 

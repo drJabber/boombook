@@ -1,11 +1,16 @@
-package rnk.bb.domain.hotel.resource;
+package rnk.bb.domain.hotel.schedule;
 
 import lombok.Data;
+import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.domain.hotel.resource.Room;
+import rnk.bb.helper.json.DateAdapter;
 
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @Entity
@@ -27,11 +32,13 @@ public class ScheduleItem {
     @NotNull
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
+    @Column(nullable = false)
     Date startPeriod;
 
     @NotNull
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
+    @Column(nullable = false)
     Date endPeriod;
 
 }

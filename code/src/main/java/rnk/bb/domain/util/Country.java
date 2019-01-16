@@ -2,6 +2,7 @@ package rnk.bb.domain.util;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -16,5 +17,6 @@ public class Country {
     private Integer id;
     @NotNull
     @Size(max=500)
+    @Column(nullable = false)
     private String country;
 }

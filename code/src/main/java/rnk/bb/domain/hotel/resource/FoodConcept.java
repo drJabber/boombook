@@ -22,14 +22,16 @@ public class FoodConcept {
 
     @NotNull
     @Size(max=200)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
     @Min(0)
-    @Column(columnDefinition = "numeric(15,2)")
+    @Column(columnDefinition = "numeric(15,2)", nullable = false)
     private Double basePrice=0.0;
 
     @NotNull
     @Size(max=500)
+    @Column(nullable = false)
     private String description;
 }

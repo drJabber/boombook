@@ -15,26 +15,29 @@ import java.util.Set;
 @Table(name="auth", schema="public")
 public class Auth implements Serializable {
     @Size(max=100)
-    @NotNull
     @Id
     private String login;
 
     @NotNull
     @Size(max=200)
+    @Column(nullable = false)
     private String password;
 
     @NotNull
     @Size(max=100)
+    @Column(nullable = false)
     private String email;
 
     @NotNull
     @Size(max=100)
+    @Column(nullable = false)
     private String phone;
 
     @NotNull
+    @Column(nullable = false)
     private Boolean blocked=false;
 
-    @JoinColumn(name="role")
+    @JoinColumn(name="role",nullable = false)
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "accounts", fetch=FetchType.LAZY )
     private Set<Role> roles=new HashSet<>();
 

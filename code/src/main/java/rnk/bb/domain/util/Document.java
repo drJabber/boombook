@@ -22,15 +22,21 @@ public class Document {
 
     @NotNull
     @Size(max = 10)
+    @Column(nullable = false)
     private String serial;
+
     @NotNull
     @Size(max = 40)
+    @Column(nullable = false)
     private String number;
 
     @NotNull
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date issueDate;
+
     @NotNull
     @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
     private Date expirationDate;
 }

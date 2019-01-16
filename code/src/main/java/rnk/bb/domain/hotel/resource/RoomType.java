@@ -18,9 +18,11 @@ public class RoomType {
 
     @NotNull
     @Size(max=200)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
     @Size(max=500)
+    @Column(nullable = false)
     private String description;
 }

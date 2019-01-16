@@ -32,4 +32,3 @@ INSERT INTO public.document_type (id, description) VALUES (2, 'DRIVER''s LICENSE
 INSERT INTO public.country (id, country) VALUES (643, 'Россия');
 INSERT INTO public.country (id, country) VALUES (804, 'Украина');
 INSERT INTO public.country (id, country) VALUES (112, 'Беларусь');
-

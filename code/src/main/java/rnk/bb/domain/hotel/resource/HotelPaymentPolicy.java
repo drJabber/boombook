@@ -18,6 +18,6 @@ public class HotelPaymentPolicy {
 
     @NotNull
     @Range(min = 0, max=100)
-    @Column(columnDefinition = "numeric(15,2)")
+    @Column(columnDefinition = "numeric(15,2)",nullable = false)
     private Double prePayPercent=0.0;
 }

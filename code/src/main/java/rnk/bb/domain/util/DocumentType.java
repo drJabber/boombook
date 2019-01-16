@@ -2,6 +2,7 @@ package rnk.bb.domain.util;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,5 +18,6 @@ public class DocumentType {
 
     @NotNull
     @Size(max=500)
+    @Column(nullable = false)
     private String description;
 }

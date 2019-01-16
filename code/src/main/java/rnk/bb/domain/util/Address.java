@@ -22,12 +22,15 @@ public class Address {
 
     @NotNull
     @Size(max = 20)
+    @Column(nullable = false)
     private String zip;
 
     @NotNull
     @Size(max = 500)
+    @Column(nullable = false)
     private String settlementPart;
     @NotNull
     @Size(max = 500)
+    @Column(nullable = false)
     private String StreetPart;
 }
