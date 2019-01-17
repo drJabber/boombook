@@ -25,7 +25,7 @@ public class ClientController {
     @PUT
     @Path("client")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
         try{
             Client client= JsonHelper.unmarshal(info,Client.class);
@@ -39,7 +39,7 @@ public class ClientController {
     @POST
     @Path("client")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
         try{
             Client client= JsonHelper.unmarshal(info,Client.class);

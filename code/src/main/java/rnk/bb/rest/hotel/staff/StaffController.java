@@ -25,12 +25,12 @@ public class StaffController {
     @PUT
     @Path("hotel/staff")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
         try{
             Staff staff= JsonHelper.unmarshal(info,Staff.class);
             em.persist(staff);
-            return Response.ok().build();
+            return Response.ok().entity(staff).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
@@ -39,12 +39,12 @@ public class StaffController {
     @POST
     @Path("hotel/staff")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
         try{
             Staff staff= JsonHelper.unmarshal(info,Staff.class);
             em.merge(staff);
-            return Response.ok().build();
+            return Response.ok().entity(staff).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }

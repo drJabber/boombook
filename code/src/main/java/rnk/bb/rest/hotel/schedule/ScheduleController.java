@@ -1,6 +1,6 @@
-package rnk.bb.rest.hotel.resource;
+package rnk.bb.rest.hotel.schedule;
 
-import rnk.bb.domain.hotel.resource.HotelPaymentPolicy;
+import rnk.bb.domain.hotel.schedule.ScheduleItem;
 import rnk.bb.helper.json.JsonHelper;
 
 import javax.ejb.DependsOn;
@@ -17,58 +17,58 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class HotelPaymentPolicyController {
+public class ScheduleController {
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
 
     @PUT
-    @Path("hotel/resource/pp")
+    @Path("hotel/schedule")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(JsonObject info) {
+    public Response createItem(JsonObject info) {
         try{
-            HotelPaymentPolicy policy= JsonHelper.unmarshal(info, HotelPaymentPolicy.class);
-            em.persist(policy);
-            return Response.ok().entity(policy).build();
+            ScheduleItem item= JsonHelper.unmarshal(info, ScheduleItem.class);
+            em.persist(item);
+            return Response.ok().entity(item).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
     }
 
     @POST
-    @Path("hotel/resource/pp")
+    @Path("hotel/schedule")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(JsonObject info) {
+    public Response updateItem(JsonObject info) {
         try{
-            HotelPaymentPolicy policy= JsonHelper.unmarshal(info, HotelPaymentPolicy.class);
-            em.merge(policy);
-            return Response.ok().entity(policy).build();
+            ScheduleItem item= JsonHelper.unmarshal(info,ScheduleItem.class);
+            em.merge(item);
+            return Response.ok().entity(item).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
     }
 
     @GET
-    @Path("hotel/resource/pp/{id}")
+    @Path("hotel/schedule/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("id") Integer policyId) {
-        HotelPaymentPolicy policy=em.find(HotelPaymentPolicy.class,policyId);
-        if (policy!=null){
-            return Response.ok().entity(policy).build();
+    public Response readItem(@PathParam("id") Integer scheduleItemId) {
+        ScheduleItem scheduleItem=em.find(ScheduleItem.class,scheduleItemId);
+        if (scheduleItemId!=null){
+            return Response.ok().entity(scheduleItem).build();
         }else{
             return Response.serverError().entity("cant find entity").build();
         }
     }
 
     @DELETE
-    @Path("hotel/resource/pp/{id}")
+    @Path("hotel/schedule/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("id") Integer policyId) {
-        HotelPaymentPolicy policy=em.find(HotelPaymentPolicy.class,policyId);
-        if (policy!=null){
-            em.remove(policy);
+    public Response deleteItem(@PathParam("id") Integer scheduleItemId) {
+        ScheduleItem scheduleItem=em.find(ScheduleItem.class,scheduleItemId);
+        if (scheduleItem!=null){
+            em.remove(scheduleItem);
             return Response.ok().build();
         }else{
             return Response.serverError().entity("cand find entity").build();

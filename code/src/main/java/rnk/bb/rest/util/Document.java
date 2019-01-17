@@ -1,8 +1,7 @@
-package rnk.bb.rest.auth;
+package rnk.bb.rest.util;
 
-
-import rnk.bb.domain.auth.Auth;
-import rnk.bb.domain.auth.Role;
+import rnk.bb.domain.util.Country;
+import rnk.bb.domain.util.DocumentType;
 import rnk.bb.helper.json.JsonHelper;
 
 import javax.ejb.DependsOn;
@@ -14,98 +13,75 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBException;
 
 @Singleton
 @Startup
 @DependsOn({"StartupController"})
-@Path("/v1")
-public class AuthController {
-
+@Path("v1")
+public class Document {
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
 
-    public Auth createAuth(JsonObject info) throws JAXBException {
-        Auth auth= JsonHelper.unmarshal(info,Auth.class);
-        em.persist(auth);
-        return auth;
-    }
-
-    public Auth updateAuth(JsonObject info) throws JAXBException {
-        Auth auth= JsonHelper.unmarshal(info,Auth.class);
-        em.merge(auth);
-        return auth;
-    }
-
-    public Auth getAuth(String login) {
-        return em.find(Auth.class,login);
-    }
-
-    public Boolean deleteAuth(String login) {
-        Auth auth=em.find(Auth.class,login);
-        if (auth!=null) {
-            em.remove(auth);
-            return true;
-        }
-        return false;
-    }
-
     @PUT
-    @Path("auth")
+    @Path("util/doc")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
         try{
-            Auth auth=createAuth(info);
-            return Response.ok().entity(auth).build();
+            Document document= JsonHelper.unmarshal(info, Document.class);
+            em.persist(document);
+            return Response.ok().entity(document).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
     }
 
     @POST
-    @Path("auth")
+    @Path("util/adr")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
         try{
-            Auth auth=updateAuth(info);
-            return Response.ok().entity(auth).build();
+            Document document= JsonHelper.unmarshal(info, Document.class);
+            em.merge(document);
+            return Response.ok().entity(document).build();
         }catch(Exception ex){
             return Response.serverError().entity("cant parse query parameters").build();
         }
     }
 
     @GET
-    @Path("/auth/{login}")
+    @Path("util/adr/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@PathParam("login") String login) {
-        Auth auth=getAuth(login);
-        if (auth!=null){
-            return Response.ok().entity(auth).build();
+    public Response readItem(@PathParam("id") Integer documentId) {
+        Document document=em.find(Document.class,documentId);
+        if (document!=null){
+            return Response.ok().entity(document).build();
         }else{
             return Response.serverError().entity("cant find entity").build();
         }
     }
 
     @GET
-    @Path("/auth/role/{role}")
+    @Path("/util/doctype/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRole(@PathParam("role") String role) {
-        Role r=em.find(Role.class,role);
-        if (r!=null){
-            return Response.ok().entity(r).build();
+    public Response getDocumentType(@PathParam("id") Integer docTypeId) {
+        DocumentType dt=em.find(DocumentType.class,docTypeId);
+        if (dt!=null){
+            return Response.ok().entity(dt).build();
         }else{
             return Response.serverError().entity("cant find entity").build();
         }
     }
 
     @DELETE
-    @Path("auth/{login}")
+    @Path("util/adr/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("login") String login) {
-        if (deleteAuth(login)){
+    public Response delete(@PathParam("id") Integer documentId) {
+        Document document=em.find(Document.class,documentId);
+        if (document!=null){
+            em.remove(document);
             return Response.ok().build();
         }else{
             return Response.serverError().entity("cand find entity").build();
