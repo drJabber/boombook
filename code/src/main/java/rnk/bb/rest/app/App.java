@@ -6,6 +6,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.auth.Authenticator;
 import rnk.bb.rest.user.ClientController;
+import rnk.bb.rest.util.AddressController;
 
 import javax.ws.rs.ApplicationPath;
 import java.nio.charset.StandardCharsets;
@@ -33,6 +34,8 @@ public class App extends ResourceConfig {
         register(Authenticator.class);
         register(AuthController.class);
         register(ClientController.class);
+
+        register(AddressController.class);
     }
 
 //    private void registerExceptionMapperClasses(){

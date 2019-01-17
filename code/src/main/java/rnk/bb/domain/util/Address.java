@@ -17,7 +17,6 @@ public class Address {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="country_id")
-    @NotNull
     private Country country;
 
     @NotNull
@@ -32,5 +31,5 @@ public class Address {
     @NotNull
     @Size(max = 500)
     @Column(nullable = false)
-    private String StreetPart;
+    private String streetPart;
 }

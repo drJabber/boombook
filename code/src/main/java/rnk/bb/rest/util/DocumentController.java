@@ -1,6 +1,6 @@
 package rnk.bb.rest.util;
 
-import rnk.bb.domain.util.Country;
+import rnk.bb.domain.util.Document;
 import rnk.bb.domain.util.DocumentType;
 import rnk.bb.helper.json.JsonHelper;
 
@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class Document {
+public class DocumentController {
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
 
@@ -37,7 +37,7 @@ public class Document {
     }
 
     @POST
-    @Path("util/adr")
+    @Path("util/doc")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
@@ -51,9 +51,9 @@ public class Document {
     }
 
     @GET
-    @Path("util/adr/{id}")
+    @Path("util/doc/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response readItem(@PathParam("id") Integer documentId) {
+    public Response read(@PathParam("id") Integer documentId) {
         Document document=em.find(Document.class,documentId);
         if (document!=null){
             return Response.ok().entity(document).build();
@@ -75,7 +75,7 @@ public class Document {
     }
 
     @DELETE
-    @Path("util/adr/{id}")
+    @Path("util/doc/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response delete(@PathParam("id") Integer documentId) {
