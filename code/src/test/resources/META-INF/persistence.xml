@@ -8,11 +8,11 @@
         <properties>
             <!-- DON'T USE THIS IN PRODUCTION -->
             <!-- automatically drop and create required database tables -->
-            <property name="javax.persistence.schema-generation.create-source" value="metadata-then-script"/>
+            <property name="javax.persistence.schema-generation.create-source" value="metadata"/>
             <property name="javax.persistence.schema-generation.drop-source" value="metadata" />
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
-            <!--<property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/data.sql" />-->
-            <!-- <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/drop-db.sql" />-->
+            <!-- <property name="javax.persistence.schema-generation.create-script-source" value="META-INF/sql/create-db.sql" />
+            <property name="javax.persistence.schema-generation.drop-script-source" value="META-INF/sql/drop-db.sql" /> -->
             <property name="javax.persistence.sql-load-script-source" value="META-INF/sql/data.sql" />
 
             <property name="eclipselink.logging.level.sql" value="FINE"/>
@@ -20,4 +20,5 @@
             <property name="eclipselink.logging.logger" value="ServerLogger"/>
         </properties>
     </persistence-unit>
+
 </persistence>

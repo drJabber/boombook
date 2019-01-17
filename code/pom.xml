@@ -37,7 +37,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
 
@@ -125,21 +125,13 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.arquillian</groupId>
-      <artifactId>arquillian-bom</artifactId>
-      <version>1.4.0.Final</version>
-      <scope> import</scope>
-      <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.main.extras</groupId>
-      <artifactId>glassfish-embedded-all</artifactId>
-      <version>5.0</version>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.jboss.arquillian.container</groupId>
-      <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+      <artifactId>arquillian-glassfish-remote-3.1</artifactId>
       <version>1.0.0.Final</version>
       <scope>test</scope>
     </dependency>
@@ -184,6 +176,18 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>1.4.0.Final</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>boombook</finalName>
