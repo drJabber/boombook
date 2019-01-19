@@ -3,10 +3,11 @@ package rnk.bb.domain.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
-import rnk.bb.helper.json.DateAdapter;
+import rnk.bb.util.json.DateAdapter;
 
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
@@ -19,13 +20,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="client", schema="public")
-public class Client implements Serializable {
-    @Id
-    @SequenceGenerator(name="client_id_seq",sequenceName = "client_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="client_id_seq")
-//    @JsonIgnore
-    private Integer id;
-
+public class Client extends AbstractEntity {
     @OneToOne
     @JoinColumn(name="login")
     private Auth login;

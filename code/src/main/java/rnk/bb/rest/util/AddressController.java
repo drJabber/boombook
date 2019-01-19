@@ -1,16 +1,13 @@
 package rnk.bb.rest.util;
 
-import rnk.bb.domain.auth.Role;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Country;
-import rnk.bb.helper.json.JsonHelper;
+import rnk.bb.rest.blank.CustomController;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,22 +18,14 @@ import java.util.List;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class AddressController {
-    @PersistenceContext(unitName="RNK_PU")
-    private EntityManager em;
+public class AddressController extends CustomController<Address, Long> {
 
     @PUT
     @Path("util/adr")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
-        try{
-            Address address= JsonHelper.unmarshal(info, Address.class);
-            em.persist(address);
-            return Response.ok().entity(address).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @POST
@@ -44,63 +33,21 @@ public class AddressController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
-        try{
-            Address address=JsonHelper.unmarshal(info,Address.class);
-            em.merge(address);
-            return Response.ok().entity(address).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @GET
     @Path("util/adr/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("id") Integer addressId) {
-        Address address=em.find(Address.class,addressId);
-        if (address!=null){
-            return Response.ok().entity(address).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
-    }
-
-    @GET
-    @Path("/util/country/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCountry(@PathParam("id") Integer countryId) {
-        Country country=em.find(Country.class,countryId);
-        if (country!=null){
-            return Response.ok().entity(country).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
-    }
-
-    @GET
-    @Path("/util/countries")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCountries() {
-        Query q=em.createQuery("select c from Country c", Country.class);
-        List<Country> result=q.getResultList();
-        if (result!=null){
-            return Response.ok().entity(result).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
+    public Response read(@PathParam("id") Long addressId) {
+        return readInternal(addressId);
     }
 
     @DELETE
     @Path("util/adr/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("id") Integer addressId) {
-        Address address=em.find(Address.class,addressId);
-        if (address!=null){
-            em.remove(address);
-            return Response.ok().build();
-        }else{
-            return Response.serverError().entity("cand find entity").build();
-        }
+    public Response delete(@PathParam("id") Long addressId) {
+        return deleteInternal(addressId);
     }
 }

@@ -2,14 +2,12 @@ package rnk.bb.rest.hotel.staff;
 
 
 import rnk.bb.domain.hotel.staff.Staff;
-import rnk.bb.helper.json.JsonHelper;
+import rnk.bb.rest.blank.CustomController;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,22 +16,13 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class StaffController {
-    @PersistenceContext(unitName="RNK_PU")
-    private EntityManager em;
-
+public class StaffController extends CustomController<Staff, Long> {
     @PUT
     @Path("hotel/staff")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
-        try{
-            Staff staff= JsonHelper.unmarshal(info,Staff.class);
-            em.persist(staff);
-            return Response.ok().entity(staff).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @POST
@@ -41,38 +30,21 @@ public class StaffController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
-        try{
-            Staff staff= JsonHelper.unmarshal(info,Staff.class);
-            em.merge(staff);
-            return Response.ok().entity(staff).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @GET
     @Path("hotel/staff/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("id") Integer staffId) {
-        Staff staff=em.find(Staff.class,staffId);
-        if (staff!=null){
-            return Response.ok().entity(staff).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
+    public Response read(@PathParam("id") Long staffId) {
+        return readInternal(staffId);
     }
 
     @DELETE
     @Path("hotel/staff/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("id") Integer staffId) {
-        Staff staff=em.find(Staff.class,staffId);
-        if (staff!=null){
-            em.remove(staff);
-            return Response.ok().build();
-        }else{
-            return Response.serverError().entity("cand find entity").build();
-        }
+    public Response delete(@PathParam("id") Long staffId) {
+        return deleteInternal(staffId);
     }
 }

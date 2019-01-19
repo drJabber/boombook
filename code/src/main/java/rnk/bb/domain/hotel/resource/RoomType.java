@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -10,12 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name="room_type", schema = "public")
-public class RoomType {
-    @Id
-    @SequenceGenerator(name="room_type_id_seq",sequenceName = "room_type_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_type_id_seq")
-    private Integer id;
-
+public class RoomType  extends AbstractEntity {
     @NotNull
     @Size(max=200)
     @Column(nullable = false)

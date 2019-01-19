@@ -3,7 +3,7 @@ package rnk.bb.rest.auth;
 
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.auth.Role;
-import rnk.bb.helper.json.JsonHelper;
+import rnk.bb.util.json.JsonHelper;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;

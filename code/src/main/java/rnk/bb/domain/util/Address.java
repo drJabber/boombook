@@ -1,6 +1,7 @@
 package rnk.bb.domain.util;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,12 +10,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Data
 @Table(name="address", schema = "public")
-public class Address {
-    @Id
-    @SequenceGenerator(name="address_id_seq",sequenceName = "address_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="address_id_seq")
-    private Integer id;
-
+public class Address extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="country_id")
     private Country country;

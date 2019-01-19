@@ -1,0 +1,16 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+>
+    <ui:fragment rendered="#{not empty facesContext.messageList}">
+        <p>
+            <p:messages id="pmessages" layout="vertical" globalOnly="true"
+                        styleClass="list-unstyled" showSummary="true" showDetail="false"
+                        errorClass="alert alert-error" infoClass="alert alert-info"
+                        warnClass="alert alert-warning"
+                        closable="true"
+            />
+        </p>
+    </ui:fragment>
+</ui:composition>

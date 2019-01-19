@@ -1,9 +1,10 @@
 package rnk.bb.domain.book;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.hotel.resource.RoomFeature;
 import rnk.bb.domain.hotel.resource.RoomPool;
-import rnk.bb.helper.json.DateAdapter;
+import rnk.bb.util.json.DateAdapter;
 
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
@@ -12,17 +13,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import rnk.bb.domain.book.Order;
 
 @Data
 @Entity
 @Table(name="room_order", schema = "public")
-public class RoomOrder {
-    @Id
-    @SequenceGenerator(name="room_order_id_seq",sequenceName = "room_order_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_order_id_seq")
-    private Integer id;
-
+public class RoomOrder  extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private Order order;

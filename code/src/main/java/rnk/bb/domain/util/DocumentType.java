@@ -1,6 +1,7 @@
 package rnk.bb.domain.util;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,10 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name="document_type",schema = "public")
-public class DocumentType {
-    @Id
-    private Integer id;
-
+public class DocumentType extends AbstractEntity {
     @NotNull
     @Size(max=500)
     @Column(nullable = false)

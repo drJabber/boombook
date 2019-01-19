@@ -1,4 +1,4 @@
-package rnk.bb.helper.json;
+package rnk.bb.util.json;
 
 
 import javax.json.bind.adapter.JsonbAdapter;

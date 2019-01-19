@@ -1,6 +1,7 @@
 package rnk.bb.domain.util;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,12 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="document",schema="public")
-public class Document {
-    @Id
-    @SequenceGenerator(name="document_id_seq",sequenceName = "document_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="document_id_seq")
-    private Integer id;
-
+public class Document extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="type_id")
     private DocumentType documentType;

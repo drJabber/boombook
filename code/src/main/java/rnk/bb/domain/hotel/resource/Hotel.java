@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
 import rnk.bb.domain.hotel.staff.Staff;
@@ -14,12 +15,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="hotel", schema = "public")
-public class Hotel {
-    @Id
-    @SequenceGenerator(name="hotel_id_seq",sequenceName = "hotel_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="hotel_id_seq")
-    private Integer id;
-
+public class Hotel extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="manager_id")
     private Staff manager;

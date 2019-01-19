@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
 
 import javax.persistence.*;
@@ -12,12 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="room", schema = "public")
-public class Room {
-    @Id
-    @SequenceGenerator(name="room_id_seq",sequenceName = "room_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_id_seq")
-    private Integer id;
-
+public class Room extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="pool_id")
     private RoomPool pool;

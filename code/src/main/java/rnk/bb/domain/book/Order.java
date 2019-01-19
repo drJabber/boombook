@@ -1,6 +1,8 @@
 package rnk.bb.domain.book;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
+import rnk.bb.domain.blank.AbstractHotelRefEntity;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.user.Client;
@@ -14,16 +16,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="order", schema = "public")
-public class Order {
-    @Id
-    @SequenceGenerator(name="order_id_seq",sequenceName = "order_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="order_id_seq")
-    private Integer id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="hotel_id")
-    private Hotel hotel;
-
+public class Order  extends AbstractHotelRefEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id")
     private Client client;

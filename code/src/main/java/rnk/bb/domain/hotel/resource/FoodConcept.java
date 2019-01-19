@@ -1,6 +1,8 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
+import rnk.bb.domain.blank.AbstractHotelRefEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -10,16 +12,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name="food_concept", schema = "public")
-public class FoodConcept {
-    @Id
-    @SequenceGenerator(name="food_concept_id_seq",sequenceName = "food_concept_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="food_concept_id_seq")
-    private Integer id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="hotel_id")
-    private Hotel hotel;
-
+public class FoodConcept extends AbstractHotelRefEntity {
     @NotNull
     @Size(max=200)
     @Column(nullable = false)

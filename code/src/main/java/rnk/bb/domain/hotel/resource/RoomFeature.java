@@ -1,6 +1,8 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
+import rnk.bb.domain.blank.AbstractHotelRefEntity;
 import rnk.bb.domain.book.RoomOrder;
 
 import javax.persistence.*;
@@ -13,16 +15,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name="room_feature", schema = "public")
-public class RoomFeature {
-    @Id
-    @SequenceGenerator(name="room_feature_id_seq",sequenceName = "room_feature_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="room_feature_id_seq")
-    private Integer id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="hotel_id",nullable = false)
-    private Hotel hotel;
-
+public class RoomFeature extends AbstractHotelRefEntity {
     @NotNull
     @Size(max=200)
     @Column(nullable = false)

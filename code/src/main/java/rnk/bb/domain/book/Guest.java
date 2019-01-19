@@ -1,9 +1,10 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
-import rnk.bb.helper.json.DateAdapter;
+import rnk.bb.util.json.DateAdapter;
 import rnk.bb.domain.book.Order;
 
 import javax.json.bind.annotation.JsonbTypeAdapter;
@@ -16,12 +17,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="guest", schema = "public")
-public class Guest {
-    @Id
-    @SequenceGenerator(name="guest_id_seq",sequenceName = "guest_id_seq",schema = "public",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="guest_id_seq")
-    private Integer id;
-
+public class Guest  extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
     private Order order;

@@ -1,15 +1,12 @@
 package rnk.bb.rest.util;
 
 import rnk.bb.domain.util.Document;
-import rnk.bb.domain.util.DocumentType;
-import rnk.bb.helper.json.JsonHelper;
+import rnk.bb.rest.blank.CustomController;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,22 +15,13 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class DocumentController {
-    @PersistenceContext(unitName="RNK_PU")
-    private EntityManager em;
-
+public class DocumentController extends CustomController<Document, Long> {
     @PUT
     @Path("util/doc")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(JsonObject info) {
-        try{
-            Document document= JsonHelper.unmarshal(info, Document.class);
-            em.persist(document);
-            return Response.ok().entity(document).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @POST
@@ -41,50 +29,21 @@ public class DocumentController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
-        try{
-            Document document= JsonHelper.unmarshal(info, Document.class);
-            em.merge(document);
-            return Response.ok().entity(document).build();
-        }catch(Exception ex){
-            return Response.serverError().entity("cant parse query parameters").build();
-        }
+        return saveInternal(info);
     }
 
     @GET
     @Path("util/doc/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response read(@PathParam("id") Integer documentId) {
-        Document document=em.find(Document.class,documentId);
-        if (document!=null){
-            return Response.ok().entity(document).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
-    }
-
-    @GET
-    @Path("/util/doctype/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getDocumentType(@PathParam("id") Integer docTypeId) {
-        DocumentType dt=em.find(DocumentType.class,docTypeId);
-        if (dt!=null){
-            return Response.ok().entity(dt).build();
-        }else{
-            return Response.serverError().entity("cant find entity").build();
-        }
+    public Response read(@PathParam("id") Long id) {
+        return readInternal(id);
     }
 
     @DELETE
     @Path("util/doc/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
-    public Response delete(@PathParam("id") Integer documentId) {
-        Document document=em.find(Document.class,documentId);
-        if (document!=null){
-            em.remove(document);
-            return Response.ok().build();
-        }else{
-            return Response.serverError().entity("cand find entity").build();
-        }
+    public Response delete(@PathParam("id") Long id) {
+        return deleteInternal(id);
     }
 }
