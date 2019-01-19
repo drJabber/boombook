@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Range;
 import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
 
 @Data

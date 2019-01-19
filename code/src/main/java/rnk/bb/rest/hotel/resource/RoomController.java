@@ -34,14 +34,14 @@ public class RoomController extends CustomController<Room, Long> {
     }
 
     @GET
-    @Path("hotel/resource/rt/{id}")
+    @Path("hotel/resource/room/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response read(@PathParam("id") Long id) {
         return readInternal(id);
     }
 
     @DELETE
-    @Path("hotel/resource/rt/{id}")
+    @Path("hotel/resource/room/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response delete(@PathParam("id") Long id) {

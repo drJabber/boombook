@@ -1,7 +1,7 @@
 package rnk.bb.rest.user;
 
 
-import rnk.bb.domain.hotel.schedule.ScheduleItem;
+import rnk.bb.domain.user.Client;
 import rnk.bb.rest.blank.CustomController;
 
 import javax.ejb.DependsOn;
@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class ClientController  extends CustomController<ScheduleItem, Long> {
+public class ClientController  extends CustomController<Client, Long> {
     @PUT
     @Path("client")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -34,7 +34,7 @@ public class ClientController  extends CustomController<ScheduleItem, Long> {
     }
 
     @GET
-    @Path("/client/{id}")
+    @Path("client/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response read(@PathParam("id") Long id) {
         return readInternal(id);

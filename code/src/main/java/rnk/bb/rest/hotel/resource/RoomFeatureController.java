@@ -40,7 +40,7 @@ public class RoomFeatureController extends CustomController<RoomFeature, Long> {
     }
 
     @DELETE
-    @Path("hotel/resource/pp/{id}")
+    @Path("hotel/resource/rf/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response delete(@PathParam("id") Long id) {

@@ -108,7 +108,7 @@ public class AuthController {
         if (deleteAuth(login)){
             return Response.ok().build();
         }else{
-            return Response.serverError().entity("cand find entity").build();
+            return Response.status(204).entity("cand find entity").build();
         }
     }
 }

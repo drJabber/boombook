@@ -5,6 +5,7 @@ import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.auth.Authenticator;
+import rnk.bb.rest.hotel.resource.*;
 import rnk.bb.rest.hotel.staff.StaffController;
 import rnk.bb.rest.user.ClientController;
 import rnk.bb.rest.util.AddressController;
@@ -38,6 +39,13 @@ public class App extends ResourceConfig {
         register(ClientController.class);
         register(StaffController.class);
         register(CountryController.class);
+        register(HotelController.class);
+        register(FoodConceptController.class);
+        register(HotelPaymentPolicyController.class);
+        register(RoomController.class);
+        register(RoomFeatureController.class);
+        register(RoomPoolController.class);
+        register(RoomTypeController.class);
 
         register(AddressController.class);
     }

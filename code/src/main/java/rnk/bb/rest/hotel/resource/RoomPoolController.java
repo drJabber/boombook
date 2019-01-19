@@ -25,7 +25,7 @@ public class RoomPoolController extends CustomController<RoomPool, Long> {
     }
 
     @POST
-    @Path("hotel/resource/rf")
+    @Path("hotel/resource/rp")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(JsonObject info) {
