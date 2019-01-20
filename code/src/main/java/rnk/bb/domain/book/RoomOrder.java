@@ -26,12 +26,10 @@ public class RoomOrder  extends AbstractEntity {
     @JoinColumn(name="pool_id")
     private RoomPool pool;
 
-    @NotNull
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
     Date checkInTime;
 
-    @NotNull
     @Temporal(TemporalType.DATE)
     @JsonbTypeAdapter(DateAdapter.class)
     Date checkOutTime;

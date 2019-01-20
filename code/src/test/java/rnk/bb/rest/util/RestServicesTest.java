@@ -3,18 +3,21 @@ package rnk.bb.rest.util;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.exparity.hamcrest.date.DateMatchers;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.book.RoomOrder;
 import rnk.bb.domain.hotel.resource.*;
-import rnk.bb.domain.user.Client;
+import rnk.bb.domain.hotel.resource.Guest;
+import rnk.bb.domain.hotel.schedule.ScheduleItem;
 import rnk.bb.util.json.JsonHelper;
 
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static io.restassured.RestAssured.when;
 import static io.restassured.RestAssured.given;
@@ -89,50 +92,6 @@ public class RestServicesTest {
                 .get("auth/{login}")
                 .then()
                 .body("phone",equalTo(auth.getPhone()))
-                .statusCode(200);
-
-    }
-
-    @Test
-    public void testClientController() throws ParseException {
-        Client client=new Client();
-        client.setName("Doddo Zik");
-
-        client.setBirthDate((new SimpleDateFormat("yyyy-MM-dd")).parse("1998-12-05"));
-        client.setGender("Z");
-
-        given()
-                .contentType(ContentType.JSON)
-                .body(JsonHelper.marshal(client))
-                .put("client")
-                .then()
-                .body("name",equalTo(client.getName()))
-                .statusCode(200);
-
-        client.setGender("X");
-
-        Response response=given()
-                .contentType(ContentType.JSON)
-                .body(JsonHelper.marshal(client))
-                .post("client");
-        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
-
-        response
-                .then()
-                .body("gender",equalTo(client.getGender()))
-                .statusCode(200);
-
-        given()
-                .pathParam("id",id)
-                .get("client/{id}")
-                .then()
-                .body("id",equalTo(id.intValue()))
-                .statusCode(200);
-
-        given()
-                .pathParam("id",id)
-                .delete("client/{id}")
-                .then()
                 .statusCode(200);
 
     }
@@ -365,4 +324,218 @@ public class RestServicesTest {
 
     }
 
+    @Test
+    public void testRoomPoolController() throws ParseException {
+        RoomPool rp=new RoomPool();
+        rp.setName("Double rooms on the seaside");
+        rp.setBasePrice(45.);
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(rp))
+                .put("hotel/resource/rp")
+                .then()
+                .body("name",equalTo(rp.getName()))
+                .statusCode(200);
+
+        rp.setBasePrice(71.);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(rp))
+                .post("hotel/resource/rp");
+
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+
+        response
+                .then()
+                .body("basePrice",(equalTo(rp.getBasePrice().floatValue())))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .get("hotel/resource/rp/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("hotel/resource/rp/{id}")
+                .then()
+                .statusCode(200);
+
+    }
+
+    @Test
+    public void testRoomTypeController() throws ParseException {
+        RoomType rt=new RoomType();
+        rt.setName("Double rooms on the seaside");
+        rt.setDescription("");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(rt))
+                .put("hotel/resource/rt")
+                .then()
+                .body("name",equalTo(rt.getName()))
+                .statusCode(200);
+
+        rt.setName("very expensive rooms");
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(rt))
+                .post("hotel/resource/rt");
+
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+
+        response
+                .then()
+                .body("name",(equalTo(rt.getName())))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .get("hotel/resource/rt/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("hotel/resource/rt/{id}")
+                .then()
+                .statusCode(200);
+
+    }
+
+    @Test
+    public void testScheduleController() throws ParseException {
+        ScheduleItem schedule=new ScheduleItem();
+        schedule.setStartPeriod((new SimpleDateFormat("yyyy-MM-dd")).parse("2018-11-05"));
+        schedule.setEndPeriod((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-03-05"));
+
+        Response response= given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(schedule))
+                .put("hotel/schedule");
+
+        String startPeriod=response.jsonPath().get("startPeriod");
+        response
+                .then()
+                .statusCode(200);
+
+        Assert.assertEquals(schedule.getStartPeriod(), (new SimpleDateFormat("yyyy-MM-dd")).parse(startPeriod));
+
+        schedule.setEndPeriod((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-04-05"));
+
+        response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(schedule))
+                .post("hotel/schedule");
+
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+        String endPeriod=response.jsonPath().get("endPeriod");
+
+        response
+                .then()
+                .statusCode(200);
+
+        Assert.assertEquals(schedule.getEndPeriod(), (new SimpleDateFormat("yyyy-MM-dd")).parse(endPeriod));
+
+        given()
+                .pathParam("id",id)
+                .get("hotel/schedule/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("hotel/schedule/{id}")
+                .then()
+                .statusCode(200);
+
+    }
+
+    @Test
+    public void testGuestController() throws ParseException {
+        Guest guest=new Guest();
+        guest.setName("Doddo Zik");
+
+        guest.setBirthDate((new SimpleDateFormat("yyyy-MM-dd")).parse("1998-12-05"));
+        guest.setGender("Z");
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(guest))
+                .put("book/guest")
+                .then()
+                .body("name",equalTo(guest.getName()))
+                .statusCode(200);
+
+        guest.setGender("X");
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(guest))
+                .post("book/guest");
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+
+        response
+                .then()
+                .body("gender",equalTo(guest.getGender()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .get("book/guest/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("book/guest/{id}")
+                .then()
+                .statusCode(200);
+
+    }
+
+    @Test
+    public void testRoomOrderController() throws ParseException {
+        RoomOrder ro=new RoomOrder();
+        given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(ro))
+                .put("book/ro")
+                .then()
+                .statusCode(200);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(ro))
+                .post("book/ro");
+
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+
+        response
+                .then()
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .get("book/ro/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("book/ro/{id}")
+                .then()
+                .statusCode(200);
+
+    }
 }

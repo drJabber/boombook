@@ -7,6 +7,7 @@
         <setting name="provider-name" value="" />
         <datasource-mapping>
           <factory-entry name="RNK_PU" />
+          <factory-entry name="RNK_PU_OLD" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/test/resources/META-INF/persistence.xml" />
       </configuration>

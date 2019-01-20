@@ -40,7 +40,7 @@ public class RoomOrderController extends CustomController<RoomOrder, Long> {
     }
 
     @DELETE
-    @Path("book/guest/{id}")
+    @Path("book/ro/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     public Response delete(@PathParam("id") Long roomOrderId) {
