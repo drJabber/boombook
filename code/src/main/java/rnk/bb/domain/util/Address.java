@@ -15,17 +15,22 @@ public class Address extends AbstractEntity {
     @JoinColumn(name="country_id")
     private Country country;
 
-    @NotNull
     @Size(max = 20)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String zip;
 
-    @NotNull
     @Size(max = 500)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String settlementPart;
-    @NotNull
+
     @Size(max = 500)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String streetPart;
+
+    @NotNull
+    @Column(nullable = false)
+    private Integer externalId=0;
+
+
+
 }

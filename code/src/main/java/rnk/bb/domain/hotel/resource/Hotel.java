@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
@@ -25,24 +26,50 @@ public class Hotel extends AbstractEntity {
     @Column(nullable = false)
     private String name;
 
-    @NotNull
     @Size(max = 100)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String email;
 
-    @NotNull
+    @Size(max = 1024)
+    @Column(nullable = true)
+    private String place;
+
     @Size(max=1024)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String site;
 
-    @NotNull
     @Size(max=100)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String phone;
+
+    @Size(max=100)
+    @Column(nullable = true)
+    private String fax;
+
+    @Size(max=1024)
+    @Column(nullable = true)
+    private String descr;
+
+    @Size(max = 1024)
+    @Column(nullable = true)
+    private String vk;
+
+    @Size(max = 1024)
+    @Column(nullable = true)
+    private String fb;
+
+    @Lob
+    @Basic(fetch=FetchType.LAZY)
+    private String longDescr;
 
     @NotNull
     @Column(nullable = false)
     private Boolean published=false;
+
+    @NotNull
+    @Column(nullable = false)
+    @Range(min=0, max=7)
+    private Integer stars=5;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="address_id")

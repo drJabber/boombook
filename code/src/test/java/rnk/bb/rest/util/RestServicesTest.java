@@ -13,9 +13,11 @@ import rnk.bb.domain.book.RoomOrder;
 import rnk.bb.domain.hotel.resource.*;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
+import rnk.bb.domain.payment.PaymentStub;
 import rnk.bb.util.json.JsonHelper;
 
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -517,6 +519,54 @@ public class RestServicesTest {
                 .contentType(ContentType.JSON)
                 .body(JsonHelper.marshal(ro))
                 .post("book/ro");
+
+        Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
+
+        response
+                .then()
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .get("book/ro/{id}")
+                .then()
+                .body("id",equalTo(id.intValue()))
+                .statusCode(200);
+
+        given()
+                .pathParam("id",id)
+                .delete("book/ro/{id}")
+                .then()
+                .statusCode(200);
+
+    }
+    @Test
+    public void testPaymentController() throws ParseException {
+        PaymentStub p=new PaymentStub();
+        p.setSum(400.);
+        p.setTimestamp(Date.valueOf("2019-20-05"));
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(p))
+                .put("pay")
+                .then()
+                .statusCode(200);
+
+        p.setTimestamp((new SimpleDateFormat("yyyy-MM-dd")).parse("2019-04-05"));
+        p.setSum(500.);
+
+        Response response=given()
+                .contentType(ContentType.JSON)
+                .body(JsonHelper.marshal(p))
+                .post("pay");
+
+        String ts=response.jsonPath().get("timeStamp");
+        response
+                .then()
+                .statusCode(200);
+
+        Assert.assertEquals(p.getTimestamp(), (new SimpleDateFormat("yyyy-MM-dd")).parse(ts));
 
         Long id=Long.valueOf(((Integer)response.jsonPath().get("id")).longValue());
 
