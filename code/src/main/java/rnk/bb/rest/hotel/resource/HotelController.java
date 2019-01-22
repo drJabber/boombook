@@ -7,9 +7,13 @@ import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.json.JsonObject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Singleton
 @Startup
@@ -45,6 +49,17 @@ public class HotelController  extends CustomController<Hotel, Long> {
     @Produces(MediaType.TEXT_HTML)
     public Response delete(@PathParam("id") Long foodConceptId) {
         return deleteInternal(foodConceptId);
+    }
+
+    public List<Hotel> findAllPublished() {
+
+        CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
+
+        CriteriaQuery<Hotel> q = cb.createQuery(Hotel.class);
+        Root<Hotel> c = q.from(Hotel.class);
+        q.select(c).where(c.equals(c.get("published").equals(true)))
+
+        return entityManager().createQuery(q).getResultList();
     }
 
 }
