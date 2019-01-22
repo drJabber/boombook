@@ -15,12 +15,11 @@ public class HotelService implements Serializable {
     HotelController hotels;
 
     public Hotel findById(Long id){
-        return this.hotels.findOptionalById(id).orElseThrow(()->HotelNotFoundException(id));
+        return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
     }
 
     public List<Hotel> findAllPublished(){
         return this.hotels.findAllPublished();
     }
 
-    public Hotel update()
 }

@@ -52,12 +52,10 @@ public class HotelController  extends CustomController<Hotel, Long> {
     }
 
     public List<Hotel> findAllPublished() {
-
         CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
-
         CriteriaQuery<Hotel> q = cb.createQuery(Hotel.class);
         Root<Hotel> c = q.from(Hotel.class);
-        q.select(c).where(c.equals(c.get("published").equals(true)))
+        q.where(cb.equal(c.get("published"),true));
 
         return entityManager().createQuery(q).getResultList();
     }
