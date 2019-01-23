@@ -23,9 +23,10 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
 
     @Override
     public void handle() throws FacesException {
-        logger.log(Level.INFO, "invoking custom jsf ExceptionHandlder...");
         Iterator<ExceptionQueuedEvent> events = getUnhandledExceptionQueuedEvents().iterator();
-
+        if (events.hasNext()){
+            logger.log(Level.INFO, "invoking custom jsf ExceptionHandlder...");
+        }
         while (events.hasNext()) {
             ExceptionQueuedEvent event = events.next();
             ExceptionQueuedEventContext context = (ExceptionQueuedEventContext) event.getSource();

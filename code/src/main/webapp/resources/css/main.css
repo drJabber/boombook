@@ -43,7 +43,19 @@ code {
 dl dt{
     font-weight: bold;
 }
-dl dt, dl dd{
-    padding: 10px !important;
+/*dl dt, dl dd{*/
+    /*padding: 10px !important;*/
+/*}*/
+
+.datatable-no-header thead {
+    display: none;
+}
+
+.ui-noborder{
+    border: none !important;
+}
+
+.ui-panel-content{
+    background: inherit;
 }
 
