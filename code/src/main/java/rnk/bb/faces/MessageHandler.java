@@ -13,8 +13,7 @@ import javax.faces.event.PhaseListener;
  
 
 public class MessageHandler implements PhaseListener {
-	private static final long serialVersionUID = 1L;
- 
+
 //	 a name to save messages in the session
 	private static final String sessionToken = "MULTI_PAGE_MESSAGES_SUPPORT";
  
