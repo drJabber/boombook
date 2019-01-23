@@ -1,6 +1,7 @@
 package rnk.bb.domain.book;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
 import rnk.bb.domain.hotel.resource.Guest;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name="order", schema = "public")
+@EqualsAndHashCode(callSuper = false)
 public class Order  extends AbstractHotelRefEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id")

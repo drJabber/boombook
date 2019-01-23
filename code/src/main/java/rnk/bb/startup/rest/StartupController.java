@@ -1,13 +1,15 @@
 package rnk.bb.startup.rest;
 
 
+import rnk.bb.rest.hotel.staff.StaffController;
+import rnk.bb.views.HotelHome;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,12 +20,10 @@ public class StartupController {
     @PersistenceContext(unitName="RNK_PU_STARTUP")
     private EntityManager em;
 
-
-    @Inject
-    Logger logger;
+    private static Logger log=Logger.getLogger(StaffController.class.getName());
 
     @PostConstruct
     void init(){
-        logger.log(Level.INFO,"Initializing boombook...");
+        log.log(Level.INFO,"Initializing boombook...");
     }
 }

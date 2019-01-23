@@ -7,16 +7,17 @@
                 template="/WEB-INF/layout/template.xhtml">
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewAction action="#{hotelHome.init()}" />
+            <f:viewAction action="#{boomHome.init()}" />
         </f:metadata>
     </ui:define>
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
         <h:form>
-            <p:dataTable var="hotel" value="#{hotelHome.lazyModel}" paginator="true" rows="20"
+            <p:dataTable var="hotel" value="#{boomHome.hotelsModel}" paginator="true" rows="20"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         rowsPerPageTemplate="15,25,50" selectionMode="single" selection="#{hotelHome.selectedHotel}" id="hoelTable" lazy="true">
-                <p:ajax event="rowSelect" listener="#{hotelHome.onRowSelect}" update=":form:hotelDetail" oncomplete="PF('hotelDialog').show()" />
+                         rowsPerPageTemplate="15,25,50" selectionMode="single" selection="#{boomHome.selectedHotel}" id="hoelTable" lazy="true">
+                <!--<p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}" update=":form:hotelDetail" oncomplete="PF('hotelDialog').show()" />-->
+                <p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}"/>/ />
                 <p:column headerText="Id" sortBy="#{hotel.id}" filterBy="#{hotel.id}">
                     <h:outputText value="#{hotel.id}" />
                 </p:column>

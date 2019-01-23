@@ -1,8 +1,10 @@
 package rnk.bb.rest.hotel.resource;
 
+import org.primefaces.model.LazyDataModel;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.rest.blank.CustomController;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -13,7 +15,9 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 @Startup
@@ -51,13 +55,11 @@ public class HotelController  extends CustomController<Hotel, Long> {
         return deleteInternal(foodConceptId);
     }
 
-    public List<Hotel> findAllPublished() {
-        CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
-        CriteriaQuery<Hotel> q = cb.createQuery(Hotel.class);
-        Root<Hotel> c = q.from(Hotel.class);
-        q.where(cb.equal(c.get("published"),true));
 
-        return entityManager().createQuery(q).getResultList();
+    @PostConstruct
+    public void init(){
+        Map<String, Object> filter=new HashMap<>();
+        filter.put("published",true);
+        super.init(filter);
     }
-
 }

@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 @Entity
 @Table(name="food_concept", schema = "public")
+@EqualsAndHashCode(callSuper = false)
 public class FoodConcept extends AbstractHotelRefEntity {
     @NotNull
     @Size(max=200)

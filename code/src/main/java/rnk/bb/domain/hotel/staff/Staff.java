@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.staff;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
 import rnk.bb.util.json.DateAdapter;
@@ -14,6 +15,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="staff", schema = "public")
+@EqualsAndHashCode(callSuper = false)
 public class Staff extends AbstractHotelRefEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="login")

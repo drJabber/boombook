@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name="room_pool", schema = "public")
+@EqualsAndHashCode(callSuper = false)
 public class RoomPool  extends AbstractHotelRefEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="room_type_id")

@@ -12,17 +12,16 @@ public class RequestLoggingPhaseListener implements PhaseListener {
 
     private static final long serialVersionUID = 1L;
 
-    @Inject
-    Logger logger;
+    private static Logger log=Logger.getLogger(RequestLoggingPhaseListener.class.getName());
 
     @Override
     public void afterPhase(PhaseEvent event) {
-        logger.log(Level.INFO, "after phase:{0}", event.getPhaseId());
+        log.log(Level.INFO, "after phase:{0}", event.getPhaseId());
     }
 
     @Override
     public void beforePhase(PhaseEvent event) {
-        logger.log(Level.INFO, "before phase:{0}", event.getPhaseId());
+        log.log(Level.INFO, "before phase:{0}", event.getPhaseId());
     }
 
     @Override

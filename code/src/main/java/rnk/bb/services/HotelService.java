@@ -1,5 +1,6 @@
 package rnk.bb.services;
 
+import org.primefaces.model.LazyDataModel;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.rest.hotel.resource.HotelController;
 
@@ -18,8 +19,8 @@ public class HotelService implements Serializable {
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
     }
 
-    public List<Hotel> findAllPublished(){
-        return this.hotels.findAllPublished();
+    public LazyDataModel<Hotel> getController(){
+        return this.hotels;
     }
 
 }

@@ -1,11 +1,15 @@
 package rnk.bb.rest.blank;
 
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Response;
+import java.util.List;
+import java.util.Map;
 
 public class CustomController<T extends AbstractEntity, ID> extends AbstractController<T,ID>{
     @PersistenceContext(unitName="RNK_PU")
