@@ -13,7 +13,7 @@
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
         <h:form>
-            <p:dataTable var="hotel" value="#{boomHome.hotelsModel}" paginator="true" rows="20"
+            <p:dataTable var="hotel" value="#{boomHome.hotelsModel}" paginator="true" rows="25"
                          paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                          rowsPerPageTemplate="15,25,50" selectionMode="single" selection="#{boomHome.selectedHotel}" id="hoelTable" lazy="true">
                 <!--<p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}" update=":form:hotelDetail" oncomplete="PF('hotelDialog').show()" />-->
