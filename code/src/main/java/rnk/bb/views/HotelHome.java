@@ -8,16 +8,19 @@ import rnk.bb.services.HotelService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("boomHome")
-@ViewScoped()
+@SessionScoped
+//@ViewScoped()
 public class HotelHome implements Serializable {
     private static Logger log=Logger.getLogger(HotelHome.class.getName());
 
@@ -45,24 +48,11 @@ public class HotelHome implements Serializable {
         this.selectedHotel=hotel;
     }
 
-    public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Hotel selected", ((Hotel) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public void onRowSelect(SelectEvent event) throws IOException {
+        Hotel hotel=(Hotel)event.getObject();
+        log.log(Level.INFO,String.format("Hotel selected %s", hotel.getName()));
+        FacesContext.getCurrentInstance().getExternalContext().redirect("hotel.xhtml");
     }
 
-    public void onRowUnSelect(UnselectEvent event) {
-        FacesMessage msg = new FacesMessage("Hotel unselected", ((Hotel) event.getObject()).getName());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 
-//    public void onHotelDetails(Integer hotelId){
-//        if (selectedHotel!=null){
-//            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Hotel selected", selectedHotel.getName());
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        }else
-//        {
-//            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Hotel note selected", null);
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//        }
-//    }
 }
