@@ -59,3 +59,8 @@ dl dt{
     background: inherit;
 }
 
+.ui-panel-titlebar .ui-panel-actions {
+    clear:both;
+    float: left;
+}
+

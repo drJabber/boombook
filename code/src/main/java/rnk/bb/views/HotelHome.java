@@ -1,6 +1,7 @@
 package rnk.bb.views;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.LazyDataModel;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.services.HotelService;
@@ -47,4 +48,21 @@ public class HotelHome implements Serializable {
     public void onRowSelect(SelectEvent event) {
         FacesMessage msg = new FacesMessage("Hotel selected", ((Hotel) event.getObject()).getName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-    }}
+    }
+
+    public void onRowUnSelect(UnselectEvent event) {
+        FacesMessage msg = new FacesMessage("Hotel unselected", ((Hotel) event.getObject()).getName());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+//    public void onHotelDetails(Integer hotelId){
+//        if (selectedHotel!=null){
+//            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Hotel selected", selectedHotel.getName());
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        }else
+//        {
+//            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Hotel note selected", null);
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//        }
+//    }
+}

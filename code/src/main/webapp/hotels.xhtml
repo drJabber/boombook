@@ -12,15 +12,19 @@
     </ui:define>
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
-        <h:form>
+        <h:form id="hotelForm">
+            <p:growl id="msgs" showDetail="true" />
+
+            <p:messages id="messages" severity="fatal,info,warn"/>
+
             <p:dataTable  var="hotel" rowIndexVar="hotelRow"
                           value="#{boomHome.hotelsModel}" paginator="true" rows="25"
                           paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                           rowsPerPageTemplate="15,25,50" selectionMode="single" selection="#{boomHome.selectedHotel}" id="hotelTable" lazy="true"
                           styleClass="datatable-no-header"
             >
-                <!--<p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}" update=":form:hotelDetail" oncomplete="PF('hotelDialog').show()" />-->
-                <p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}"/>/ />
+                <p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}" update=":hotelForm:msgs"/>
+                <p:ajax event="rowSelect" listener="#{boomHome.onRowUnSelect}" update=":hotelForm:msgs"/>
                 <p:column headerText="Id">
                     <p:panel header="#{hotel.stars} stars" styleClass="ui-noborder ui-panel-selectable #{hotelRow%2==0?'ui-datatable-even':'ui-datatable-odd'}"
                              style="min-width:400px;min-height:50px;">
@@ -28,6 +32,11 @@
                         <p><h:outputText value="#{hotel.place}" /></p>
                         <p><h:outputText value="#{hotel.descr}" /></p>
                         <p><h:outputText value="#{hotel.phone}" /></p>
+
+                        <p:dialog widgetVar="helpWidget" header="PrimeFaces Help">
+                            <p>Forum: http://forum.primefaces.org/ </p>
+                        </p:dialog>
+
                     </p:panel>
                 </p:column>
             </p:dataTable>
