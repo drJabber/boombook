@@ -13,10 +13,6 @@
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
         <h:form id="hotelForm">
-            <p:growl id="msgs" showDetail="true" />
-
-            <p:messages id="messages" severity="fatal,info,warn"/>
-
             <p:dataTable  var="hotel" id="hotelTable" rowIndexVar="hotelRow"
                           value="#{boomHome.hotelsModel}" lazy="true" paginator="true" rows="10"
                           paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -24,19 +20,25 @@
                           selectionMode="single" selection="#{boomHome.selectedHotel}" rowKey="#{hotel.id}"
                           styleClass="datatable-no-header"
             >
-                <p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}" update=":hotelForm:msgs"/>
+                <p:ajax event="rowSelect" listener="#{boomHome.onRowSelect}"/>
                 <p:column headerText="Id">
-                    <!--<p:panel header="#{hotel.stars} stars" styleClass="ui-noborder ui-panel-selectable #{hotelRow%2==0?'ui-datatable-even':'ui-datatable-odd'}"-->
-                             <!--style="min-width:400px;min-height:50px;">-->
+                    <div class="ui-dt-c">
                         <p><strong><h:outputText value="#{hotel.name}" /></strong></p>
-                        <p><h:outputText value="#{hotel.place}" /></p>
-                        <p><h:outputText value="#{hotel.descr}" /></p>
-                        <p><h:outputText value="#{hotel.phone}" /></p>
+                        <h:panelGroup rendered="#{not empty hotel.place}"><p>Местонахождение:<h:outputText value="#{hotel.place}" /></p></h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.descr}"><p>Описание:<h:outputText value="#{hotel.descr}" /></p></h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.site}">
+                            <p>Сайт:<h:outputLink value="#{hotel.site} ">#{hotel.site}</h:outputLink></p>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.vk}">
+                            <p>VK:<h:outputLink value="#{hotel.vk}">#{hotel.vk}</h:outputLink></p>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.fb}">
+                            <p>FB:<h:outputLink value="#{hotel.fb}">#{hotel.fb}</h:outputLink></p>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.phone}"><p>Телефон:<h:outputText value="#{hotel.phone}" /></p></h:panelGroup>
+                        <h:panelGroup rendered="#{not empty hotel.fax}"><p>Факс:<h:outputText value="#{hotel.fax}" /></p></h:panelGroup>
 
-                        <!--<p:dialog widgetVar="helpWidget" header="PrimeFaces Help">-->
-                            <!--<p>Forum: http://forum.primefaces.org/ </p>-->
-                        <!--</p:dialog>-->
-                    <!--</p:panel>-->
+                    </div>
                 </p:column>
             </p:dataTable>
         </h:form>
