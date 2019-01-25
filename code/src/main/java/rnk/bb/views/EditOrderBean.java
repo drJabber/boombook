@@ -14,6 +14,8 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 public class EditOrderBean implements Serializable {
+    private Long id=null;
+
     @Size(max=100)
     @Email(message = "Введите правильный email")
     private String email="";
@@ -38,6 +40,7 @@ public class EditOrderBean implements Serializable {
 
     public void init(Order order){
         if (order!=null){
+            this.id=order.getId();
             this.email=order.getEmail();
             this.phone=order.getPhone();
             this.price=order.getPrice();
@@ -53,12 +56,21 @@ public class EditOrderBean implements Serializable {
         if (order==null){
             result=new Order();
         }
+        result.setId(id);
         result.setPhone(phone);
         result.setEmail(email);
         result.setPrice(price);
         result.setConfirmed(confirmed);
         result.setSubmitted(submitted);
         result.setRejected(rejected);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
