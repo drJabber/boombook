@@ -53,8 +53,4 @@ public class EditOrderView implements Serializable {
     public EditOrderBean getOrderBean(){
         return orderBean;
     }
-
-    public  void validate(ComponentSystemEvent event){
-
-    }
 }

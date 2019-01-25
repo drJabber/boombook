@@ -15,31 +15,70 @@
     </ui:define>
     <ui:define name="pageTitle">Edit Order</ui:define>
     <ui:define name="pageContent">
+    	<p:messages autoUpdate="true" />
         <h:form id="orderForm">
-            <h:panelGrid columns="1" cellpadding="5">
-                <f:event listener="#{editOrderView.validate}" type="postValidate" />
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Добавить гостя" update="orderPanel" process="@this" action="PF('addGuest').show()" style="margin-right:20px;" />
+                    <p:commandButton value="Добавить комнату" update="paorderPanelnel" process="@this" action="PF('addRoom').show()" style="margin-right:20px;" />
+                </f:facet>
+
+                <f:facet name="right">
+                    <p:commandButton value="Submit" update="orderPanel" action="#{resetInputView.save}" style="margin-right:20px;" />
+                    <p:commandButton value="Reset Tag" update="orderPanel" process="@this" style="margin-right:20px;">
+                        <p:resetInput target="panel" />
+                    </p:commandButton>
+                </f:facet>
+            </p:toolbar>
+
+            <p:panel id="orderPanel" header="#{empty order.id?'Новый заказ':'Изменение заказа'}">
 
                 <h:outputLabel for="email_input" value="Email:" />
                 <p:inputText id="email_input" value="#{order.email}" validatorMessage="Здесь нужен Email">
                     <f:validator validatorId="custom.EmailValidator" />
                 </p:inputText>
-                <p:message for="email_input" display="tooltip" />
+                <p:message for="email_input" id="emailMessage" display="both" />
 
                 <p:outputLabel for="phone" value="Телефон:" />
                 <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999" required="treu" validatorMessage="Введите телефон"/>
 
                 <h:outputLabel for="guests" value="Гости:" />
-                <p:dataList id="guests" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
-                    <h:outputText value="#{guest.name}" />
-                </p:dataList>
+                <p:dataTable id="guests" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны" paginator="true"
+                        paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                        rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{order.selectedGuest}" >
 
-                <p:message for="guests" id="guestsMessage" />
+                        <p:ajax event="rowSelect" listener="#{order.onRowSelect}" update=":form:carDetail" oncomplete="PF('carDialog').show()" />
+
+                        <p:column headerText="Имя" sortBy="#{guest.name}" >
+                            <h:outputText value="#{guest.name}" />
+                        </p:column>
+                        <p:column headerText="Д.Р.">
+                            <h:outputText value="#{guest.birthDate}" />
+                        </p:column>
+                        <p:column headerText="Пол">
+                            <h:outputText value="#{guest.gender}" />
+                        </p:column>
+
+                        <h:outputText value="#{guest.name}" />
+                </p:dataTable>
+
+                <p:message for="guests" id="guestsMessage" display="both" />
 
                 <p:panelGrid columns="2" cellpadding="5" styleClass="ui-noborder">
                     <p:commandButton value="Reset" type="reset" target="orderForm" />
-                    <p:commandButton value="Submit" ajax="false" icon="pi pi-check" validateClient="true" update="guests guestsMessage"/>
+                    <p:commandButton value="Submit" ajax="false" icon="pi pi-check" update="guests guestsMessage @orderForm"/>
                 </p:panelGrid>
-            </h:panelGrid>
+            </p:panel>
+
+            <p:dialog header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}" widgetVar="guestDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="guestDetail" style="text-align:center;">
+                    <p:panelGrid columns="2" rendered="#{not empty dtLazyView.selectedCar}" columnClasses="label,value">
+                        <h:outputLabel for="guestName" value="Имя:" />
+                        <p:inputText id="guestName" value="#{guest.name}" required="true" />
+                        <p:message for="guestName" id="guestEditMessage" display="both" />
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
         </h:form>
 
     </ui:define>
