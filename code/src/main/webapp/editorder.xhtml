@@ -28,12 +28,14 @@
                 <p:outputLabel for="phone" value="Телефон:" />
                 <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999" required="treu" validatorMessage="Введите телефон"/>
 
-                <p:dataList id="guests" value="#{order.guests}" var="guests">
-                    <h:outputText value="#{guests}" />
+                <h:outputLabel for="guests" value="Гости:" />
+                <p:dataList id="guests" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
+                    <h:outputText value="#{guest.name}" />
                 </p:dataList>
 
                 <p:message for="guests" id="guestsMessage" />
-                <p:panelGrid columns="2" cellpadding="5">
+
+                <p:panelGrid columns="2" cellpadding="5" styleClass="ui-noborder">
                     <p:commandButton value="Reset" type="reset" target="orderForm" />
                     <p:commandButton value="Submit" ajax="false" icon="pi pi-check" validateClient="true" update="guests guestsMessage"/>
                 </p:panelGrid>
