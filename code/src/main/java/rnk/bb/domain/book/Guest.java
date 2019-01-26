@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @Table(name="guest", schema = "public")
 public class Guest  extends AbstractEntity {
     @ManyToOne(cascade = CascadeType.ALL)
@@ -34,6 +36,11 @@ public class Guest  extends AbstractEntity {
     @NotNull
     @Size(max=2)
     private String gender;
+
+    @NotNull
+    @Size(max=100)
+    @Column(nullable = false)
+    private String email;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="address_id")

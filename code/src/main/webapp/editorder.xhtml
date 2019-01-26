@@ -10,16 +10,20 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewAction action="#{editOrderView.init()}" />
-            <ui:param name="order" value="#{editOrderView.orderBean}"/>
+            <!--<ui:param name="order" value="#{editOrderView.orderBean}"/>-->
+            <ui:param name="order" value="#{editOrderBean}"/>
         </f:metadata>
     </ui:define>
+
     <ui:define name="pageTitle">Edit Order</ui:define>
     <ui:define name="pageContent">
     	<!--<p:messages autoUpdate="true" />-->
         <h:form id="orderForm">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:commandButton value="Добавить гостя" update="orderPanel" process="@this" action="PF('addGuest').show()" style="margin-right:20px;" />
+                    <p:commandButton id="addGuestButton" name="addGuestButton" value="#{editOrderView.someText}" icon="ui-icon-extlink" action="#{editOrderView.addDDDDD}" update="guestsTable" style="margin-right:20px;">
+                        <p:ajax event="dialogReturn" listener="#{editOrderView.onAddGuest}" update="guestsTable" />
+                    </p:commandButton>
                     <p:commandButton value="Добавить комнату" update="orderPanel" process="@this" action="PF('addRoom').show()" style="margin-right:20px;" />
                 </f:facet>
             </p:toolbar>
@@ -38,8 +42,8 @@
                 </p:panelGrid>
             </p:panel>
 
-            <h:outputLabel for="guests" value="Гости:" />
-            <p:dataTable id="guests" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
+            <h:outputLabel for="guestsTable" value="Гости:" />
+            <p:dataTable id="guestsTable" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
 
                 <!--<p:ajax event="rowSelect" listener="#{order.onRowSelect}" update=":form:carDetail" oncomplete="PF('carDialog').show()" />-->
 
@@ -54,7 +58,7 @@
                 </p:column>
             </p:dataTable>
 
-            <p:message for="guests" id="guestsMessage" display="both" />
+            <p:message for="guestsTable" id="guestsMessage" display="both" />
 
             <p:toolbar>
                 <f:facet name="left">
@@ -63,14 +67,8 @@
                 </f:facet>
             </p:toolbar>
 
-            <p:dialog header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}" widgetVar="guestDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="guestDetail" style="text-align:center;">
-                    <p:panelGrid columns="2" rendered="#{not empty dtLazyView.selectedCar}" columnClasses="label,value">
-                        <h:outputLabel for="guestName" value="Имя:" />
-                        <p:inputText id="guestName" value="#{guest.name}" required="true" />
-                        <p:message for="guestName" id="guestEditMessage" display="both" />
-                    </p:panelGrid>
-                </p:outputPanel>
+            <p:dialog header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}" widgetVar="guestDialog"
+                      modal="true" showEffect="fade" hideEffect="fade" resizable="false">
             </p:dialog>
         </h:form>
 

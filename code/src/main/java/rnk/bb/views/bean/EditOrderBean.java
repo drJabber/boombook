@@ -1,19 +1,23 @@
-package rnk.bb.views;
+package rnk.bb.views.bean;
 
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.book.RoomOrder;
 import rnk.bb.domain.hotel.resource.Guest;
+import rnk.bb.domain.user.Client;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean
-@SessionScoped
+@Named("editOrderBean")
+@ViewScoped
 public class EditOrderBean implements Serializable {
+    private Client client;
+
     private Long id=null;
 
     @Size(max=100)
@@ -36,10 +40,19 @@ public class EditOrderBean implements Serializable {
     private List<RoomOrder> roomOrders=new ArrayList<>();
 
     @NotEmpty(message = "В заказе не указаны гости")
-    private List<Guest> guests=new ArrayList<>();
+    private List<EditGuestBean> guests=new ArrayList<>();
+
+    public EditOrderBean(){
+
+    }
+
+    public EditOrderBean(Order order){
+        init(order);
+    }
 
     public void init(Order order){
         if (order!=null){
+            this.client=order.getClient();
             this.id=order.getId();
             this.email=order.getEmail();
             this.phone=order.getPhone();
@@ -48,7 +61,15 @@ public class EditOrderBean implements Serializable {
             this.confirmed=order.getConfirmed();
             this.rejected=order.getRejected();
 
+            guests.clear();
+            order.getGuests().stream().forEach(g->guests.add(new EditGuestBean(g)));
         }
+    }
+
+    private void addGuest(EditGuestBean guest, List<Guest> orderGuests){
+        Guest g=new Guest();
+        guest.updateGuest(g);
+        orderGuests.add(g);
     }
 
     public void updateOrder(Order order){
@@ -56,6 +77,9 @@ public class EditOrderBean implements Serializable {
         if (order==null){
             result=new Order();
         }
+
+        result.setClient(client);
+
         result.setId(id);
         result.setPhone(phone);
         result.setEmail(email);
@@ -63,6 +87,10 @@ public class EditOrderBean implements Serializable {
         result.setConfirmed(confirmed);
         result.setSubmitted(submitted);
         result.setRejected(rejected);
+
+        List<Guest> orderGuests=order.getGuests();
+        orderGuests.clear();
+        guests.stream().forEach(g->addGuest(g, orderGuests));
     }
 
     public Long getId() {
@@ -129,11 +157,19 @@ public class EditOrderBean implements Serializable {
         this.roomOrders = roomOrders;
     }
 
-    public List<Guest> getGuests() {
+    public List<EditGuestBean> getGuests() {
         return guests;
     }
 
-    public void setGuests(List<Guest> guests) {
+    public void setGuests(List<EditGuestBean> guests) {
         this.guests = guests;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
