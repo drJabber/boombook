@@ -32,8 +32,9 @@
                 <p:panelGrid columns="3"  styleClass="ui-noborder">
                     <p:inputText id="email_input" value="#{order.email}" validatorMessage="Здесь нужен Email">
                     </p:inputText>
-
-                    <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999" required="true" validatorMessage="Введите телефон"/>
+                    <h:outputText value="#{order==null ? 'ORDER IS NULL':'order good'}" />
+                    <h:outputText value="#{order.phone==null ? 'ORDER.PHONE IS NULL':'order.phone good'}" />
+                    <p:inputText id="phone"  value="#{order.phone}" validatorMessage="Введите телефон"/>
                     <p:message for="phone" id="phoneMessage" display="both" />
                 </p:panelGrid>
             </p:panel>
