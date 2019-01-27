@@ -1,9 +1,13 @@
 package rnk.bb.views;
 
 import org.primefaces.event.SelectEvent;
+import rnk.bb.domain.book.Order;
+import rnk.bb.views.bean.EditOrderBean;
 
 import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -17,7 +21,7 @@ public class EditOrderView implements Serializable {
 //    private Long orderId=null;
 //
 //    private Hotel hotel=null;
-//    private Order order=null;
+    private Order order=null;
 //
 //    @Inject
 //    OrderController orders;
@@ -25,8 +29,8 @@ public class EditOrderView implements Serializable {
 //    @Inject
 //    HotelService hotelService;
 
-//    @Inject
-//    EditOrderBean orderBean;
+    @Inject
+    EditOrderBean orderBean;
 
     @PostConstruct
     public void init(){
@@ -41,7 +45,7 @@ public class EditOrderView implements Serializable {
 //            this.orderId=Long.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id"));
 //            order=this.orders.findOptionalById(orderId).orElse(null);
 //        }
-//            orderBean.init(order);
+            orderBean.init(order);
     }
 
 
@@ -49,15 +53,15 @@ public class EditOrderView implements Serializable {
 //        return hotel;
 //    }
 
-//    public EditOrderBean getOrderBean(){
-//        return orderBean;
-//    }
+    public EditOrderBean getOrderBean(){
+        return orderBean;
+    }
 
     public String getSomeText(){
         return "Добавить гостя!!!";
     }
 
-    public void addDDDDD(){
+    public void addGuest(){
         log.log(Level.INFO,"ADDD GUEST!!!!!!!!!!!!!");
 //        Map<String,Object> options = new HashMap<>();
 //        options.put("resizable", false);

@@ -21,7 +21,7 @@ public class EditOrderBean implements Serializable {
     private Long id=null;
 
     @Size(max=100)
-    @Email(message = "Введите правильный email")
+//    @Email(message = "Введите правильный email")
     private String email="";
 
     @NotNull
