@@ -59,6 +59,13 @@ public class EditGuestBean implements Serializable {
 //            this.address=guest.getAddress();
 //            this.document=guest.getDocument();
 //            this.foodConcept=guest.getFoodConcept();
+        }else{
+            this.order=null;
+            this.id=null;
+            this.name="";
+            this.birthDate=null;
+            this.gender="М";
+            this.email="";
         }
     }
 

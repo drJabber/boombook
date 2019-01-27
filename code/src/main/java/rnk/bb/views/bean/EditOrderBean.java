@@ -6,6 +6,7 @@ import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.user.Client;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.validation.constraints.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Named("editOrderBean")
-@ViewScoped
+@SessionScoped
 public class EditOrderBean implements Serializable {
     private Client client;
 

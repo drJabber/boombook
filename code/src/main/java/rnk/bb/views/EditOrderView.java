@@ -2,81 +2,114 @@ package rnk.bb.views;
 
 import org.primefaces.event.SelectEvent;
 import rnk.bb.domain.book.Order;
+import rnk.bb.domain.hotel.resource.Guest;
+import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.rest.book.GuestController;
+import rnk.bb.rest.book.OrderController;
+import rnk.bb.services.HotelService;
+import rnk.bb.views.bean.EditGuestBean;
 import rnk.bb.views.bean.EditOrderBean;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("editOrderView")
-@ViewScoped
+@SessionScoped
 public class EditOrderView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
 
-//    private Long orderId=null;
-//
-//    private Hotel hotel=null;
+    private Long orderId=null;
+    private Long guestId=null;
+
+    private Hotel hotel=null;
     private Order order=null;
-//
-//    @Inject
-//    OrderController orders;
-//
-//    @Inject
-//    HotelService hotelService;
+    private Guest guest=null;
+
+    private String state="order";
+
+    @Inject
+    OrderController orderController;
+
+    @Inject
+    GuestController guestController;
+
+    @Inject
+    HotelService hotelService;
 
     @Inject
     EditOrderBean orderBean;
 
+    @Inject
+    EditGuestBean guestBean;
+
     @PostConstruct
     public void init(){
-//        Map<String, String> params= FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-//
-//        if (params.get("hotelId")!=null){
-//            Long hotelId= Long.valueOf(params.get("hotelId"));
-//            hotel=hotelService.findById(hotelId);
-//        }
-//
-//        if (params.get("id")!=null){
-//            this.orderId=Long.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id"));
-//            order=this.orders.findOptionalById(orderId).orElse(null);
-//        }
-            orderBean.init(order);
+        Map<String, String> params= FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+        if (params.get("hotelId")!=null){
+            Long hotelId= Long.valueOf(params.get("hotelId"));
+            hotel=hotelService.findById(hotelId);
+        }
+
+        if (params.get("orderId")!=null){
+            this.orderId=Long.valueOf(params.get("orderId"));
+            order=this.orderController.findOptionalById(orderId).orElse(null);
+        }
+
+        if (params.get("guestId")!=null){
+            this.guestId=Long.valueOf(params.get("guestId"));
+            guest=this.guestController.findOptionalById(guestId).orElse(null);
+        }
+
+        orderBean.init(order);
+        guestBean.init(guest);
     }
 
 
-//    public Hotel getHotel(){
-//        return hotel;
-//    }
+    public Hotel getHotel(){
+        return hotel;
+    }
 
     public EditOrderBean getOrderBean(){
         return orderBean;
     }
 
-    public String getSomeText(){
-        return "Добавить гостя!!!";
+    public EditGuestBean getGuestBean(){
+        return guestBean;
+    }
+
+    public void setGuestBean(EditGuestBean guestBean){
+        this.guestBean=guestBean;
+    }
+
+    public String getState(){
+        return state;
     }
 
     public void addGuest(){
-        log.log(Level.INFO,"ADDD GUEST!!!!!!!!!!!!!");
-//        Map<String,Object> options = new HashMap<>();
-//        options.put("resizable", false);
-//        options.put("draggable", false);
-//        options.put("modal", true);
-//
-//        orderBean=new EditOrderBean();
-//
-//        PrimeFaces.current().dialog().openDynamic("guestDialog",options,null);
+        log.log(Level.INFO,"add new guest");
+        guestBean.init(null);
+        state="guest";
     }
 
-    public void onAddGuest(SelectEvent event){
-//        EditGuestBean guest=(EditGuestBean) event.getObject();
-//        orderBean.getGuests().add(guest);
+    public void saveGuest(EditGuestBean guestBean){
+        log.log(Level.INFO,"save guest");
+        orderBean.getGuests().add(guestBean);
+        state="order";
+    }
 
-
+    public void cancelGuest(){
+        log.log(Level.INFO,"cancel guest");
+        state="order";
     }
 }

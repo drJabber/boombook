@@ -11,58 +11,90 @@
         <f:metadata>
             <f:viewAction action="#{editOrderView.init()}" />
             <ui:param name="order" value="#{editOrderView.orderBean}"/>
+            <ui:param name="guest" value="#{editOrderView.guestBean}"/>
             <!--<ui:param name="order" value="#{editOrderBean}"/>-->
         </f:metadata>
     </ui:define>
 
-    <ui:define name="pageTitle">Edit Order</ui:define>
+    <ui:define name="pageTitle">Заказ</ui:define>
     <ui:define name="pageContent">
-    	<!--<p:messages autoUpdate="true" />-->
         <h:form id="orderForm">
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:commandButton id="addGuestButton" ajax="false" name="addGuestButton" value="#{editOrderView.someText}" action="#{editOrderView.addGuest}" update=":orderForm" style="margin-right:20px;">
-                        <p:ajax event="dialogReturn" listener="#{editOrderView.onAddGuest}" update=":orderForm" />
-                    </p:commandButton>
-                    <!--<p:commandButton value="Добавить комнату" update="orderPanel" process="@this" action="PF('addRoom').show()" style="margin-right:20px;" />-->
-                </f:facet>
-            </p:toolbar>
+            <p:panel id="orderPanel" header="#{empty order.id?'Новый заказ':'Изменение заказа'}" rendered="#{editOrderView.state.equals('order')}">
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton type="submit" id="addGuestButton" ajax="true"
+                                  name="addGuestButton" value="Добавить гостя"
+                                  action="#{editOrderView.addGuest}" update=":orderForm" process="@this"
+                                  style="margin-right:20px;">
+                        </p:commandButton>
+                    </f:facet>
+                </p:toolbar>
 
-            <p:panel id="orderPanel" header="#{empty order.id?'Новый заказ':'Изменение заказа'}">
-                <p:panelGrid columns="3"  styleClass="ui-noborder">
+                <p:panelGrid columns="3" columnClasses="label, input, value" styleClass="ui-noborder">
+                    <h:outputLabel for="email_input" value="Email:" />
                     <p:inputText id="email_input" value="#{order.email}" validatorMessage="Здесь нужен Email">
+                        <f:validator validatorId="custom.EmailValidator" />
                     </p:inputText>
-                    <h:outputText value="#{order==null ? 'ORDER IS NULL':'order good'}" />
-                    <h:outputText value="#{order.phone==null ? 'ORDER.PHONE IS NULL':'order.phone good'}" />
-                    <p:inputText id="phone"  value="#{order.phone}" validatorMessage="Введите телефон"/>
+                    <p:message for="email_input" id="emailMessage" display="both" />
+
+                    <p:outputLabel for="phone" value="Телефон:" />
+                    <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999"
+                                 required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
                     <p:message for="phone" id="phoneMessage" display="both" />
                 </p:panelGrid>
+
+
+                <h:outputLabel for="guestsTable" value="Гости:" />
+                <p:dataTable id="guestsTable" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
+                    <p:column headerText="Имя" sortBy="#{guest.name}" >
+                        <h:outputText value="#{guest.name}" />
+                    </p:column>
+                    <p:column headerText="Д.Р.">
+                        <h:outputText value="#{guest.birthDate}" />
+                    </p:column>
+                    <p:column headerText="Пол">
+                        <h:outputText value="#{guest.gender}" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:message for="guestsTable" id="guestsMessage" display="both" />
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton id="saveOrderButton" name="saveOrderButton" value="Сохранить" update=":orderForm" style="margin-right:20px;" />
+                        <p:commandButton value="Очистить" type="reset" target=":orderForm" style="margin-right:20px;"/>
+                    </f:facet>
+                </p:toolbar>
             </p:panel>
 
-            <h:outputLabel for="guestsTable" value="Гости:" />
-            <p:dataTable id="guestsTable" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
+            <p:panel id="guestPanel" header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}"  rendered="#{editOrderView.state.equals('guest')}">
+                <p:panelGrid id="guestDetail" columns="3"  styleClass="ui-noborder">
+                    <h:outputLabel for="guestName" value="Имя:" />
+                    <p:inputText id="guestName" value="#{guest.name}" required="true" />
+                    <p:message for="guestName" id="guestNameMessage" display="both" />
 
-                <!--<p:ajax event="rowSelect" listener="#{order.onRowSelect}" update=":form:carDetail" oncomplete="PF('carDialog').show()" />-->
+                    <h:outputLabel for="guestBD" value="Д.Р.:" />
+                    <p:calendar id="guestBD" value="#{guest.birthDate}" showOn="button" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+                    <p:message for="guestBD" id="guestBDMessage" display="both"/>
 
-                <p:column headerText="Имя" sortBy="#{guest.name}" >
-                    <h:outputText value="#{guest.name}" />
-                </p:column>
-                <p:column headerText="Д.Р.">
-                    <h:outputText value="#{guest.birthDate}" />
-                </p:column>
-                <p:column headerText="Пол">
-                    <h:outputText value="#{guest.gender}" />
-                </p:column>
-            </p:dataTable>
+                    <h:outputLabel for="guestGender" value="Пол:" />
+                    <p:selectOneMenu id="guestGender" value="#{guest.gender}" style="width:80px">
+                        <f:selectItem itemLabel="М" itemValue="М"/>
+                        <f:selectItem itemLabel="Ж" itemValue="Ж"/>
+                    </p:selectOneMenu>
+                    <p:message for="guestGender" id="guestGenderMessage" display="both" />
+                </p:panelGrid>
 
-            <p:message for="guestsTable" id="guestsMessage" display="both" />
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuest(guest)}" update=":orderForm" style="margin-right:20px;" />
+                        <p:commandButton value="Закрыть"
+                                         action="#{editOrderView.cancelGuest()}" update=":orderForm" process="@this"
+                                         style="margin-right:20px;"/>
+                    </f:facet>
+                </p:toolbar>
+            </p:panel>
 
-            <p:toolbar>
-                <f:facet name="left">
-                    <p:commandButton id="saveOrderButton" name="saveOrderButton" value="Сохранить" update=":orderForm" style="margin-right:20px;" />
-                    <p:commandButton value="Очистить" type="reset" target=":orderForm" style="margin-right:20px;"/>
-                </f:facet>
-            </p:toolbar>
         </h:form>
 
     </ui:define>
