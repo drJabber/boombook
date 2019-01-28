@@ -1,5 +1,8 @@
 package rnk.bb.views.bean;
 
+import rnk.bb.domain.util.Address;
+import rnk.bb.domain.util.Country;
+
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -40,7 +43,16 @@ public class EditAddressBean implements Serializable {
         init(address);
     }
 
-    private void init(EditAddressBean addressBean){
+    private void clean(){
+        this.id=null;
+        this.countryId=null;
+        this.country="";
+        this.zip=null;
+        this.settlementPart="";
+        this.streetPart="";
+    }
+
+    public void init(EditAddressBean addressBean){
         if (addressBean!=null){
             this.id=addressBean.getId();
             
@@ -48,14 +60,9 @@ public class EditAddressBean implements Serializable {
             this.country=addressBean.getCountry();
             this.zip=addressBean.getZip();
             this.settlementPart=addressBean.getSettlementPart();
-            this.streetPart=addressBean.streetPart();
+            this.streetPart=addressBean.getStreetPart();
         }else{
-            this.id=null;
-            this.countryId=null;
-            this.country="";
-            this.zip=null;
-            this.settlementPart="";
-            this.streetPart="";
+            clean();
         }
     }
 
@@ -64,37 +71,61 @@ public class EditAddressBean implements Serializable {
             this.id=address.getId();
             
             this.countryId=address.getCountry().getId();
-            this.country=address.getCountry().getName_ru();
+            this.country=address.getCountry().getNameRu();
             this.zip=address.getZip();
             this.settlementPart=address.getSettlementPart();
-            this.streetPart=address.streetPart();
+            this.streetPart=address.getStreetPart();
         }else{
-            this.id=null;
-            this.countryId=null;
-            this.country="";
-            this.zip=null;
-            this.settlementPart="";
-            this.streetPart="";
+            clean();
         }
     }
 
-    public void updateAddress(Address address){
-        Guest result=guest;
-        if (guest==null){
-            result=new Guest();
-        }
-        result.setOrder(order);
-        result.setId(id);
-        result.setName(name);
-        result.setBirthDate(birthDate);
-        result.setGender(gender);
-        result.setEmail(email);
 
-        address.updateAddress(guest.getAddress());
-//        result.setDocument(document);
-//        result.setFoodConcept(foodConcept);
+    public Long getId() {
+        return id;
     }
 
-    
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getSettlementPart() {
+        return settlementPart;
+    }
+
+    public void setSettlementPart(String settlementPart) {
+        this.settlementPart = settlementPart;
+    }
+
+    public String getStreetPart() {
+        return streetPart;
+    }
+
+    public void setStreetPart(String streetPart) {
+        this.streetPart = streetPart;
+    }
 }

@@ -6,8 +6,6 @@ import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.user.Client;
 
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -65,33 +63,6 @@ public class EditOrderBean implements Serializable {
             guests.clear();
             order.getGuests().stream().forEach(g->guests.add(new EditGuestBean(g)));
         }
-    }
-
-    private void addGuest(EditGuestBean guest, List<Guest> orderGuests){
-        Guest g=new Guest();
-        guest.updateGuest(g);
-        orderGuests.add(g);
-    }
-
-    public void updateOrder(Order order){
-        Order result=order;
-        if (order==null){
-            result=new Order();
-        }
-
-        result.setClient(client);
-
-        result.setId(id);
-        result.setPhone(phone);
-        result.setEmail(email);
-        result.setPrice(price);
-        result.setConfirmed(confirmed);
-        result.setSubmitted(submitted);
-        result.setRejected(rejected);
-
-        List<Guest> orderGuests=order.getGuests();
-        orderGuests.clear();
-        guests.stream().forEach(g->addGuest(g, orderGuests));
     }
 
     public Long getId() {

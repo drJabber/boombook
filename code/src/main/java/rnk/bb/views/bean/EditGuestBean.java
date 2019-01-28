@@ -35,7 +35,7 @@ public class EditGuestBean implements Serializable {
 
     private FoodConcept foodConcept=null;
 
-    private EditAddressBean address=new EditAddressBean();
+    private EditAddressBean address=null;
 
     public EditGuestBean(){
 
@@ -95,23 +95,6 @@ public class EditGuestBean implements Serializable {
             this.email="";
             this.address=new EditAddressBean();
         }
-    }
-
-    public void updateGuest(Guest guest){
-        Guest result=guest;
-        if (guest==null){
-            result=new Guest();
-        }
-        result.setOrder(order);
-        result.setId(id);
-        result.setName(name);
-        result.setBirthDate(birthDate);
-        result.setGender(gender);
-        result.setEmail(email);
-
-        address.updateAddress(guest.getAddress());
-//        result.setDocument(document);
-//        result.setFoodConcept(foodConcept);
     }
 
     public Long getId() {

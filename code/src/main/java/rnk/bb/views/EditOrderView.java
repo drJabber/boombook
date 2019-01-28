@@ -7,6 +7,7 @@ import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.rest.book.GuestController;
 import rnk.bb.rest.book.OrderController;
 import rnk.bb.services.HotelService;
+import rnk.bb.views.bean.EditAddressBean;
 import rnk.bb.views.bean.EditGuestBean;
 import rnk.bb.views.bean.EditOrderBean;
 
@@ -120,7 +121,7 @@ public class EditOrderView implements Serializable {
 
     public void setGuestAddress(){
         log.log(Level.INFO,"add new guest");
-        guestBean.getAddress().init(null);
+        guestBean.getAddress().init((EditAddressBean)null);
         state="guest-address";
     }
 

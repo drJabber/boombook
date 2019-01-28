@@ -91,16 +91,21 @@
                     </p:inputText>
                     <p:message for="guest_email_input" id="guestEmailMessage" display="both" />
 
+                    <p:row>
+                        <p:column colspan="3">
+                            <div class="ui-inputgroup">
+                                <!--<h:outputLabel for="guestAddress" value="Адрес:" />-->
+                                <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress}" update=":orderForm" />
+                                <p:inputText  id="guestAddress" placeholder="Адрес не задан" value="#{guest.address}"
+                                              required="true" requiredMessage="Необходимо задать адрес" />
+                                <p:message for="guestAddress" id="guestAddressMessage" display="both" />
+                            </div>
+                        </p:column>
+                    </p:row>
 
-                    <h:outputLabel for="guestAddress" value="Адрес:" />
-                    <div class="ui-inputgroup" id="guestAddress">
-                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress())" update=":orderForm" />
 
-                        <p:inputText  placeholder="Адрес не задан" value="#{guest.address}"
-                                      required="true" requiredMessage="Необходимо задать адрес" />
-                    </div>
-                    <p:message for="guestAddress" id="guestAddressMessage" display="both" />
                 </p:panelGrid>
+
 
                 <p:toolbar>
                     <f:facet name="left">
