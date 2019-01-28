@@ -94,7 +94,7 @@
 
                     <h:outputLabel for="guestAddress" value="Адрес:" />
                     <div class="ui-inputgroup" id="guestAddress">
-                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress(guest))" update=":orderForm" />
+                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress())" update=":orderForm" />
 
                         <p:inputText  placeholder="Адрес не задан" value="#{guest.address}"
                                       required="true" requiredMessage="Необходимо задать адрес" />

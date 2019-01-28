@@ -110,7 +110,6 @@ public class EditOrderView implements Serializable {
         EditGuestBean guest=new EditGuestBean(guestBean);
         List<EditGuestBean> guests=orderBean.getGuests();
         guests.add(guest);
-        guests.stream().forEach(g->log.log(Level.INFO, String.format("guest: %s", g.getName())));
         state="order";
     }
 
@@ -118,4 +117,23 @@ public class EditOrderView implements Serializable {
         log.log(Level.INFO,"cancel guest");
         state="order";
     }
+
+    public void setGuestAddress(){
+        log.log(Level.INFO,"add new guest");
+        guestBean.getAddress().init(null);
+        state="guest-address";
+    }
+
+    public void saveGuestAddress(EditAddressBean addressBean){
+        log.log(Level.INFO,"save guest address");
+        guestBean.getAddress().init(addressBean);
+        state="guest";
+    }
+
+    public void cancelGuestAddress(){
+        log.log(Level.INFO,"cancel guest address");
+        state="guest";
+    }
+
+    
 }
