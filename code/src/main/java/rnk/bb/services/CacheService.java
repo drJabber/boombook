@@ -34,4 +34,8 @@ public class CacheService {
         return countries;
     }
 
+    public CountryBean getCountryById(Integer countryId){
+        return countries.filter(c->c==countryId).findFirst().get();
+    }
+
 }

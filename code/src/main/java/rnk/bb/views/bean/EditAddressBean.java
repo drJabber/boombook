@@ -98,7 +98,8 @@ public class EditAddressBean implements Serializable {
     }
 
     public String getCountry() {
-        return country;
+        CountryBean country=cacheService.getCountryById(countryId);
+        return country.getName();
     }
 
     public void setCountry(String country) {
@@ -127,5 +128,29 @@ public class EditAddressBean implements Serializable {
 
     public void setStreetPart(String streetPart) {
         this.streetPart = streetPart;
+    }
+
+    public String toString(){
+        StringBuilder sb=new StringBuilder();
+        List<String> list=new ArrayList();
+        String country=getCountry();
+        
+        if (!zip.trim().isEmpty()){
+            list.add(zip.trim());
+        }
+
+        if (!country.trim().isEmpty()){
+            list.add(country.trim());
+        }
+
+        if (!settlementPart.trim().isEmpty()){
+            list.add(settlementPart.trim());
+        }
+
+        if (!streetPart.trim().isEmpty()){
+            list.add(streetPart.trim());
+        }
+
+        return list.stream().collect(Collectors.joining(","))
     }
 }
