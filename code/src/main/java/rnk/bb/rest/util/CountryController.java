@@ -48,12 +48,7 @@ public class CountryController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCountries() {
 
-        CriteriaBuilder cb = this.em.getCriteriaBuilder();
-
-        CriteriaQuery<Country> q = cb.createQuery(Country.class);
-        Root<Country> c = q.from(Country.class);
-
-        List<Country> countries= em.createQuery(q).getResultList();
+        List<Country> countries= findAll();
 
         if (countries!=null){
             return Response.ok().entity(countries).build();
@@ -61,4 +56,16 @@ public class CountryController {
             return Response.serverError().entity("cant find entity").build();
         }
     }
+
+    public List<Country> findAll() {
+
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+
+        CriteriaQuery<Country> q = cb.createQuery(Country.class);
+        Root<Country> c = q.from(Country.class);
+
+        return em.createQuery(q).getResultList();
+    }
+
+
 }

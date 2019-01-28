@@ -46,10 +46,10 @@ public class EditOrderView implements Serializable {
     @Inject
     HotelService hotelService;
 
-    @Inject
+//    @Inject
     EditOrderBean orderBean;
 
-    @Inject
+//    @Inject
     EditGuestBean guestBean;
 
     @PostConstruct
@@ -71,7 +71,10 @@ public class EditOrderView implements Serializable {
             guest=this.guestController.findOptionalById(guestId).orElse(null);
         }
 
+        orderBean=new EditOrderBean();
         orderBean.init(order);
+
+        guestBean=new EditGuestBean();
         guestBean.init(guest);
     }
 
@@ -104,7 +107,10 @@ public class EditOrderView implements Serializable {
 
     public void saveGuest(EditGuestBean guestBean){
         log.log(Level.INFO,"save guest");
-        orderBean.getGuests().add(guestBean);
+        EditGuestBean guest=new EditGuestBean(guestBean);
+        List<EditGuestBean> guests=orderBean.getGuests();
+        guests.add(guest);
+        guests.stream().forEach(g->log.log(Level.INFO, String.format("guest: %s", g.getName())));
         state="order";
     }
 

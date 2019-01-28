@@ -45,15 +45,15 @@
 
 
                 <h:outputLabel for="guestsTable" value="Гости:" />
-                <p:dataTable id="guestsTable" value="#{order.guests}" var="guest" emptyMessage="Гости не указаны">
-                    <p:column headerText="Имя" sortBy="#{guest.name}" >
-                        <h:outputText value="#{guest.name}" />
+                <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
+                    <p:column headerText="Имя" sortBy="#{currentGuest.name}" >
+                        <h:outputText value="#{currentGuest.name}" />
                     </p:column>
                     <p:column headerText="Д.Р.">
-                        <h:outputText value="#{guest.birthDate}" />
+                        <h:outputText value="#{currentGuest.birthDate}" />
                     </p:column>
                     <p:column headerText="Пол">
-                        <h:outputText value="#{guest.gender}" />
+                        <h:outputText value="#{currentGuest.gender}" />
                     </p:column>
                 </p:dataTable>
 
@@ -70,11 +70,12 @@
             <p:panel id="guestPanel" header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}"  rendered="#{editOrderView.state.equals('guest')}">
                 <p:panelGrid id="guestDetail" columns="3"  styleClass="ui-noborder">
                     <h:outputLabel for="guestName" value="Имя:" />
-                    <p:inputText id="guestName" value="#{guest.name}" required="true" />
+                    <p:inputText id="guestName" value="#{guest.name}" required="true" requiredMessage="Заполните поле" />
                     <p:message for="guestName" id="guestNameMessage" display="both" />
 
                     <h:outputLabel for="guestBD" value="Д.Р.:" />
-                    <p:calendar id="guestBD" value="#{guest.birthDate}" showOn="button" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+                    <p:calendar id="guestBD" value="#{guest.birthDate}" showOn="button"
+                                required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
                     <p:message for="guestBD" id="guestBDMessage" display="both"/>
 
                     <h:outputLabel for="guestGender" value="Пол:" />
@@ -83,6 +84,22 @@
                         <f:selectItem itemLabel="Ж" itemValue="Ж"/>
                     </p:selectOneMenu>
                     <p:message for="guestGender" id="guestGenderMessage" display="both" />
+
+                    <h:outputLabel for="guest_email_input" value="Email:" />
+                    <p:inputText id="guest_email_input" value="#{order.email}" validatorMessage="Здесь нужен Email">
+                        <f:validator validatorId="custom.EmailValidator" />
+                    </p:inputText>
+                    <p:message for="guest_email_input" id="guestEmailMessage" display="both" />
+
+
+                    <h:outputLabel for="guestAddress" value="Адрес:" />
+                    <div class="ui-inputgroup" id="guestAddress">
+                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress(guest))" update=":orderForm" />
+
+                        <p:inputText  placeholder="Адрес не задан" value="#{guest.address}"
+                                      required="true" requiredMessage="Необходимо задать адрес" />
+                    </div>
+                    <p:message for="guestAddress" id="guestAddressMessage" display="both" />
                 </p:panelGrid>
 
                 <p:toolbar>
@@ -95,6 +112,38 @@
                 </p:toolbar>
             </p:panel>
 
+            <p:panel id="guestAddressPanel" header="#{empty guest.address?'Ввод адреса':'Изменение адреса'}"  rendered="#{editOrderView.state.equals('guest-address')}">
+                <p:panelGrid id="guestAddressDetail" columns="3"  styleClass="ui-noborder">
+                    <h:outputLabel for="countryInput" value="Страна:" />
+                    <p:selectOneMenu id="countryInput" value="#{guest.address.country}" style="width:80px">
+                        <f:selectItem itemLabel="Выберите страну" itemValue="М" noSelectionOption="true"/>
+                        <f:selectItems value="#{cacheService.countries}" var="country"  itemValue="#{country.id}" itemLabel="#{country.name}"/>
+                    </p:selectOneMenu>
+                    <p:message for="countryInput" id="countryInputMessage" display="both" />
+
+                    <h:outputLabel for="zipInput" value="Индекс:" />
+                    <p:inputText id="zipInput" value="#{guest.address.zip}" required="true" requiredMessage="Заполните поле" />
+                    <p:message for="zipInput" id="zipInputMessage" display="both" />
+
+                    <h:outputLabel for="settlementInput" value="Город/населенный пункт:" />
+                    <p:inputText id="settlementInput" value="#{guest.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
+                    <p:message for="settlementInput" id="settlementInputMessage" display="both"/>
+
+                    <h:outputLabel for="streetInput" value="Улица,дом,квартира:" />
+                    <p:inputText id="streetInput" value="#{guest.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
+                    <p:message for="streetInput" id="streetInputMessage" display="both"/>
+
+                </p:panelGrid>
+
+                <p:toolbar>
+                    <f:facet name="left">
+                        <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuestAddress(guest)}" update=":orderForm" style="margin-right:20px;" />
+                        <p:commandButton value="Закрыть"
+                                         action="#{editOrderView.cancelGuestAddress()}" update=":orderForm" process="@this"
+                                         style="margin-right:20px;"/>
+                    </f:facet>
+                </p:toolbar>
+            </p:panel>
         </h:form>
 
     </ui:define>
