@@ -74,7 +74,12 @@ public class OrderService implements Serializable {
         if (guestId!=null){
             guest=guests.findOptionalById(guestId).orElse(null);
         }
-        return initGuestBean(guestBean,guest);
+        EditGuestBean result=guestBean;
+        if (guestBean==null)
+        {
+            result=new EditGuestBean();
+        }
+        return initGuestBean(result,guest);
     }
 
     public EditGuestBean initGuestBean(EditGuestBean guestBean, Guest guest){
@@ -90,8 +95,7 @@ public class OrderService implements Serializable {
             initDocumentBean(guestBean.getDocument(),guest.getDocument());
 //            guestBean.setfoodConcept=guest.getFoodConcept();
         }
-
-        return guestBean;
+        return result;
     }
 
     public EditGuestBean initGuestBean(EditGuestBean guestBean, EditGuestBean anotherBean){

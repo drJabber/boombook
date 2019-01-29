@@ -31,11 +31,11 @@ public class EditGuestBean implements Serializable {
     @Size(max=2)
     private String gender="М";
 
-    private EditDocumentBean document=null;
+    private EditDocumentBean document=new EditDocumentBean();
 
     private FoodConcept foodConcept=null;
 
-    private EditAddressBean address=null;
+    private EditAddressBean address=new EditAddressBean();
 
     public EditGuestBean(){
 
