@@ -1,25 +1,20 @@
 package rnk.bb.views;
 
-import org.primefaces.event.SelectEvent;
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.rest.book.GuestController;
-import rnk.bb.rest.book.OrderController;
 import rnk.bb.services.HotelService;
-import rnk.bb.views.bean.EditAddressBean;
+import rnk.bb.services.OrderService;
 import rnk.bb.views.bean.EditGuestBean;
 import rnk.bb.views.bean.EditOrderBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,18 +34,15 @@ public class EditOrderView implements Serializable {
     private String state="order";
 
     @Inject
-    OrderController orderController;
-
-    @Inject
     GuestController guestController;
 
     @Inject
     HotelService hotelService;
+    @Inject
+    OrderService orderService;
 
-//    @Inject
     EditOrderBean orderBean;
 
-//    @Inject
     EditGuestBean guestBean;
 
     @PostConstruct
@@ -64,19 +56,18 @@ public class EditOrderView implements Serializable {
 
         if (params.get("orderId")!=null){
             this.orderId=Long.valueOf(params.get("orderId"));
-            order=this.orderController.findOptionalById(orderId).orElse(null);
         }
 
         if (params.get("guestId")!=null){
             this.guestId=Long.valueOf(params.get("guestId"));
-            guest=this.guestController.findOptionalById(guestId).orElse(null);
         }
 
         orderBean=new EditOrderBean();
-        orderBean.init(order);
+        orderService.initOrderBean(orderBean,orderId);
 
         guestBean=new EditGuestBean();
-        guestBean.init(guest);
+        orderService.initGuestBean(guestBean,guestId);
+
     }
 
 
@@ -88,29 +79,23 @@ public class EditOrderView implements Serializable {
         return orderBean;
     }
 
-    public EditGuestBean getGuestBean(){
-        return guestBean;
-    }
-
-    public void setGuestBean(EditGuestBean guestBean){
-        this.guestBean=guestBean;
-    }
-
     public String getState(){
         return state;
     }
 
+
+    public EditGuestBean getGuestBean(){
+        return guestBean;
+    }
+
     public void addGuest(){
         log.log(Level.INFO,"add new guest");
-        guestBean.init(null);
         state="guest";
     }
 
     public void saveGuest(EditGuestBean guestBean){
         log.log(Level.INFO,"save guest");
-        EditGuestBean guest=new EditGuestBean(guestBean);
-        List<EditGuestBean> guests=orderBean.getGuests();
-        guests.add(guest);
+        orderBean.getGuests().add(orderService.initGuestBean(new EditGuestBean(),guestBean));
         state="order";
     }
 
@@ -119,15 +104,14 @@ public class EditOrderView implements Serializable {
         state="order";
     }
 
-    public void setGuestAddress(){
+    public void setGuestAddress(EditGuestBean guest){
         log.log(Level.INFO,"add new guest");
-        guestBean.getAddress().init((EditAddressBean)null);
         state="guest-address";
     }
 
-    public void saveGuestAddress(EditAddressBean addressBean){
+    public void saveGuestAddress(EditGuestBean guest){
         log.log(Level.INFO,"save guest address");
-        guestBean.getAddress().init(addressBean);
+//        guest.getAddress().init(guest.getAddress());
         state="guest";
     }
 
@@ -136,5 +120,22 @@ public class EditOrderView implements Serializable {
         state="guest";
     }
 
-    
+
+    public void saveGuestDocument(EditGuestBean guest){
+        log.log(Level.INFO,"save guest document");
+//        this.guestBean.getDocument().init(guest.getDocument());
+        state="guest";
+    }
+
+    public void cancelGuestDocument(){
+        log.log(Level.INFO,"cancel guest document");
+        state="guest";
+    }
+
+    public void setGuestDocument(EditGuestBean guest){
+        log.log(Level.INFO,"add new document");
+//        this.guestBean.getDocument().init(guest.getDocument());
+        state="guest-document";
+    }
+
 }

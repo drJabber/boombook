@@ -1,24 +1,28 @@
 package rnk.bb.views.bean;
 
 import rnk.bb.domain.util.Address;
-import rnk.bb.domain.util.Country;
+import rnk.bb.services.CacheService;
+import rnk.bb.services.bean.CountryBean;
 
 import javax.enterprise.context.SessionScoped;
-import javax.validation.constraints.Email;
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @SessionScoped
 public class EditAddressBean implements Serializable {
     private Long id=null;
 
     @NotNull
-    private Integer countryId;
+    private Integer countryId=643;
 
     @NotNull
     @Size(max=500)
-    private String country;
+    private String country="Россия";
 
     @NotNull
     @Size(max=20)
@@ -34,52 +38,6 @@ public class EditAddressBean implements Serializable {
 
     public EditAddressBean(){        
     }
-
-    public EditAddressBean(EditAddressBean addressBean){
-        init(addressBean);
-    }
-
-    public EditAddressBean(Address address){
-        init(address);
-    }
-
-    private void clean(){
-        this.id=null;
-        this.countryId=null;
-        this.country="";
-        this.zip=null;
-        this.settlementPart="";
-        this.streetPart="";
-    }
-
-    public void init(EditAddressBean addressBean){
-        if (addressBean!=null){
-            this.id=addressBean.getId();
-            
-            this.countryId=addressBean.getCountryId();
-            this.country=addressBean.getCountry();
-            this.zip=addressBean.getZip();
-            this.settlementPart=addressBean.getSettlementPart();
-            this.streetPart=addressBean.getStreetPart();
-        }else{
-            clean();
-        }
-    }
-
-    public void init(Address address){
-        if (address!=null){
-            this.id=address.getId();
-            
-            this.countryId=address.getCountry().getId();
-            this.country=address.getCountry().getNameRu();
-            this.zip=address.getZip();
-            this.settlementPart=address.getSettlementPart();
-            this.streetPart=address.getStreetPart();
-        }else{
-            clean();
-        }
-    }
-
 
     public Long getId() {
         return id;
@@ -98,8 +56,7 @@ public class EditAddressBean implements Serializable {
     }
 
     public String getCountry() {
-        CountryBean country=cacheService.getCountryById(countryId);
-        return country.getName();
+        return country;
     }
 
     public void setCountry(String country) {
@@ -132,11 +89,11 @@ public class EditAddressBean implements Serializable {
 
     public String toString(){
         StringBuilder sb=new StringBuilder();
-        List<String> list=new ArrayList();
+        List<String> list=new ArrayList<>();
         String country=getCountry();
         
         if (!zip.trim().isEmpty()){
-            list.add(zip.trim());
+            ((ArrayList) list).add(zip.trim());
         }
 
         if (!country.trim().isEmpty()){
@@ -151,6 +108,6 @@ public class EditAddressBean implements Serializable {
             list.add(streetPart.trim());
         }
 
-        return list.stream().collect(Collectors.joining(","))
+        return list.stream().collect(Collectors.joining(","));
     }
 }

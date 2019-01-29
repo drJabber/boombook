@@ -18,7 +18,7 @@ SET row_security = off;
 
 INSERT INTO public.role (role) VALUES ('Client'),('HotelStaff'),('HotelManager'),('SystemManager');
 
-INSERT INTO public.document_type (id, description) VALUES (1, 'PASSPORT'),(2, 'DRIVER''s LICENSE');
+INSERT INTO public.document_type (id, description) VALUES (1, 'ПАСПОРТ'),(2, 'ВОДИТЕЛЬСКОЕ УДОСТОВЕРЕНИЕ');
 
 
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(8,'Албания','Albania','AL','ALB',NULL);
@@ -73,7 +73,7 @@ insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(17
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(180,'Демократическая республика Конго','Congo, Democractic Republic','CD','COD',NULL);
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(184,'острова Кука','Cook Islands','CK','COK',NULL);
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(188,'Коста Рика','Costa Rica','CR','CRI',NULL);
-insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(384,'Кот-д'Ивуар','Cote D'Ivoire','CI','CIV',NULL);
+insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(384,'Кот-д''Ивуар','Cote D''Ivoire','CI','CIV',NULL);
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(191,'Хорватия','Croatia','HR','HRV',NULL);
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(192,'Куба','Cuba','CU','CUB',NULL);
 insert into public.country(id, name_ru, name_en, iso2, iso3, order_id) values(196,'Кипр','Cyprus','CY','CYP',NULL);

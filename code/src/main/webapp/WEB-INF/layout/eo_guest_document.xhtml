@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="guestDocumentPanel" header="#{empty guest.document?'Ввод документа':'Изменение документа'}"  rendered="#{editOrderView.state.equals('guest-document')}">
+        <p:panelGrid id="guestDocumentDetail" columns="3"  styleClass="ui-noborder">
+            <h:outputLabel for="documentTypeInput" value="Тип:" />
+            <p:selectOneMenu id="documentTypeInput" value="#{guest.document.documentType}" style="width:300px">
+                <f:selectItem itemLabel="Выберите тип документа" itemValue="21" noSelectionOption="true"/>
+                <f:selectItems value="#{cacheService.documentTypes}" var="doctype"  itemValue="#{doctype.description}" itemLabel="#{doctype.description}"/>
+            </p:selectOneMenu>
+            <p:message for="documentTypeInput" id="documentTypeInputMessage" display="both" />
+
+            <h:outputLabel for="documentNumberInput" value="Номер:" />
+            <p:inputText id="documentNumberInput" value="#{guest.document.number}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="documentNumberInput" id="documentNumberMessage" display="both" />
+
+            <h:outputLabel for="documentSerialInput" value="Серия:" />
+            <p:inputText id="documentSerialInput" value="#{guest.document.serial}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="documentSerialInput" id="documenSerialMessage" display="both" />
+
+            <h:outputLabel for="documentIssueInput" value="Действует с:" />
+            <p:calendar id="documentIssueInput" value="#{guest.document.issueDate}" showOn="button"
+                        required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="documentIssueInput" id="documentIssueMessage" display="both"/>
+
+            <h:outputLabel for="documentExpirationInput" value="Действует до:" />
+            <p:calendar id="documentExpirationInput" value="#{guest.document.expirationDate}" showOn="button"
+                        required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="documentExpirationInput" id="documentExpirationMessage" display="both"/>
+
+        </p:panelGrid>
+
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuestDocument(guest)}" update=":orderForm" style="margin-right:20px;" />
+                <p:commandButton value="Закрыть"
+                                 action="#{editOrderView.cancelGuestDocument()}" update=":orderForm" process="@this"
+                                 style="margin-right:20px;"/>
+            </f:facet>
+        </p:toolbar>
+    </p:panel>
+
+</ui:composition>

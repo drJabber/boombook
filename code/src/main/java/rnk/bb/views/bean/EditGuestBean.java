@@ -31,7 +31,7 @@ public class EditGuestBean implements Serializable {
     @Size(max=2)
     private String gender="М";
 
-    private Document document=null;
+    private EditDocumentBean document=null;
 
     private FoodConcept foodConcept=null;
 
@@ -39,62 +39,6 @@ public class EditGuestBean implements Serializable {
 
     public EditGuestBean(){
 
-    }
-
-    public EditGuestBean(Guest guest){
-        init(guest);
-    }
-
-    public EditGuestBean(EditGuestBean guest){
-        init(guest);
-    }
-
-    private void init(EditGuestBean editGuestBean){
-        if (editGuestBean!=null){
-            this.order=editGuestBean.getOrder();
-
-            this.id=editGuestBean.getId();
-            this.name=editGuestBean.getName();
-            this.birthDate=editGuestBean.getBirthDate();
-            this.gender=editGuestBean.getGender();
-            this.email=editGuestBean.getEmail();
-
-            this.address.init(editGuestBean.address);
-
-//            this.document=editGuestBean.getDocument();
-//            this.foodConcept=editGuestBean.getFoodConcept();
-        }else{
-            this.order=null;
-            this.id=null;
-            this.name="";
-            this.birthDate=null;
-            this.gender="М";
-            this.email="";
-        }
-    }
-
-    public void init(Guest guest){
-        if (guest!=null){
-            this.order=guest.getOrder();
-
-            this.id=guest.getId();
-            this.birthDate=guest.getBirthDate();
-            this.name=guest.getName();
-            this.gender=guest.getGender();
-            this.email=guest.getEmail();
-
-            this.address.init(guest.getAddress());
-//            this.document=guest.getDocument();
-//            this.foodConcept=guest.getFoodConcept();
-        }else{
-            this.order=null;
-            this.id=null;
-            this.birthDate=null;
-            this.name="";
-            this.gender="М";
-            this.email="";
-            this.address=new EditAddressBean();
-        }
     }
 
     public Long getId() {
@@ -145,11 +89,11 @@ public class EditGuestBean implements Serializable {
         this.address = address;
     }
 
-    public Document getDocument() {
+    public EditDocumentBean getDocument() {
         return document;
     }
 
-    public void setDocument(Document document) {
+    public void setDocument(EditDocumentBean document) {
         this.document = document;
     }
 

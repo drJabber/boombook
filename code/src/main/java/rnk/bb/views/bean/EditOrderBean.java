@@ -45,26 +45,6 @@ public class EditOrderBean implements Serializable {
 
     }
 
-    public EditOrderBean(Order order){
-        init(order);
-    }
-
-    public void init(Order order){
-        if (order!=null){
-            this.client=order.getClient();
-            this.id=order.getId();
-            this.email=order.getEmail();
-            this.phone=order.getPhone();
-            this.price=order.getPrice();
-            this.submitted= order.getSubmitted();
-            this.confirmed=order.getConfirmed();
-            this.rejected=order.getRejected();
-
-            guests.clear();
-            order.getGuests().stream().forEach(g->guests.add(new EditGuestBean(g)));
-        }
-    }
-
     public Long getId() {
         return id;
     }

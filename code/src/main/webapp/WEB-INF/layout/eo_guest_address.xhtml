@@ -1,0 +1,41 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="guestAddressPanel" header="#{empty guest.address?'Ввод адреса':'Изменение адреса'}"  rendered="#{editOrderView.state.equals('guest-address')}">
+        <p:panelGrid id="guestAddressDetail" columns="3"  styleClass="ui-noborder">
+            <h:outputLabel for="countryInput" value="Страна:" />
+            <p:selectOneMenu id="countryInput" value="#{guest.address.countryId}" style="width:80px">
+                <f:selectItem itemLabel="Выберите страну" itemValue="М" noSelectionOption="true"/>
+                <f:selectItems value="#{cacheService.countries}" var="country"  itemValue="#{country.id}" itemLabel="#{country.name}"/>
+            </p:selectOneMenu>
+            <p:message for="countryInput" id="countryInputMessage" display="both" />
+
+            <h:outputLabel for="zipInput" value="Индекс:" />
+            <p:inputText id="zipInput" value="#{guest.address.zip}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="zipInput" id="zipInputMessage" display="both" />
+
+            <h:outputLabel for="settlementInput" value="Город/населенный пункт:" />
+            <p:inputText id="settlementInput" value="#{guest.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="settlementInput" id="settlementInputMessage" display="both"/>
+
+            <h:outputLabel for="streetInput" value="Улица,дом,квартира:" />
+            <p:inputText id="streetInput" value="#{guest.address.streetPart}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="streetInput" id="streetInputMessage" display="both"/>
+
+        </p:panelGrid>
+
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuestAddress(guest)}" update=":orderForm" style="margin-right:20px;" />
+                <p:commandButton value="Закрыть"
+                                 action="#{editOrderView.cancelGuestAddress()}" update=":orderForm" process="@this"
+                                 style="margin-right:20px;"/>
+            </f:facet>
+        </p:toolbar>
+    </p:panel>
+
+</ui:composition>

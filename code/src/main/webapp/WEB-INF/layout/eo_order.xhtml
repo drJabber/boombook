@@ -1,0 +1,56 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="orderPanel" header="#{empty order.id?'Новый заказ':'Изменение заказа'}" rendered="#{editOrderView.state.equals('order')}">
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton type="submit" id="addGuestButton" ajax="true"
+                                 name="addGuestButton" value="Добавить гостя"
+                                 action="#{editOrderView.addGuest}" update=":orderForm" process="@this"
+                                 style="margin-right:20px;">
+                </p:commandButton>
+            </f:facet>
+        </p:toolbar>
+
+        <p:panelGrid columns="3" columnClasses="label, input, value" styleClass="ui-noborder">
+            <h:outputLabel for="email_input" value="Email:" />
+            <p:inputText id="email_input" value="#{order.email}" validatorMessage="Здесь нужен Email">
+                <f:validator validatorId="custom.EmailValidator" />
+            </p:inputText>
+            <p:message for="email_input" id="emailMessage" display="both" />
+
+            <p:outputLabel for="phone" value="Телефон:" />
+            <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999"
+                         required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
+            <p:message for="phone" id="phoneMessage" display="both" />
+        </p:panelGrid>
+
+
+        <h:outputLabel for="guestsTable" value="Гости:" />
+        <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
+            <p:column headerText="Имя" sortBy="#{currentGuest.name}" >
+                <h:outputText value="#{currentGuest.name}" />
+            </p:column>
+            <p:column headerText="Д.Р.">
+                <h:outputText value="#{currentGuest.birthDate}" />
+            </p:column>
+            <p:column headerText="Пол">
+                <h:outputText value="#{currentGuest.gender}" />
+            </p:column>
+        </p:dataTable>
+
+        <p:message for="guestsTable" id="guestsMessage" display="both" />
+
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton id="saveOrderButton" name="saveOrderButton" value="Сохранить" update=":orderForm" style="margin-right:20px;" />
+                <p:commandButton value="Очистить" type="reset" target=":orderForm" style="margin-right:20px;"/>
+            </f:facet>
+        </p:toolbar>
+    </p:panel>
+
+</ui:composition>
