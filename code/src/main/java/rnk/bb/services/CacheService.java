@@ -47,7 +47,7 @@ public class CacheService {
     }
 
     public CountryBean getCountryById(Integer countryId){
-        return countries.stream().filter(c->c.getId()==countryId).findFirst().get();
+        return countries.stream().filter(c->c.getId().equals(countryId)).findFirst().orElse(null);
     }
 
     public List<DocumentTypeBean> getDocumentTypes(){

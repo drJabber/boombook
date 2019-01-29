@@ -95,7 +95,7 @@ public class OrderService implements Serializable {
             initDocumentBean(guestBean.getDocument(),guest.getDocument());
 //            guestBean.setfoodConcept=guest.getFoodConcept();
         }
-        return result;
+        return guestBean;
     }
 
     public EditGuestBean initGuestBean(EditGuestBean guestBean, EditGuestBean anotherBean){
