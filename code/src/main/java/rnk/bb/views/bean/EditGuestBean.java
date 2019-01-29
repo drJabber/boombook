@@ -33,7 +33,7 @@ public class EditGuestBean implements Serializable {
 
     private EditDocumentBean document=new EditDocumentBean();
 
-    private FoodConcept foodConcept=null;
+    private FoodConcept foodConcept=new EditFoodConceptBean();
 
     private EditAddressBean address=new EditAddressBean();
 

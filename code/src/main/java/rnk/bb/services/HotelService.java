@@ -23,4 +23,22 @@ public class HotelService implements Serializable {
         return this.hotels;
     }
 
+    public List<T> findAll() {
+
+        CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
+
+        CriteriaQuery<T> q = cb.createQuery(entityClass());
+        Root<T> c = q.from(entityClass());
+
+        return entityManager().createQuery(q).getResultList();
+    }
+
+    public List<FoodConcept> getFoodConceptList(Long hotelId){
+        CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
+        CriteriaQuery<T> q = cb.createQuery(entityClass());
+        Root<T> c = q.from(entityClass());
+        
+        return this.
+    }
+
 }

@@ -93,7 +93,7 @@ public class OrderService implements Serializable {
 
             initAddressBean(guestBean.getAddress(), guest.getAddress());
             initDocumentBean(guestBean.getDocument(),guest.getDocument());
-//            guestBean.setfoodConcept=guest.getFoodConcept();
+            initFoodConceptBean(guestBean.getFoodConcept(),guest.getFoodConcept());
         }
         return guestBean;
     }
@@ -107,6 +107,7 @@ public class OrderService implements Serializable {
             guestBean.setEmail(anotherBean.getEmail());
             initAddressBean(guestBean.getAddress(),anotherBean.getAddress());
             initDocumentBean(guestBean.getDocument(),anotherBean.getDocument());
+            initFoodConceptBean(guestBean.getFoodConcept(),anotherBean.getFoodConcept());
         }
         return guestBean;
     }
@@ -130,7 +131,6 @@ public class OrderService implements Serializable {
             addressBean.setSettlementPart(address.getSettlementPart());
             addressBean.setStreetPart(address.getStreetPart());
         }
-
         return addressBean;
     }
 
@@ -153,7 +153,6 @@ public class OrderService implements Serializable {
         if (documentId!=null){
             document=documents.findOptionalById(documentId).orElse(null);
         }
-
         return initDocumentBean(documentBean,document);
     }
 
@@ -167,7 +166,6 @@ public class OrderService implements Serializable {
             documentBean.setIssueDate(document.getIssueDate());
             documentBean.setExpirationDate(document.getExpirationDate());
         }
-
         return documentBean;
     }
 
@@ -181,7 +179,32 @@ public class OrderService implements Serializable {
             documentBean.setIssueDate(anotherBean.getIssueDate());
             documentBean.setExpirationDate(anotherBean.getExpirationDate());
         }
-
         return documentBean;
+    }
+
+    public EditDocumentBean initFoodConceptBean(EditFoodConceptBean fcBean, Long fcId){
+        FoodConcept fc =null;
+        if (fcId!=null){
+            fc=foodConcepts.findOptionalById(fcId).orElse(null);
+        }
+        return initFoodConceptBean(fcBean,fc);
+    }
+
+    public EditFoodConceptBean initFoodConceptBean(EditFoodConceptBean fcBean, FoodConcept fc){
+        if (fc!=null) {
+            fcBean.setName(fc.getName());
+            fcBean.setBasePrice(fc.getBasePrice());
+            fcBean.setDescription(fc.getDescription());
+        }
+        return fcBean;
+    }
+
+    public EditDocumentBean initFoodConceptBean(EditFoodConceptBean fcBean, EditFoodConceptBean anotherBean){
+        if ((fcBean!=null)&&(anotherBean!=null)) {
+            fcBean.setName(anotherBean.getName());
+            fcBean.setBasePrice(anotherBean.getBasePrice());
+            fcBean.setDescription(anotherBean.getDescription());
+        }
+        return fcBean;
     }
 }

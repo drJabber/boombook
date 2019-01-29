@@ -38,6 +38,7 @@ public class EditOrderView implements Serializable {
 
     @Inject
     HotelService hotelService;
+
     @Inject
     OrderService orderService;
 
