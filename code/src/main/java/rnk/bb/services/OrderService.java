@@ -56,17 +56,18 @@ public class OrderService implements Serializable {
             orderBean.setClient(order.getClient());
             orderBean.setId(order.getId());
             orderBean.setEmail(order.getEmail());
-            orderBean.setPhone(orderBean.getPhone());
+            orderBean.setPhone(order.getPhone());
             orderBean.setPrice(order.getPrice());
             orderBean.setSubmitted(order.getSubmitted());
-            orderBean.setConfirmed(orderBean.getConfirmed());
-            orderBean.setRejected(orderBean.getRejected());
+            orderBean.setConfirmed(order.getConfirmed());
+            orderBean.setRejected(order.getRejected());
+            orderBean.setCheckInTime(order.getCheckInTime())
+            orderBean.setCheckOutTime(order.getCheckOutTime())
 
             List<EditGuestBean> guests=orderBean.getGuests();
             guests.clear();
             order.getGuests().stream().forEach(g->guests.add(initGuestBean(new EditGuestBean(),g)));
         }
-
         return orderBean;
     }
 

@@ -20,9 +20,9 @@ public class Storage {
     private String dataSource;
     private final static Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
-    private final static String SALT_FOR_USER = "SELECT passwd_salt FROM public.staff u WHERE login = ?;";
-    private final static String VERIFY_USER = "SELECT login FROM public.staff u WHERE login = ? AND passwd_hash = ?;";
-    private final static String EXTRACT_GROUPS = "SELECT role FROM public.staff_roles r WHERE login = ?;";
+    private final static String PASSWD_AND_SALT_FOR_USER = "SELECT password FROM public.auth u WHERE login = ?;";
+    private final static String VERIFY_USER = "SELECT login FROM public.auth u WHERE login = ? AND pasword = ?;";
+    private final static String EXTRACT_GROUPS = "SELECT role FROM public.auth_role r WHERE login = ?;";
 
     public Storage(String dataSource) {
 //            this does not work directly in init phase, so use lazy connection init
@@ -63,14 +63,16 @@ public class Storage {
     }
 
     public String getSaltForLogin(String login) {
-        String salt = null;
+        String passwd_ans_salt = null;
+        String salt=null;
         try {
-            PreparedStatement s = getConnection().prepareStatement(SALT_FOR_USER);
+            PreparedStatement s = getConnection().prepareStatement(PASSWD_AND_SALT_FOR_USER);
             s.setString(1, login);
             ResultSet rs = s.executeQuery();
 
             if (rs.next()) {
-                salt = rs.getString(1);
+                passwd_ans_salt = rs.getString(1);
+                salt=String.split("-")[0];
             }
 
         } catch (SQLException ex) {

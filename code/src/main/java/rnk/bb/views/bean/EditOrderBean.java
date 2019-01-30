@@ -36,10 +36,18 @@ public class EditOrderBean implements Serializable {
 
     private Boolean rejected=false;
 
+    Date checkInTime=null;
+
+    Date checkOutTime=null;
+
+    
     private List<RoomOrder> roomOrders=new ArrayList<>();
 
     @NotEmpty(message = "В заказе не указаны гости")
     private List<EditGuestBean> guests=new ArrayList<>();
+
+    @NotEmpty(message = "В заказе не указаны комнаты")
+    private List<EditRoomBean> rooms=new ArrayList<>();
 
     public EditOrderBean(){
 
@@ -117,11 +125,35 @@ public class EditOrderBean implements Serializable {
         this.guests = guests;
     }
 
+    public void setRooms(List<EditRoomBean> rooms) {
+        this.guests = rooms;
+    }
+
+    public List<EditRoomBean> getRooms() {
+        return rooms;
+    }
+
     public Client getClient() {
         return client;
     }
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Date getCheckInTime() {
+        return checkInTime;
+    }
+
+    public void setCheckInTime(Date date) {
+        this.checkInTime = date;
+    }
+
+    public Date getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    public void setCheckOutTime(Date date) {
+        this.checkOutTime = date;
     }
 }

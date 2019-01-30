@@ -27,6 +27,16 @@
             <p:inputMask id="phone" value="#{order.phone}" mask="(999) 999-9999"
                          required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
             <p:message for="phone" id="phoneMessage" display="both" />
+
+            <p:outputLabel for="checkin_input" value="Дата заселения:" />
+                <p:calendar id="checkin_input" value="#{order.checkInTime}" showOn="button"
+                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="checkin_input" id="checkinMessage" display="both" />
+
+            <p:outputLabel for="checkout_input" value="Дата заселения:" />
+                <p:calendar id="checkout_input" value="#{order.checkOutTime}" showOn="button"
+                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="checkout_input" id="checkoutMessage" display="both" />
         </p:panelGrid>
 
 
@@ -58,9 +68,32 @@
                 <h:outputText value="#{currentGuest.foodConcept.description}" />
             </p:column>
         </p:dataTable>
-
         <p:message for="guestsTable" id="guestsMessage" display="both" />
 
+        <h:outputLabel for="roomsTable" value="Комнаты:" />
+        <p:dataTable id="roomsTable" value="#{order.rooms}" var="currentRoom" emptyMessage="Комнаты не заказаны">
+            <p:column style="width:90px">
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.editRoom}"
+                                 icon="fa fa-edit">
+                    <f:setPropertyActionListener value="#{currentRoom}" target="#{editOrderView.roomBean}"/>
+                </p:commandButton>
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.removeRoom}"
+                                 icon="fa fa-remove">
+                    <f:setPropertyActionListener value="#{currentRoom}" target="#{editOrderView.roomBean}"/>
+                    <p:confirm header="Удаление" message="Удалить данные #{editOrderView.roomBean}" icon="pi pi-exclamation-triangle" />
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Тип номера" sortBy="#{currentRoom}" >
+                <h:outputText value="#{currentRoom.pool}" />
+            </p:column>
+            <p:column headerText="Опции">
+                <h:outputText value="#{currentRoom.features}" />
+            </p:column>
+        </p:dataTable>
+
+        
         <p:toolbar>
             <f:facet name="left">
                 <p:commandButton id="saveOrderButton" name="saveOrderButton" value="Сохранить" update=":orderForm" style="margin-right:20px;" />

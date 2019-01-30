@@ -50,6 +50,14 @@ public class Order  extends AbstractHotelRefEntity {
     @Column(nullable = false)
     private Boolean rejected=false;
 
+    @Temporal(TemporalType.DATE)
+    @JsonbTypeAdapter(DateAdapter.class)
+    Date checkInTime;
+
+    @Temporal(TemporalType.DATE)
+    @JsonbTypeAdapter(DateAdapter.class)
+    Date checkOutTime;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.LAZY)
     private List<RoomOrder> roomOrders;
 
