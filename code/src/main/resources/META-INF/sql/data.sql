@@ -1267,3 +1267,6 @@ insert into public.hotel(name, place, phone,fax,site,email,descr,vk,fb,stars,pub
 insert into public.hotel(name, place, phone,fax,site,email,descr,vk,fb,stars,published,address_id) values('Baron Resort 5*','Египет, Мухафаза Южный Синай, Шарм-Эль-Шейх, Рас Насрани','+20-69-670110 / 670111','+20-69-670107','www.baronhotelsegypt.com','','Гостиница, Пляжный, 1-я линия от моря','','https://www.facebook.com/pages/Baron-Hotels-Resorts-Egypt/223130804523126?ref=hl',5,true,(select id from public.address where externalid=224));
 
 
+insert into public.food_concept(name, baseprice, description,hotel_id) values('AI',70,'Все включено',1);
+insert into public.food_concept(name, baseprice, description,hotel_id) values('UAI',90,'Ультра все включено',1);
+insert into public.food_concept(name, baseprice, description,hotel_id) values('BB',30,'Только завтраки',1);

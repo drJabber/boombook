@@ -1,6 +1,7 @@
 package rnk.bb.services;
 
 import rnk.bb.domain.book.Order;
+import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Address;
@@ -10,10 +11,7 @@ import rnk.bb.rest.book.OrderController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
 import rnk.bb.services.bean.CountryBean;
-import rnk.bb.views.bean.EditAddressBean;
-import rnk.bb.views.bean.EditDocumentBean;
-import rnk.bb.views.bean.EditGuestBean;
-import rnk.bb.views.bean.EditOrderBean;
+import rnk.bb.views.bean.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,6 +34,9 @@ public class OrderService implements Serializable {
 
     @Inject
     CacheService cache;
+
+    @Inject
+    HotelService hotelService;
 
     public Order findById(Long id){
         return this.orders.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
@@ -82,6 +83,21 @@ public class OrderService implements Serializable {
         return initGuestBean(result,guest);
     }
 
+    private EditGuestBean cleanGuestBean(EditGuestBean guestBean){
+
+        guestBean.setOrder(null);
+        guestBean.setName("");
+        guestBean.setId(null);
+        guestBean.setEmail("");
+        guestBean.setGender("М");
+        guestBean.setBirthDate(null);
+        initAddressBean(guestBean.getAddress(),(EditAddressBean)null);
+        initDocumentBean(guestBean.getDocument(),(EditDocumentBean)null);
+        hotelService.initFoodConceptBean(guestBean.getFoodConcept(),(EditFoodConceptBean)null);
+
+        return guestBean;
+    }
+
     public EditGuestBean initGuestBean(EditGuestBean guestBean, Guest guest){
         if (guest!=null){
             guestBean.setOrder(guest.getOrder());
@@ -93,9 +109,12 @@ public class OrderService implements Serializable {
 
             initAddressBean(guestBean.getAddress(), guest.getAddress());
             initDocumentBean(guestBean.getDocument(),guest.getDocument());
-            initFoodConceptBean(guestBean.getFoodConcept(),guest.getFoodConcept());
+            hotelService.initFoodConceptBean(guestBean.getFoodConcept(),guest.getFoodConcept());
+
+            return guestBean;
+        }else{
+            return cleanGuestBean(guestBean);
         }
-        return guestBean;
     }
 
     public EditGuestBean initGuestBean(EditGuestBean guestBean, EditGuestBean anotherBean){
@@ -107,9 +126,12 @@ public class OrderService implements Serializable {
             guestBean.setEmail(anotherBean.getEmail());
             initAddressBean(guestBean.getAddress(),anotherBean.getAddress());
             initDocumentBean(guestBean.getDocument(),anotherBean.getDocument());
-            initFoodConceptBean(guestBean.getFoodConcept(),anotherBean.getFoodConcept());
+            hotelService.initFoodConceptBean(guestBean.getFoodConcept(),anotherBean.getFoodConcept());
+
+            return guestBean;
+        }else{
+            return cleanGuestBean(guestBean);
         }
-        return guestBean;
     }
 
     public EditAddressBean initAddressBean(EditAddressBean addressBean, Long addressId){
@@ -121,6 +143,16 @@ public class OrderService implements Serializable {
         return initAddressBean(addressBean,address);
     }
 
+    private EditAddressBean cleanAddressBean(EditAddressBean addressBean){
+        addressBean.setId(null);
+        addressBean.setZip("");
+        addressBean.setCountryId(643);
+        addressBean.setCountry("Россия");
+        addressBean.setSettlementPart("");
+        addressBean.setStreetPart("");
+        return addressBean;
+    }
+
     public EditAddressBean initAddressBean(EditAddressBean addressBean, Address address){
         if (address!=null) {
             addressBean.setId(address.getId());
@@ -130,8 +162,11 @@ public class OrderService implements Serializable {
             addressBean.setZip(address.getZip());
             addressBean.setSettlementPart(address.getSettlementPart());
             addressBean.setStreetPart(address.getStreetPart());
+
+            return addressBean;
+        }else {
+            return cleanAddressBean(addressBean);
         }
-        return addressBean;
     }
 
     public EditAddressBean initAddressBean(EditAddressBean addressBean, EditAddressBean anotherBean){
@@ -144,8 +179,23 @@ public class OrderService implements Serializable {
             addressBean.setZip(anotherBean.getZip());
             addressBean.setSettlementPart(anotherBean.getSettlementPart());
             addressBean.setStreetPart(anotherBean.getStreetPart());
+
+            return addressBean;
+        }else{
+            return cleanAddressBean(addressBean);
         }
-        return addressBean;
+    }
+
+
+    private EditDocumentBean cleanDocumentbean(EditDocumentBean documentBean){
+        documentBean.setDocumentType("ПАСПОРТ");
+        documentBean.setId(null);
+        documentBean.setSerial("");
+        documentBean.setNumber("");
+        documentBean.setIssueDate(null);
+        documentBean.setExpirationDate(null);
+
+        return documentBean;
     }
 
     public EditDocumentBean initDocumentBean(EditDocumentBean documentBean, Long documentId){
@@ -165,8 +215,10 @@ public class OrderService implements Serializable {
             documentBean.setSerial(document.getSerial());
             documentBean.setIssueDate(document.getIssueDate());
             documentBean.setExpirationDate(document.getExpirationDate());
+            return documentBean;
+        }else {
+            return cleanDocumentbean(documentBean);
         }
-        return documentBean;
     }
 
     public EditDocumentBean initDocumentBean(EditDocumentBean documentBean, EditDocumentBean anotherBean){
@@ -178,33 +230,10 @@ public class OrderService implements Serializable {
             documentBean.setSerial(anotherBean.getSerial());
             documentBean.setIssueDate(anotherBean.getIssueDate());
             documentBean.setExpirationDate(anotherBean.getExpirationDate());
+            return documentBean;
+        }else{
+            return cleanDocumentbean(documentBean);
         }
-        return documentBean;
     }
 
-    public EditDocumentBean initFoodConceptBean(EditFoodConceptBean fcBean, Long fcId){
-        FoodConcept fc =null;
-        if (fcId!=null){
-            fc=foodConcepts.findOptionalById(fcId).orElse(null);
-        }
-        return initFoodConceptBean(fcBean,fc);
-    }
-
-    public EditFoodConceptBean initFoodConceptBean(EditFoodConceptBean fcBean, FoodConcept fc){
-        if (fc!=null) {
-            fcBean.setName(fc.getName());
-            fcBean.setBasePrice(fc.getBasePrice());
-            fcBean.setDescription(fc.getDescription());
-        }
-        return fcBean;
-    }
-
-    public EditDocumentBean initFoodConceptBean(EditFoodConceptBean fcBean, EditFoodConceptBean anotherBean){
-        if ((fcBean!=null)&&(anotherBean!=null)) {
-            fcBean.setName(anotherBean.getName());
-            fcBean.setBasePrice(anotherBean.getBasePrice());
-            fcBean.setDescription(anotherBean.getDescription());
-        }
-        return fcBean;
-    }
 }

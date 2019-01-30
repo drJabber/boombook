@@ -6,7 +6,7 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <p:panel id="orderPanel" header="#{empty order.id?'Новый заказ':'Изменение заказа'}" rendered="#{editOrderView.state.equals('order')}">
-        <p:toolbar>
+        <p:toolbar styleClass="ui-noborder">
             <f:facet name="left">
                 <p:commandButton type="submit" id="addGuestButton" ajax="true"
                                  name="addGuestButton" value="Добавить гостя"
@@ -32,6 +32,14 @@
 
         <h:outputLabel for="guestsTable" value="Гости:" />
         <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
+            <p:column style="width:32px">
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.editGuest}"
+                                 icon="pi pi-edit"
+                >
+                    <f:setPropertyActionListener value="#{currentGuest}" target="#{order.selectedGuest}"/>
+                </p:commandButton>
+            </p:column>
             <p:column headerText="Имя" sortBy="#{currentGuest.name}" >
                 <h:outputText value="#{currentGuest.name}" />
             </p:column>
@@ -40,6 +48,9 @@
             </p:column>
             <p:column headerText="Пол">
                 <h:outputText value="#{currentGuest.gender}" />
+            </p:column>
+            <p:column headerText="Питание">
+                <h:outputText value="#{currentGuest.foodConcept.description}" />
             </p:column>
         </p:dataTable>
 

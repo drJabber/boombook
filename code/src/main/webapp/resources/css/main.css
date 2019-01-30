@@ -64,3 +64,10 @@ dl dt{
     float: left;
 }
 
+.ui-form-input-label{
+    width:100px;
+}
+/*.ui-form-input{*/
+    /*width:300px;*/
+/*}*/
+

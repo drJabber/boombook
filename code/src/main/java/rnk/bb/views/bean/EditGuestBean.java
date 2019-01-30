@@ -2,8 +2,6 @@ package rnk.bb.views.bean;
 
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.resource.FoodConcept;
-import rnk.bb.domain.hotel.resource.Guest;
-import rnk.bb.domain.util.Document;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Email;
@@ -33,7 +31,7 @@ public class EditGuestBean implements Serializable {
 
     private EditDocumentBean document=new EditDocumentBean();
 
-    private FoodConcept foodConcept=new EditFoodConceptBean();
+    private EditFoodConceptBean foodConcept=new EditFoodConceptBean();
 
     private EditAddressBean address=new EditAddressBean();
 
@@ -97,11 +95,11 @@ public class EditGuestBean implements Serializable {
         this.document = document;
     }
 
-    public FoodConcept getFoodConcept() {
+    public EditFoodConceptBean getFoodConcept() {
         return foodConcept;
     }
 
-    public void setFoodConcept(FoodConcept foodConcept) {
+    public void setFoodConcept(EditFoodConceptBean foodConcept) {
         this.foodConcept = foodConcept;
     }
 

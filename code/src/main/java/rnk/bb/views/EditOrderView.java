@@ -7,6 +7,7 @@ import rnk.bb.rest.book.GuestController;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
 import rnk.bb.views.bean.EditGuestBean;
+import rnk.bb.views.bean.EditHotelBean;
 import rnk.bb.views.bean.EditOrderBean;
 
 import javax.annotation.PostConstruct;
@@ -26,10 +27,7 @@ public class EditOrderView implements Serializable {
 
     private Long orderId=null;
     private Long guestId=null;
-
-    private Hotel hotel=null;
-    private Order order=null;
-    private Guest guest=null;
+    private Long hotelId=null;
 
     private String state="order";
 
@@ -42,6 +40,8 @@ public class EditOrderView implements Serializable {
     @Inject
     OrderService orderService;
 
+    EditHotelBean hotelBean;
+
     EditOrderBean orderBean;
 
     EditGuestBean guestBean;
@@ -51,8 +51,7 @@ public class EditOrderView implements Serializable {
         Map<String, String> params= FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
         if (params.get("hotelId")!=null){
-            Long hotelId= Long.valueOf(params.get("hotelId"));
-            hotel=hotelService.findById(hotelId);
+            hotelId= Long.valueOf(params.get("hotelId"));
         }
 
         if (params.get("orderId")!=null){
@@ -63,6 +62,9 @@ public class EditOrderView implements Serializable {
             this.guestId=Long.valueOf(params.get("guestId"));
         }
 
+        hotelBean=new EditHotelBean();
+        hotelService.initHotelBean(hotelBean,hotelId);
+
         orderBean=new EditOrderBean();
         orderService.initOrderBean(orderBean,orderId);
 
@@ -71,10 +73,6 @@ public class EditOrderView implements Serializable {
 
     }
 
-
-    public Hotel getHotel(){
-        return hotel;
-    }
 
     public EditOrderBean getOrderBean(){
         return orderBean;
@@ -91,6 +89,7 @@ public class EditOrderView implements Serializable {
 
     public void addGuest(){
         log.log(Level.INFO,"add new guest");
+        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
         state="guest";
     }
 
@@ -139,4 +138,11 @@ public class EditOrderView implements Serializable {
         state="guest-document";
     }
 
+    public EditHotelBean getHotelBean() {
+        return hotelBean;
+    }
+
+    public void setHotelBean(EditHotelBean hotelBean) {
+        this.hotelBean = hotelBean;
+    }
 }
