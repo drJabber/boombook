@@ -135,6 +135,45 @@ public class OrderService implements Serializable {
         }
     }
 
+    private EditRoomOrderBean cleanRoomOrderBean(EditRoomOrderBean roomOrderBean){
+
+        roomOrderBean.setOrder(null);
+        roomOrderBean.setId(null);
+        roomOrderBean.setCheckInDate(null);
+        roomOrderBean.setCheckOutDate(null);
+        hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),(EditRoomPoolBean)null);
+
+        return roomOrderBean;
+    }
+
+    public EditRoomOrderBean initRoomOrderBean(EditRoomOrderBean roomOrderBean, RoomOrder roomOrder){
+        if (roomOrder!=null){
+            roomOrderBean.setOrder(roomOrder.getOrder());
+            roomOrderBean.setId(roomOrder.getId());
+            roomOrderBean.setCheckInDate(roomOrder.getCheckInTime());
+            roomOrderBean.setCheckOutDate(roomOrder.getCheckOutTime());
+            hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),roomOrder.getRoomPool());
+
+            return roomOrderBean;
+        }else{
+            return cleanRoomOrderBean(roomOrderBean);
+        }
+    }
+
+    public EditRoomOrderBean initGuestBean(EditRoomOrderBean roomOrderBean, EditRoomOrderBean anotherBean){
+        if ((roomOrderBean!=null) && (anotherBean!=null)){
+            roomOrderBean.setOrder(anotherBean.getOrder());
+            roomOrderBean.setId(anotherBean.getId());
+            roomOrderBean.setCheckInDate(anotherBean.getCheckInDate());
+            roomOrderBean.setCheckOutDate(anotherBean.getCheckOutDate());
+            hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),anotherBean.getRoomPool());
+
+            return roomOrderBean;
+        }else{
+            return cleanRoomOrderBean(roomOrderBean);
+        }
+    }
+
     public EditAddressBean initAddressBean(EditAddressBean addressBean, Long addressId){
         Address address=null;
         if (addressId!=null){

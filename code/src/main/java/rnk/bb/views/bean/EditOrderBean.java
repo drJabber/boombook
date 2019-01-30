@@ -42,13 +42,11 @@ public class EditOrderBean implements Serializable {
     Date checkOutTime=null;
 
     
-    private List<RoomOrder> roomOrders=new ArrayList<>();
-
     @NotEmpty(message = "В заказе не указаны гости")
     private List<EditGuestBean> guests=new ArrayList<>();
 
     @NotEmpty(message = "В заказе не указаны комнаты")
-    private List<EditRoomBean> rooms=new ArrayList<>();
+    private List<EditRoomOrderBean> rooms=new ArrayList<>();
 
     public EditOrderBean(){
 
@@ -110,14 +108,6 @@ public class EditOrderBean implements Serializable {
         this.rejected = rejected;
     }
 
-    public List<RoomOrder> getRoomOrders() {
-        return roomOrders;
-    }
-
-    public void setRoomOrders(List<RoomOrder> roomOrders) {
-        this.roomOrders = roomOrders;
-    }
-
     public List<EditGuestBean> getGuests() {
         return guests;
     }
@@ -126,11 +116,11 @@ public class EditOrderBean implements Serializable {
         this.guests = guests;
     }
 
-    public void setRooms(List<EditRoomBean> rooms) {
+    public void setRooms(List<EditRoomOrderBean> rooms) {
         this.guests = rooms;
     }
 
-    public List<EditRoomBean> getRooms() {
+    public List<EditRoomOrderBean> getRooms() {
         return rooms;
     }
 

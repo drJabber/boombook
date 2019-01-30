@@ -24,6 +24,12 @@ public class HotelService implements Serializable {
     @Inject
     FoodConceptController foodConcepts;
 
+    @Inject
+    RoomTypeController roomTypes;
+
+    @Inject
+    RoomPoolController roomPools;
+
     public Hotel findById(Long id){
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
     }
@@ -98,6 +104,79 @@ public class HotelService implements Serializable {
             return fcBean;
         }else{
             return cleanFoodConceptBean(fcBean);
+        }
+    }
+
+    private EditRoomPoolBean cleanRoomPoolBean(EditRoomPoolBean rpBean){
+        rpBean.setId(null);
+        rpBean.setHotel(null);
+        rpBean.setName("");
+        rpBean.setBasePrice(null);
+
+        initRoomTypeBean(rpBean.getRoomType(),(EditRoomTypeBean)null);
+        return rpBean;
+    }
+
+    public EditRoomPoolBean initRoomPoolBean(EditRoomPoolBean rpBean, RoomPool rp){
+        if (rp!=null) {
+            rpBean.setId(rp.getId());
+            rpBean.setHotel(rp.getHotel());
+            rpBean.setName(rp.getName());
+            rpBean.setBasePrice(rp.getBasePrice());
+
+            initRoomTypeBean(rpBean.getRoomType(),rp.getRoomType())
+            return rpBean;
+        }else{
+            return cleanRoomPoolBean(rpBean);
+        }
+    }
+
+    public EditRoomPoolBean initRoomPoolBean(EditRoomPoolBean rpBean, EditRoomPoolBean anotherBean){
+        if ((rpBean!=null)&&(anotherBean!=null)) {
+            RoomPool roomPool=roomPools.findByLongId(anotherBean.getId());
+
+            rpBean.setId(roomPool.getId());
+            rpBean.setHotel(roomPool.getHotel());
+            rpBean.setName(roomPool.getName());
+            rpBean.setBasePrice(roomPool.getBasePrice());
+
+            initRoomTypeBean(rpBean.getRoomType(),roomPool.getRoomType())
+
+            return rpBean;
+        }else{
+            return cleanRoomPoolBean(rpBean);
+        }
+    }
+
+    private EditRoomTypeBean cleanRoomTypeBean(EditRoomTypeBean rtBean){
+        rtBean.setId(null);
+        rtBean.setDescription("");
+        rtBean.setName("");
+
+        return fcBean;
+    }
+
+    public EditRoomTypeBean initRoomTypeBean(EditRoomTypeBean rtBean, RoomType rt){
+        if (rt!=null) {
+            rtBean.setId(rt.getId());
+            rtBean.setName(rt.getName());
+            rtBean.setDescription(rt.getDescription());
+            return rtBean;
+        }else{
+            return cleanRoomTypeBean(rtBean);
+        }
+    }
+
+    public EditRoomTypeBean initRoomTypeBean(EditRoomTypeBean rtBean, EditFoodConceptBean anotherBean){
+        if ((fcBean!=null)&&(anotherBean!=null)) {
+            RoomType roomType=roomTypes.findByLongId(anotherBean.getId());
+
+            rtBean.setId(roomType.getId());
+            rtBean.setName(roomType.getName());
+            rtBean.setDescription(roomType.getDescription());
+            return rtBean;
+        }else{
+            return cleanRoomTypeBean(rtBean);
         }
     }
 
