@@ -86,7 +86,7 @@
                     <h:outputLabel for="fcInput" value="Питание:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:selectOneMenu id="fcInput" value="#{guest.foodConcept.id}" style="width:150px" >
+                    <p:selectOneMenu id="fcInput" value="#{guest.foodConcept.id}" style="width:150px" required="true" requiredMessage="Заполните поле" >
                         <f:selectItem itemLabel="Тип питания" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{hotel.foodConcepts}" var="fc"  itemValue="#{fc.id}" itemLabel="#{fc.description}"/>
                     </p:selectOneMenu>

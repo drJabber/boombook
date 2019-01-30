@@ -32,12 +32,17 @@
 
         <h:outputLabel for="guestsTable" value="Гости:" />
         <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
-            <p:column style="width:32px">
+            <p:column style="width:90px">
                 <p:commandButton update=":orderForm"
                                  process="@this" action="#{editOrderView.editGuest}"
-                                 icon="pi pi-edit"
-                >
-                    <f:setPropertyActionListener value="#{currentGuest}" target="#{order.selectedGuest}"/>
+                                 icon="fa fa-edit">
+                    <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
+                </p:commandButton>
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.removeGuest}"
+                                 icon="fa fa-remove">
+                    <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
+                    <p:confirm header="Удаление" message="Удалить данные #{editOrderView.guestBean.name}" icon="pi pi-exclamation-triangle" />
                 </p:commandButton>
             </p:column>
             <p:column headerText="Имя" sortBy="#{currentGuest.name}" >

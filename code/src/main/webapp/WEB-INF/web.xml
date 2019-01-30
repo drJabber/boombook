@@ -11,11 +11,6 @@
   </context-param>
 
   <context-param>
-    <param-name>javax.faces.PROJECT_STAGE</param-name>
-    <param-value>Development</param-value>
-  </context-param>
-
-  <context-param>
     <param-name>javax.faces.validator.ENABLE_VALIDATE_WHOLE_BEAN</param-name>
     <param-value>true</param-value>
   </context-param>
@@ -30,4 +25,67 @@
     <param-value>true</param-value>
   </context-param>
 
+
+  <!--<context-param>-->
+    <!--<param-name>com.sun.faces.numberOfViewsInSession</param-name>-->
+    <!--<param-value>5</param-value>-->
+  <!--</context-param>-->
+  <!--<context-param>-->
+    <!--<param-name>com.sun.faces.serializeServerState</param-name>-->
+    <!--<param-value>false</param-value>-->
+  <!--</context-param>-->
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>server</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!--<context-param>-->
+    <!--<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>-->
+    <!--<param-value>6Lf2XQkTAAAAAHsc1-7Mt_kMlmcmGqlxoMDJlp2K</param-value>-->
+  <!--</context-param>-->
+  <!--<context-param>-->
+    <!--<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>-->
+    <!--<param-value>6Lf2XQkTAAAAANcvOwYqPxWL4iZDksFqHpS39GDA</param-value>-->
+  <!--</context-param>-->
+
+  <context-param>
+    <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>omega</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.FONT_AWESOME</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.MOVE_SCRIPTS_TO_BOTTOM</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <mime-mapping>
+    <extension>ttf</extension>
+    <mime-type>application/font-sfnt</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>woff</extension>
+    <mime-type>application/font-woff</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>woff2</extension>
+    <mime-type>application/font-woff2</mime-type>
+  </mime-mapping>
 </web-app>

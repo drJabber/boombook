@@ -1,8 +1,5 @@
 package rnk.bb.views;
 
-import rnk.bb.domain.book.Order;
-import rnk.bb.domain.hotel.resource.Guest;
-import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.rest.book.GuestController;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
@@ -87,15 +84,35 @@ public class EditOrderView implements Serializable {
         return guestBean;
     }
 
+    public void setGuestBean(EditGuestBean guestBean){
+        this.guestBean=guestBean;
+    }
+
     public void addGuest(){
         log.log(Level.INFO,"add new guest");
-        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
+        EditGuestBean bean=new EditGuestBean();
+        this.guestBean=orderService.initGuestBean(bean,(EditGuestBean) null);
         state="guest";
+    }
+
+    public void editGuest(){
+        log.log(Level.INFO, String.format("edit guest %s", guestBean.getName()));
+//        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
+        state="guest";
+    }
+
+    public void removeGuest(){
+        log.log(Level.INFO, String.format("remove guest %s", guestBean.getName()));
+        orderBean.getGuests().remove(guestBean);
+//        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
+        state="order";
     }
 
     public void saveGuest(EditGuestBean guestBean){
         log.log(Level.INFO,"save guest");
-        orderBean.getGuests().add(orderService.initGuestBean(new EditGuestBean(),guestBean));
+        if (!orderBean.getGuests().contains(guestBean)){
+            orderBean.getGuests().add(orderService.initGuestBean(new EditGuestBean(),guestBean));
+        }
         state="order";
     }
 

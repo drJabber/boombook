@@ -24,6 +24,11 @@
             <ui:include src="/WEB-INF/layout/eo_guest.xhtml" />
             <ui:include src="/WEB-INF/layout/eo_guest_address.xhtml" />
             <ui:include src="/WEB-INF/layout/eo_guest_document.xhtml" />
+
+            <p:confirmDialog closeOnEscape="true" global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Удалить" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="Отменить" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>
         </h:form>
 
     </ui:define>
