@@ -13,6 +13,11 @@
                                  action="#{editOrderView.addGuest}" update=":orderForm" process="@this"
                                  style="margin-right:20px;">
                 </p:commandButton>
+                <p:commandButton type="submit" id="addRoomButton" ajax="true"
+                                 name="addRoomButton" value="Добавить комнату"
+                                 action="#{editOrderView.addRoom}" update=":orderForm" process="@this"
+                                 style="margin-right:20px;">
+                </p:commandButton>
             </f:facet>
         </p:toolbar>
 

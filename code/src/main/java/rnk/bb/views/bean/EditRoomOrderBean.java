@@ -27,6 +27,8 @@ public class EditRoomOrderBean implements Serializable {
     private checkInDate=null;
     private checkOutDate=null;
 
+    private List<EditRoomFeatureBean> features=new ArrayList<>();
+
     public String toString(){
         StringBuilder sb=new StringBuilder();
         List<String> list=new ArrayList<>();
@@ -63,6 +65,14 @@ public class EditRoomOrderBean implements Serializable {
 
     public void setCheckOutDate(Date date){
         this.checkOutDate=date;
+    }
+    
+   public List<EditRoomFeatureBean> getFeatures() {
+        return features;
+    }
+
+    public void setFeatures(List<EditRoomFeatureBean> features) {
+        this.features = features;
     }
     
 }

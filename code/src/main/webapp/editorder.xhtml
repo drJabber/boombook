@@ -13,7 +13,7 @@
             <ui:param name="order" value="#{editOrderView.orderBean}"/>
             <ui:param name="guest" value="#{editOrderView.guestBean}"/>
             <ui:param name="hotel" value="#{editOrderView.hotelBean}"/>
-            <!--<ui:param name="order" value="#{editOrderBean}"/>-->
+            <ui:param name="room" value="#{editOrderView.roomBean}"/>
         </f:metadata>
     </ui:define>
 
@@ -22,6 +22,7 @@
         <h:form id="orderForm">
             <ui:include src="/WEB-INF/layout/eo_order.xhtml" />
             <ui:include src="/WEB-INF/layout/eo_guest.xhtml" />
+            <ui:include src="/WEB-INF/layout/eo_room.xhtml" />
             <ui:include src="/WEB-INF/layout/eo_guest_address.xhtml" />
             <ui:include src="/WEB-INF/layout/eo_guest_document.xhtml" />
 

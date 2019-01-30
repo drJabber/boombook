@@ -180,4 +180,43 @@ public class HotelService implements Serializable {
         }
     }
 
+    private EditFoodConceptBean cleanRoomFeatureBean(EditRoomFeatureBean rfBean){
+        rfBean.setId(null);
+        rfBean.setHotel(null);
+        rfBean.setPrice(null);
+        rfBean.setDescription("");
+        rfBean.setName("");
+
+        return fcBean;
+    }
+
+    public EditRoomFeaturetBean initRoomFeaturetBean(EditRoomFeatureBean rfBean, RoomFeature rf){
+        if (rf!=null) {
+            rfBean.setId(rf.getId());
+            rfBean.setHotel(rf.getHotel());
+            rfBean.setName(rf.getName());
+            rfBean.setPrice(rf.getPrice());
+            rfBean.setDescription(rf.getDescription());
+            return rfBean;
+        }else{
+            return cleanRoomFeatureBean(rfBean);
+        }
+    }
+
+    public EditRoomFeatureBean initRoomFeatureBean(EditRoomFeatureBean rfBean, EditRoomFeatureBean anotherBean){
+        if ((fcBean!=null)&&(anotherBean!=null)) {
+            FoodConcept rf=roomFeatures.findByLongId(anotherBean.getId());
+
+            rfBean.setHotel(rf.getHotel());
+            rfBean.setId(rf.getId());
+            rfBean.setName(rf.getName());
+            rfBean.setPrice(rf.getPrice());
+            rfBean.setDescription(rf.getDescription());
+            return rfBean;
+        }else{
+            return cleanRoomFeatureBean(rfBean);
+        }
+    }
+
+    
 }

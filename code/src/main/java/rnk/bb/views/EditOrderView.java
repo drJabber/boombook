@@ -1,6 +1,5 @@
 package rnk.bb.views;
 
-import rnk.bb.rest.book.GuestController;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
 import rnk.bb.views.bean.EditGuestBean;
@@ -29,9 +28,6 @@ public class EditOrderView implements Serializable {
     private String state="order";
 
     @Inject
-    GuestController guestController;
-
-    @Inject
     HotelService hotelService;
 
     @Inject
@@ -42,6 +38,8 @@ public class EditOrderView implements Serializable {
     EditOrderBean orderBean;
 
     EditGuestBean guestBean;
+
+    EditRoomOrderBean roomBean;
 
     @PostConstruct
     public void init(){
@@ -162,4 +160,37 @@ public class EditOrderView implements Serializable {
     public void setHotelBean(EditHotelBean hotelBean) {
         this.hotelBean = hotelBean;
     }
+
+    public void addRoom(){
+        log.log(Level.INFO,"add new room order");
+        EditRoomOrderBean bean=new EditRoomOrderBean();
+        this.roomBean=orderService.initRoomOrderBean(bean,(EditRoomOrderBean) null);
+        state="room-order";
+    }
+
+    public void editRoom(){
+        log.log(Level.INFO, String.format("edit room order %s", roomBean.getName()));
+        state="room-order";
+    }
+
+    public void removeRoom(){
+        log.log(Level.INFO, String.format("remove room order %s", roomBean.getName()));
+        orderBean.getGuests().remove(guestBean);
+        state="order";
+    }
+
+    public void saveRoom(EditRoomOrderBean roomBean){
+        log.log(Level.INFO,"save room order");
+        if (!orderBean.getRooms().contains(roomBean)){
+            orderBean.getRooms().add(orderService.initRoomOrderBean(new EditRoomOrderBean(),roomBean));
+        }
+        state="order";
+    }
+
+    public void cancelRoom(){
+        log.log(Level.INFO,"cancel room order");
+        state="order";
+    }
+
+    
 }

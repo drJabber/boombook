@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 
 @SessionScoped
-public class EditFoodConceptBean implements Serializable {
+public class EditRoomFeatureBean implements Serializable {
     private Long id=null;
 
     private Hotel hotel=null;
@@ -27,7 +27,7 @@ public class EditFoodConceptBean implements Serializable {
 
     @NotNull
     @Min(0)
-    private Double basePrice=0.0;
+    private Double price=0.0;
 
     @NotNull
     @Size(max=500)
@@ -55,12 +55,12 @@ public class EditFoodConceptBean implements Serializable {
         this.name = name;
     }
 
-    public Double getBasePrice() {
-        return basePrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setBasePrice(Double basePrice) {
-        this.basePrice = basePrice;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getDescription() {

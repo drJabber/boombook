@@ -135,6 +135,19 @@ public class OrderService implements Serializable {
         }
     }
 
+    public EditRoomOrderBean initRoomOrderBean(EditRoomOrderBean roomOrderBean, Long roomOrderId){
+        RoomOrder roomOrder=null;
+        if (roomOrderId!=null){
+            roomOrder=roomOrders.findOptionalById(roomOrderId).orElse(null);
+        }
+        EditRoomOrderBean result=roomOrderBean;
+        if (roomOrderBean==null)
+        {
+            result=new EditRoomOrderBean();
+        }
+        return initRoomOrderBean(result,roomOrder);
+    }
+
     private EditRoomOrderBean cleanRoomOrderBean(EditRoomOrderBean roomOrderBean){
 
         roomOrderBean.setOrder(null);
@@ -142,7 +155,8 @@ public class OrderService implements Serializable {
         roomOrderBean.setCheckInDate(null);
         roomOrderBean.setCheckOutDate(null);
         hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),(EditRoomPoolBean)null);
-
+        
+        roomOrderBean.getFeatures().clear();
         return roomOrderBean;
     }
 
@@ -154,13 +168,17 @@ public class OrderService implements Serializable {
             roomOrderBean.setCheckOutDate(roomOrder.getCheckOutTime());
             hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),roomOrder.getRoomPool());
 
+            List<EditRoomFeatureBean> features=roomOrderBean.getFeatures();
+            features.clear();
+            roomOrder.getFeatures().stream().forEach(f->features.add(initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+
             return roomOrderBean;
         }else{
             return cleanRoomOrderBean(roomOrderBean);
         }
     }
 
-    public EditRoomOrderBean initGuestBean(EditRoomOrderBean roomOrderBean, EditRoomOrderBean anotherBean){
+    public EditRoomOrderBean initRoomOrderBean(EditRoomOrderBean roomOrderBean, EditRoomOrderBean anotherBean){
         if ((roomOrderBean!=null) && (anotherBean!=null)){
             roomOrderBean.setOrder(anotherBean.getOrder());
             roomOrderBean.setId(anotherBean.getId());
@@ -168,6 +186,10 @@ public class OrderService implements Serializable {
             roomOrderBean.setCheckOutDate(anotherBean.getCheckOutDate());
             hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),anotherBean.getRoomPool());
 
+            List<EditRoomFeatureBean> features=roomOrderBean.getFeatures();
+            features.clear();
+            anotherBean.getFeatures().stream().forEach(f->features.add(initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+            
             return roomOrderBean;
         }else{
             return cleanRoomOrderBean(roomOrderBean);
