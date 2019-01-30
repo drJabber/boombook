@@ -1,6 +1,7 @@
 package rnk.bb.services;
 
 import rnk.bb.domain.book.Order;
+import rnk.bb.domain.book.RoomOrder;
 import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.resource.Hotel;
@@ -8,6 +9,7 @@ import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
 import rnk.bb.rest.book.GuestController;
 import rnk.bb.rest.book.OrderController;
+import rnk.bb.rest.book.RoomOrderController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
 import rnk.bb.services.bean.CountryBean;
@@ -31,6 +33,9 @@ public class OrderService implements Serializable {
     
     @Inject
     DocumentController documents;
+
+    @Inject
+    RoomOrderController roomOrders;
 
     @Inject
     CacheService cache;
@@ -166,11 +171,11 @@ public class OrderService implements Serializable {
             roomOrderBean.setId(roomOrder.getId());
             roomOrderBean.setCheckInDate(roomOrder.getCheckInTime());
             roomOrderBean.setCheckOutDate(roomOrder.getCheckOutTime());
-            hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),roomOrder.getRoomPool());
+            hotelService.initRoomPoolBean(roomOrderBean.getRoomPool(),roomOrder.getPool());
 
             List<EditRoomFeatureBean> features=roomOrderBean.getFeatures();
             features.clear();
-            roomOrder.getFeatures().stream().forEach(f->features.add(initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+            roomOrder.getFeatures().stream().forEach(f->features.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
 
             return roomOrderBean;
         }else{
@@ -188,7 +193,7 @@ public class OrderService implements Serializable {
 
             List<EditRoomFeatureBean> features=roomOrderBean.getFeatures();
             features.clear();
-            anotherBean.getFeatures().stream().forEach(f->features.add(initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+            anotherBean.getFeatures().stream().forEach(f->features.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
             
             return roomOrderBean;
         }else{

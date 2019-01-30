@@ -117,7 +117,7 @@ public class EditOrderBean implements Serializable {
     }
 
     public void setRooms(List<EditRoomOrderBean> rooms) {
-        this.guests = rooms;
+        this.rooms = rooms;
     }
 
     public List<EditRoomOrderBean> getRooms() {

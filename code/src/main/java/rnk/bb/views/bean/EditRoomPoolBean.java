@@ -2,6 +2,7 @@ package rnk.bb.views.bean;
 
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Document;
+import rnk.bb.services.bean.RoomTypeBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Min;
@@ -21,7 +22,7 @@ public class EditRoomPoolBean implements Serializable {
 
     private Hotel hotel=null;
 
-    private EditRoomTypeBean roomType=new EditRoomTypeBean();
+    private RoomTypeBean roomType=new RoomTypeBean();
 
     @NotNull
     private String name="";
@@ -34,7 +35,7 @@ public class EditRoomPoolBean implements Serializable {
         return name;
     }
 
-    public EditRoomPoolBean getHotel(){
+    public Hotel getHotel(){
         return hotel;
     }
 
@@ -58,12 +59,20 @@ public class EditRoomPoolBean implements Serializable {
         this.name=name;
     }
 
-    public EditRoomTypeBean getRoomType(){
+    public RoomTypeBean getRoomType(){
         return roomType;
     }
 
-    public void setRoomType(EditRoomTypeBean roomType){
+    public void setRoomType(RoomTypeBean roomType){
         this.roomType=roomType;
     }
 
+
+    public Double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(Double basePrice) {
+        this.basePrice = basePrice;
+    }
 }

@@ -1,12 +1,16 @@
 package rnk.bb.services;
 
 
+import rnk.bb.domain.hotel.resource.Room;
+import rnk.bb.domain.hotel.resource.RoomType;
 import rnk.bb.domain.util.Country;
 import rnk.bb.domain.util.DocumentType;
+import rnk.bb.rest.hotel.resource.RoomTypeController;
 import rnk.bb.rest.util.CountryController;
 import rnk.bb.rest.util.DocumentTypeController;
 import rnk.bb.services.bean.CountryBean;
 import rnk.bb.services.bean.DocumentTypeBean;
+import rnk.bb.services.bean.RoomTypeBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -25,8 +29,12 @@ public class CacheService {
     @Inject
     DocumentTypeController documentTypeController;
 
+    @Inject
+    RoomTypeController roomTypeController;
+
     private List<CountryBean> countries;
     private List<DocumentTypeBean> documentTypes;
+    private List<RoomTypeBean> roomTypes;
 
     @PostConstruct
     public void init(){
@@ -39,6 +47,11 @@ public class CacheService {
         List<DocumentType> list=documentTypeController.findAll();
         this.documentTypes.clear();
         list.stream().forEach(t->this.documentTypes.add(new DocumentTypeBean(t.getDescription())));
+
+        this.roomTypes=new ArrayList<>();
+        List<RoomType> typesList=roomTypeController.findAll();
+        this.roomTypes.clear();
+        typesList.stream().forEach(t->this.roomTypes.add(new RoomTypeBean(t)));
     }
 
 
@@ -56,6 +69,14 @@ public class CacheService {
 
     public DocumentTypeBean getDocumentById(String id){
         return documentTypes.stream().filter(c->c.getDescription()==id).findFirst().get();
+    }
+
+    public List<RoomTypeBean> getRoomTypes(){
+        return roomTypes;
+    }
+
+    public RoomTypeBean getRoomTypeById(String id){
+        return roomTypes.stream().filter(c->c.getName()==id).findFirst().get();
     }
 
 }

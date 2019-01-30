@@ -3,11 +3,14 @@ package rnk.bb.services;
 import org.primefaces.model.LazyDataModel;
 import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.domain.hotel.resource.RoomFeature;
+import rnk.bb.domain.hotel.resource.RoomPool;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
-import rnk.bb.views.bean.EditDocumentBean;
-import rnk.bb.views.bean.EditFoodConceptBean;
-import rnk.bb.views.bean.EditHotelBean;
+import rnk.bb.rest.hotel.resource.RoomFeatureController;
+import rnk.bb.rest.hotel.resource.RoomPoolController;
+import rnk.bb.services.bean.RoomTypeBean;
+import rnk.bb.views.bean.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -25,10 +28,13 @@ public class HotelService implements Serializable {
     FoodConceptController foodConcepts;
 
     @Inject
-    RoomTypeController roomTypes;
+    CacheService cacheService;
 
     @Inject
     RoomPoolController roomPools;
+
+    @Inject
+    RoomFeatureController roomFeatures;
 
     public Hotel findById(Long id){
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
@@ -62,6 +68,10 @@ public class HotelService implements Serializable {
             List<EditFoodConceptBean> list=hotelBean.getFoodConcepts();
             list.clear();
             hotel.getFoodConcepts().stream().forEach(fc->list.add(initFoodConceptBean(new EditFoodConceptBean(),fc)));
+
+            List<EditRoomFeatureBean> rflist=hotelBean.getRoomFeatures();
+            rflist.clear();
+            hotel.getRoomFeatures().stream().forEach(rf->rflist.add(initRoomFeatureBean(new EditRoomFeatureBean(),rf)));
 
             return hotelBean;
         }else{
@@ -112,8 +122,7 @@ public class HotelService implements Serializable {
         rpBean.setHotel(null);
         rpBean.setName("");
         rpBean.setBasePrice(null);
-
-        initRoomTypeBean(rpBean.getRoomType(),(EditRoomTypeBean)null);
+        rpBean.setRoomType(null);
         return rpBean;
     }
 
@@ -124,7 +133,7 @@ public class HotelService implements Serializable {
             rpBean.setName(rp.getName());
             rpBean.setBasePrice(rp.getBasePrice());
 
-            initRoomTypeBean(rpBean.getRoomType(),rp.getRoomType())
+            rpBean.setRoomType(cacheService.getRoomTypeById(rp.getRoomType().getName()));
             return rpBean;
         }else{
             return cleanRoomPoolBean(rpBean);
@@ -140,7 +149,7 @@ public class HotelService implements Serializable {
             rpBean.setName(roomPool.getName());
             rpBean.setBasePrice(roomPool.getBasePrice());
 
-            initRoomTypeBean(rpBean.getRoomType(),roomPool.getRoomType())
+            rpBean.setRoomType(anotherBean.getRoomType());
 
             return rpBean;
         }else{
@@ -148,49 +157,18 @@ public class HotelService implements Serializable {
         }
     }
 
-    private EditRoomTypeBean cleanRoomTypeBean(EditRoomTypeBean rtBean){
-        rtBean.setId(null);
-        rtBean.setDescription("");
-        rtBean.setName("");
 
-        return fcBean;
-    }
-
-    public EditRoomTypeBean initRoomTypeBean(EditRoomTypeBean rtBean, RoomType rt){
-        if (rt!=null) {
-            rtBean.setId(rt.getId());
-            rtBean.setName(rt.getName());
-            rtBean.setDescription(rt.getDescription());
-            return rtBean;
-        }else{
-            return cleanRoomTypeBean(rtBean);
-        }
-    }
-
-    public EditRoomTypeBean initRoomTypeBean(EditRoomTypeBean rtBean, EditFoodConceptBean anotherBean){
-        if ((fcBean!=null)&&(anotherBean!=null)) {
-            RoomType roomType=roomTypes.findByLongId(anotherBean.getId());
-
-            rtBean.setId(roomType.getId());
-            rtBean.setName(roomType.getName());
-            rtBean.setDescription(roomType.getDescription());
-            return rtBean;
-        }else{
-            return cleanRoomTypeBean(rtBean);
-        }
-    }
-
-    private EditFoodConceptBean cleanRoomFeatureBean(EditRoomFeatureBean rfBean){
+    private EditRoomFeatureBean cleanRoomFeatureBean(EditRoomFeatureBean rfBean){
         rfBean.setId(null);
         rfBean.setHotel(null);
         rfBean.setPrice(null);
         rfBean.setDescription("");
         rfBean.setName("");
 
-        return fcBean;
+        return rfBean;
     }
 
-    public EditRoomFeaturetBean initRoomFeaturetBean(EditRoomFeatureBean rfBean, RoomFeature rf){
+    public EditRoomFeatureBean initRoomFeatureBean(EditRoomFeatureBean rfBean, RoomFeature rf){
         if (rf!=null) {
             rfBean.setId(rf.getId());
             rfBean.setHotel(rf.getHotel());
@@ -204,8 +182,8 @@ public class HotelService implements Serializable {
     }
 
     public EditRoomFeatureBean initRoomFeatureBean(EditRoomFeatureBean rfBean, EditRoomFeatureBean anotherBean){
-        if ((fcBean!=null)&&(anotherBean!=null)) {
-            FoodConcept rf=roomFeatures.findByLongId(anotherBean.getId());
+        if ((rfBean!=null)&&(anotherBean!=null)) {
+            RoomFeature rf=roomFeatures.findByLongId(anotherBean.getId());
 
             rfBean.setHotel(rf.getHotel());
             rfBean.setId(rf.getId());

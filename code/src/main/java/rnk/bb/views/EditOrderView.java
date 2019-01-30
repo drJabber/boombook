@@ -5,6 +5,7 @@ import rnk.bb.services.OrderService;
 import rnk.bb.views.bean.EditGuestBean;
 import rnk.bb.views.bean.EditHotelBean;
 import rnk.bb.views.bean.EditOrderBean;
+import rnk.bb.views.bean.EditRoomOrderBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -169,12 +170,12 @@ public class EditOrderView implements Serializable {
     }
 
     public void editRoom(){
-        log.log(Level.INFO, String.format("edit room order %s", roomBean.getName()));
+        log.log(Level.INFO, String.format("edit room order %s", roomBean.toString()));
         state="room-order";
     }
 
     public void removeRoom(){
-        log.log(Level.INFO, String.format("remove room order %s", roomBean.getName()));
+        log.log(Level.INFO, String.format("remove room order %s", roomBean.toString()));
         orderBean.getGuests().remove(guestBean);
         state="order";
     }

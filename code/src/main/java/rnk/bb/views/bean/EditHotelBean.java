@@ -14,7 +14,7 @@ public class EditHotelBean implements Serializable {
     private String name="";
 
     private List<EditFoodConceptBean> foodConcepts=new ArrayList<>();
-    private List<EditRoomFeaturesBean> roomFeatures=new ArrayList<>();
+    private List<EditRoomFeatureBean> roomFeatures=new ArrayList<>();
 
     public EditHotelBean(){
 
@@ -44,11 +44,11 @@ public class EditHotelBean implements Serializable {
         this.foodConcepts = foodConcepts;
     }
 
-    public List<EditRoomFeaturesBean> getRoomFeatures() {
+    public List<EditRoomFeatureBean> getRoomFeatures() {
         return roomFeatures;
     }
 
-    public void setRoomFeatures(List<EditRoomFeaturesBean> roomFeatures) {
+    public void setRoomFeatures(List<EditRoomFeatureBean> roomFeatures) {
         this.roomFeatures = roomFeatures;
     }
 }

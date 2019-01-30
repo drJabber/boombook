@@ -1,5 +1,6 @@
 package rnk.bb.views.bean;
 
+import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Document;
 
@@ -24,20 +25,53 @@ public class EditRoomOrderBean implements Serializable {
     @NotNull
     private EditRoomPoolBean roomPool=new EditRoomPoolBean();
 
-    private checkInDate=null;
-    private checkOutDate=null;
+    private Date checkInDate=null;
+    private Date checkOutDate=null;
 
     private List<EditRoomFeatureBean> features=new ArrayList<>();
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public EditRoomPoolBean getRoomPool() {
+        return roomPool;
+    }
+
+    public void setRoomPool(EditRoomPoolBean roomPool) {
+        this.roomPool = roomPool;
+    }
+
     public String toString(){
+        SimpleDateFormat df=new SimpleDateFormat("dd.MM.yyyy");
         StringBuilder sb=new StringBuilder();
         List<String> list=new ArrayList<>();
-        if (!name.trim().isEmpty()){
-            ((ArrayList) list).add(name.trim());
+        if (roomPool!=null){
+            if (!roomPool.getName().trim().isEmpty()){
+                ((ArrayList) list).add(roomPool.getName().trim());
+            }
+
+            list.add("("+roomPool.getRoomType().toString()+")");
         }
 
-        if (!description.trim().isEmpty()){
-            list.add(description.trim());
+        if (checkInDate!=null){
+            list.add(df.format(checkInDate));
+        }
+
+        if (checkOutDate!=null){
+            list.add(df.format(checkOutDate));
         }
 
         return list.stream().collect(Collectors.joining(","));
