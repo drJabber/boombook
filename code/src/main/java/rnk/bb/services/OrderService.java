@@ -61,8 +61,8 @@ public class OrderService implements Serializable {
             orderBean.setSubmitted(order.getSubmitted());
             orderBean.setConfirmed(order.getConfirmed());
             orderBean.setRejected(order.getRejected());
-            orderBean.setCheckInTime(order.getCheckInTime())
-            orderBean.setCheckOutTime(order.getCheckOutTime())
+            orderBean.setCheckInTime(order.getCheckInTime());
+            orderBean.setCheckOutTime(order.getCheckOutTime());
 
             List<EditGuestBean> guests=orderBean.getGuests();
             guests.clear();

@@ -7,11 +7,14 @@ import rnk.bb.domain.blank.AbstractHotelRefEntity;
 import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.user.Client;
+import rnk.bb.util.json.DateAdapter;
 
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 
 @Data
