@@ -73,6 +73,10 @@ public class HotelService implements Serializable {
             rflist.clear();
             hotel.getRoomFeatures().stream().forEach(rf->rflist.add(initRoomFeatureBean(new EditRoomFeatureBean(),rf)));
 
+            List<EditRoomPoolBean> rplist=hotelBean.getRoomPools();
+            rplist.clear();
+            hotel.getRoomPools().stream().forEach(rp->rplist.add(initRoomPoolBean(new EditRoomPoolBean(),rp)));
+
             return hotelBean;
         }else{
             return cleanHotelBean(hotelBean);

@@ -1270,3 +1270,42 @@ insert into public.hotel(name, place, phone,fax,site,email,descr,vk,fb,stars,pub
 insert into public.food_concept(name, baseprice, description,hotel_id) values('AI',70,'Все включено',1);
 insert into public.food_concept(name, baseprice, description,hotel_id) values('UAI',90,'Ультра все включено',1);
 insert into public.food_concept(name, baseprice, description,hotel_id) values('BB',30,'Только завтраки',1);
+
+insert into public.food_concept(name, baseprice, description,hotel_id) values('AI',70,'Все включено',2);
+insert into public.food_concept(name, baseprice, description,hotel_id) values('UAI',90,'Ультра все включено',2);
+insert into public.food_concept(name, baseprice, description,hotel_id) values('BB',30,'Только завтраки',2);
+
+
+insert into public.room_type(name, description) values('Signle','A room assigned to one person. May have one or more beds.');
+insert into public.room_type(name, description) values('Double','A room assigned to two people. May have one or more beds');
+insert into public.room_type(name, description) values('Triple',' A room assigned to three people. May have two or more beds.  ');
+insert into public.room_type(name, description) values('Quad',' A room assigned to four people. May have two or more beds.');
+insert into public.room_type(name, description) values('Queen',' A room with a queen-sized bed. May be occupied by one or more people.');
+insert into public.room_type(name, description) values('King','A room with a king-sized bed. May be occupied by one or more people.');
+insert into public.room_type(name, description) values('Twin','A room with two beds. May be occupied by one or more people.');
+insert into public.room_type(name, description) values('Double-double','A room with two double (or perhaps queen) beds. May be occupied by one or more people.');
+insert into public.room_type(name, description) values('Studio',' A room with a studio bed – a couch that can be converted into a bed. May also have an additional bed.');
+insert into public.room_type(name, description) values('Suite',' A parlour or living room connected to one or more bedrooms.');
+insert into public.room_type(name, description) values('Connecting Room','Rooms with individual entrance doors from the outside and a connecting door between. Guests can move between rooms without going through the hallway.');
+
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Singles',45,1,1);
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Doubles',55,1,2);
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Master Suites',65,1,10);
+
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Singles',35,2,1);
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Doubles',45,2,2);
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Junior Suites',55,2,10);
+insert into public.room_pool(name, baseprice,hotel_id,room_type_id) values('Family rooms',65,2,11);
+
+
+insert into public.room_feature(name, description, price, hotel_id) values('Сейф','Сейф',7,1);
+insert into public.room_feature(name, description, price, hotel_id) values('Утюг','Утюг',2,1);
+insert into public.room_feature(name, description, price, hotel_id) values('Wifi','Wifi',10,1);
+
+insert into public.room_feature(name, description, price, hotel_id) values('Минибар','Минибар',12,2);
+insert into public.room_feature(name, description, price, hotel_id) values('Wifi','Wifi',12,2);
+insert into public.room_feature(name, description, price, hotel_id) values('Чайник','Чайник',1,2);
+
+
+
+

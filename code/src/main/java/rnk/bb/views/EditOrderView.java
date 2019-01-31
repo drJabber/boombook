@@ -1,11 +1,9 @@
 package rnk.bb.views;
 
+import org.primefaces.model.DualListModel;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
-import rnk.bb.views.bean.EditGuestBean;
-import rnk.bb.views.bean.EditHotelBean;
-import rnk.bb.views.bean.EditOrderBean;
-import rnk.bb.views.bean.EditRoomOrderBean;
+import rnk.bb.views.bean.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -13,6 +11,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,18 +29,22 @@ public class EditOrderView implements Serializable {
     private String state="order";
 
     @Inject
-    HotelService hotelService;
+    private HotelService hotelService;
 
     @Inject
-    OrderService orderService;
+    private OrderService orderService;
 
-    EditHotelBean hotelBean;
+    private EditHotelBean hotelBean;
 
-    EditOrderBean orderBean;
+    private EditOrderBean orderBean;
 
-    EditGuestBean guestBean;
+    private EditGuestBean guestBean;
 
-    EditRoomOrderBean roomBean;
+    private EditRoomOrderBean roomBean;
+
+    private DualListModel<EditRoomFeatureBean> roomFeatures;
+
+
 
     @PostConstruct
     public void init(){
@@ -67,8 +71,27 @@ public class EditOrderView implements Serializable {
         guestBean=new EditGuestBean();
         orderService.initGuestBean(guestBean,guestId);
 
+        roomFeatures=new DualListModel<>(new ArrayList<>(), new ArrayList<>());
+        initFeatures();
     }
 
+
+    private void initFeatures(){
+        List<EditRoomFeatureBean> source=roomFeatures.getSource();
+        List<EditRoomFeatureBean> dest=roomFeatures.getTarget();
+        source.clear();
+        dest.clear();
+        if (roomBean!=null){
+            List<EditRoomFeatureBean> features=roomBean.getFeatures();
+            features.stream().forEach(f->source.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+            hotelBean.getRoomFeatures()
+                    .stream()
+                    .filter(f->!features.stream().anyMatch(x->x.getId().equals(f.getId())))
+                    .forEach(f->source.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+        }else {
+            hotelBean.getRoomFeatures().stream().forEach(f->source.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+        }
+    }
 
     public EditOrderBean getOrderBean(){
         return orderBean;
@@ -166,6 +189,7 @@ public class EditOrderView implements Serializable {
         log.log(Level.INFO,"add new room order");
         EditRoomOrderBean bean=new EditRoomOrderBean();
         this.roomBean=orderService.initRoomOrderBean(bean,(EditRoomOrderBean) null);
+        this.roomFeatures.setTarget(roomBean.getFeatures());
         state="room-order";
     }
 
@@ -176,13 +200,14 @@ public class EditOrderView implements Serializable {
 
     public void removeRoom(){
         log.log(Level.INFO, String.format("remove room order %s", roomBean.toString()));
-        orderBean.getGuests().remove(guestBean);
+        orderBean.getRooms().remove(roomBean);
         state="order";
     }
 
     public void saveRoom(EditRoomOrderBean roomBean){
         log.log(Level.INFO,"save room order");
         if (!orderBean.getRooms().contains(roomBean)){
+            orderService.saveRoomOrderFeatures(roomBean,roomFeatures.getTarget());
             orderBean.getRooms().add(orderService.initRoomOrderBean(new EditRoomOrderBean(),roomBean));
         }
         state="order";
@@ -193,5 +218,20 @@ public class EditOrderView implements Serializable {
         state="order";
     }
 
-    
+
+    public EditRoomOrderBean getRoomBean() {
+        return roomBean;
+    }
+
+    public void setRoomBean(EditRoomOrderBean roomBean) {
+        this.roomBean = roomBean;
+    }
+
+    public DualListModel<EditRoomFeatureBean> getRoomFeatures() {
+        return roomFeatures;
+    }
+
+    public void setRoomFeatures(DualListModel<EditRoomFeatureBean> roomFeatures) {
+        this.roomFeatures = roomFeatures;
+    }
 }

@@ -6,21 +6,37 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <p:panel id="roomPanel" header="#{empty room.id?'Новый заказ номера':'Изменение заказа номера'}"  rendered="#{editOrderView.state.equals('room-order')}">
-        <p:panelGrid id="roomDetail" styleClass="ui-noborder">
+        <p:panelGrid id="roomDetail">
             <p:row>
                 <p:column styleClass="ui-form-input-label">
-                    <h:outputLabel for="fcInput" value="Тип номера:" />
+                    <h:outputLabel for="rpInput" value="Тип номера:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:selectOneMenu id="fcInput" value="#{room.roomPool.id}" style="width:150px" required="true" requiredMessage="Заполните поле" >
+                    <p:selectOneMenu id="rpInput" value="#{room.roomPool.id}" style="width:150px" required="true" requiredMessage="Заполните поле" >
                         <f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value="#{hotel.roomFeatures}" var="rf"  itemValue="#{rf.id}" itemLabel="#{rf.description}"/>
+                        <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp.id}" itemLabel="#{rp.name}"/>
                     </p:selectOneMenu>
                 </p:column>
                 <p:column>
-                    <p:message for="fcInput" id="fcInputMessage" display="both" />
+                    <p:message for="rpInput" id="rpInputMessage" display="both" />
                 </p:column>
             </p:row>
+            <p:row>
+                <p:column colspan="3" styleClass="ui-form-input-label">
+                    <h:outputLabel for="featuresInput" value="Опции:" />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column  colspan="2" styleClass="ui-form-input">
+                    <p:pickList id="featuresInput" value="#{editOrderView.roomFeatures}" var="roomFeatures"
+                                itemLabel="#{roomFeatures}" itemValue="#{roomFeatures}"
+                                />
+                </p:column>
+                <p:column>
+                    <p:message for="featuresInput" id="featuresInputMessage" display="both"/>
+                </p:column>
+            </p:row>
+
             <p:row>
                 <p:column styleClass="ui-form-input-label">
                     <h:outputLabel for="checkInDateInput" value="Дата заселения:" />
@@ -43,13 +59,6 @@
                 </p:column>
                 <p:column>
                     <p:message for="checkOutDateInput" id="roomCheckOutDateMessage" display="both"/>
-                </p:column>
-            </p:row>
-            <p:row>
-                <p:column colspan="2">
-                    <p:inputText  id="roomFeaturesInput" placeholder="Опции не заданы" value="#{room.features} " size="100"
-                                    readonly="true" />
-                    <p:message for="roomFeaturesInput" id="roomfeaturesMessage" display="both" />
                 </p:column>
             </p:row>
         </p:panelGrid>

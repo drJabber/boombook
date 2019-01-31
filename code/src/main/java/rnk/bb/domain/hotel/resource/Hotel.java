@@ -91,6 +91,9 @@ public class Hotel extends AbstractEntity {
     private List<RoomFeature> roomFeatures;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RoomPool> roomPools;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ScheduleItem> scheduleItems;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)

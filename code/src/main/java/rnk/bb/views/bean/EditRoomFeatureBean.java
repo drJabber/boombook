@@ -40,6 +40,10 @@ public class EditRoomFeatureBean implements Serializable {
             ((ArrayList) list).add(name.trim());
         }
 
+        if (price!=null){
+            list.add(price.toString());
+        }
+
         if (!description.trim().isEmpty()){
             list.add(description.trim());
         }

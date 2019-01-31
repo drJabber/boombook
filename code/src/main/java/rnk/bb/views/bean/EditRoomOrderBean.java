@@ -63,7 +63,9 @@ public class EditRoomOrderBean implements Serializable {
                 ((ArrayList) list).add(roomPool.getName().trim());
             }
 
-            list.add("("+roomPool.getRoomType().toString()+")");
+            if (roomPool.getRoomType()!=null){
+                list.add("("+roomPool.getRoomType().toString()+")");
+            }
         }
 
         if (checkInDate!=null){
