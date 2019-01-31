@@ -201,6 +201,13 @@ public class OrderService implements Serializable {
         }
     }
 
+    public void updateRoomOrderFeatures(EditRoomOrderBean roomOrderBean, List<EditRoomFeatureBean> features){
+        if ((roomOrderBean!=null)&&(features!=null)){
+            roomOrderBean.getFeatures().clear();
+            features.stream().forEach(f->roomOrderBean.getFeatures().add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+        }
+    }
+
     public EditAddressBean initAddressBean(EditAddressBean addressBean, Long addressId){
         Address address=null;
         if (addressId!=null){

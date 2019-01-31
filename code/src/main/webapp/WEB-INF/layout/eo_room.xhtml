@@ -28,8 +28,8 @@
             </p:row>
             <p:row>
                 <p:column  colspan="2" styleClass="ui-form-input">
-                    <p:pickList id="featuresInput" value="#{editOrderView.roomFeatures}" var="roomFeatures"
-                                itemLabel="#{roomFeatures}" itemValue="#{roomFeatures}"
+                    <p:pickList id="featuresInput" value="#{editOrderView.roomFeatures}" var="roomFeature"
+                                itemLabel="#{roomFeature.toString()}" itemValue="#{roomFeature}" converter="genericConverter"
                                 />
                 </p:column>
                 <p:column>

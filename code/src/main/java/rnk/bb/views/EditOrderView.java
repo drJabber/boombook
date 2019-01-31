@@ -189,12 +189,14 @@ public class EditOrderView implements Serializable {
         log.log(Level.INFO,"add new room order");
         EditRoomOrderBean bean=new EditRoomOrderBean();
         this.roomBean=orderService.initRoomOrderBean(bean,(EditRoomOrderBean) null);
-        this.roomFeatures.setTarget(roomBean.getFeatures());
+        this.initFeatures();
+//        this.roomFeatures.setTarget(roomBean.getFeatures());
         state="room-order";
     }
 
     public void editRoom(){
         log.log(Level.INFO, String.format("edit room order %s", roomBean.toString()));
+        initFeatures();
         state="room-order";
     }
 
@@ -207,7 +209,7 @@ public class EditOrderView implements Serializable {
     public void saveRoom(EditRoomOrderBean roomBean){
         log.log(Level.INFO,"save room order");
         if (!orderBean.getRooms().contains(roomBean)){
-            orderService.saveRoomOrderFeatures(roomBean,roomFeatures.getTarget());
+            orderService.updateRoomOrderFeatures(roomBean,roomFeatures.getTarget());
             orderBean.getRooms().add(orderService.initRoomOrderBean(new EditRoomOrderBean(),roomBean));
         }
         state="order";
