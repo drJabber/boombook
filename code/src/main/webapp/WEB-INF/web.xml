@@ -5,6 +5,8 @@
          version="4.0">
   <display-name>boombook</display-name>
 
+
+
   <context-param>
     <param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
     <param-value>0</param-value>
@@ -26,14 +28,15 @@
   </context-param>
 
 
-  <!--<context-param>-->
-    <!--<param-name>com.sun.faces.numberOfViewsInSession</param-name>-->
-    <!--<param-value>5</param-value>-->
-  <!--</context-param>-->
-  <!--<context-param>-->
-    <!--<param-name>com.sun.faces.serializeServerState</param-name>-->
-    <!--<param-value>false</param-value>-->
-  <!--</context-param>-->
+
+  <security-role>
+    <role-name>*</role-name>
+  </security-role>
+
+
+
+
+
   <context-param>
     <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
     <param-value>server</param-value>
@@ -50,14 +53,6 @@
     <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
     <param-value>true</param-value>
   </context-param>
-  <!--<context-param>-->
-    <!--<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>-->
-    <!--<param-value>6Lf2XQkTAAAAAHsc1-7Mt_kMlmcmGqlxoMDJlp2K</param-value>-->
-  <!--</context-param>-->
-  <!--<context-param>-->
-    <!--<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>-->
-    <!--<param-value>6Lf2XQkTAAAAANcvOwYqPxWL4iZDksFqHpS39GDA</param-value>-->
-  <!--</context-param>-->
 
   <context-param>
     <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>

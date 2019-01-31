@@ -49,12 +49,12 @@
         <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
             <p:column style="width:90px">
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.editGuest}"
+                                 process="@this" action="#{editOrderView.editGuest(currentGuest)}"
                                  icon="fa fa-edit">
                     <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
                 </p:commandButton>
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.removeGuest}"
+                                 process="@this" action="#{editOrderView.removeGuest(currentGuest)}"
                                  icon="fa fa-remove">
                     <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
                     <p:confirm header="Удаление" message="Удалить данные #{editOrderView.guestBean.name}" icon="pi pi-exclamation-triangle" />
@@ -79,12 +79,12 @@
         <p:dataTable id="roomsTable" value="#{order.rooms}" var="currentRoom" emptyMessage="Комнаты не заказаны">
             <p:column style="width:90px">
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.editRoom}"
+                                 process="@this" action="#{editOrderView.editRoom(currentRoom)}"
                                  icon="fa fa-edit">
                     <f:setPropertyActionListener value="#{currentRoom}" target="#{editOrderView.roomBean}"/>
                 </p:commandButton>
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.removeRoom}"
+                                 process="@this" action="#{editOrderView.removeRoom(currentRoom)}"
                                  icon="fa fa-remove">
                     <f:setPropertyActionListener value="#{currentRoom}" target="#{editOrderView.roomBean}"/>
                     <p:confirm header="Удаление" message="Удалить данные #{editOrderView.roomBean}" icon="pi pi-exclamation-triangle" />

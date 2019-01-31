@@ -1,0 +1,28 @@
+        <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
+            <p:column style="width:90px">
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.editGuest}"
+                                 icon="fa fa-edit">
+                    <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
+                </p:commandButton>
+                <p:commandButton update=":orderForm"
+                                 process="@this" action="#{editOrderView.removeGuest}"
+                                 icon="fa fa-remove">
+                    <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
+                    <p:confirm header="Удаление" message="Удалить данные #{editOrderView.guestBean.name}" icon="pi pi-exclamation-triangle" />
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Имя" sortBy="#{currentGuest.name}" >
+                <h:outputText value="#{currentGuest.name}" />
+            </p:column>
+            <p:column headerText="Д.Р.">
+                <h:outputText value="#{currentGuest.birthDate}" />
+            </p:column>
+            <p:column headerText="Пол">
+                <h:outputText value="#{currentGuest.gender}" />
+            </p:column>
+            <p:column headerText="Питание">
+                <h:outputText value="#{currentGuest.foodConcept.description}" />
+            </p:column>
+        </p:dataTable>
+        <p:message for="guestsTable" id="guestsMessage" display="both" />
