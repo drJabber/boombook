@@ -93,7 +93,7 @@
                 </p:column>
                 <p:column  styleClass="ui-form-input">
                     <p:selectOneMenu id="fcInput" value="#{editOrderView.guestBean.foodConcept}"  style="width:150px" required="true"
-                                     requiredMessage="Заполните поле" converter="selectOneMenuConverter">
+                                     requiredMessage="Заполните поле" converter="#{selectOneMenuConverter}">
                         <f:selectItems value="#{hotel.foodConcepts}" var="fc"  itemValue="#{fc}"  itemLabel="#{fc.description}"/>
                     </p:selectOneMenu>
                 </p:column>

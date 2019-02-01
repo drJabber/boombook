@@ -1,25 +1,19 @@
 package rnk.bb.views.bean;
 
-import org.primefaces.component.selectonemenu.SelectOneMenu;
-import rnk.bb.services.HotelService;
-
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UISelectItem;
+import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
+import java.io.Serializable;
+import java.util.List;
 
 
 @Named("selectOneMenuConverter")
 @SessionScoped
-public class SelectOneMenuConverter implements Converter {
+public class SelectOneMenuConverter implements Converter, Serializable {
  
     @Override
     public Object getAsObject(final FacesContext arg0, final UIComponent arg1, final String objectString) {
