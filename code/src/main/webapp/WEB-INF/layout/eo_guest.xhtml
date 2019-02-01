@@ -5,14 +5,14 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:panel id="guestPanel" header="#{empty guest.id?'Новый гость':'Изменение данных гостя'}"  rendered="#{editOrderView.state.equals('guest')}">
+    <p:panel id="guestPanel" header="#{empty editOrderView.guestBean.id?'Новый гость':'Изменение данных гостя'}"  rendered="#{editOrderView.state.equals('guest')}">
         <p:panelGrid id="guestDetail" styleClass="ui-noborder">
             <p:row>
                 <p:column styleClass="ui-form-input-label">
                     <h:outputLabel for="guestName" value="Имя:" />
                 </p:column>
                 <p:column styleClass="ui-form-input">
-                    <p:inputText id="guestName" value="#{guest.name}" required="true" requiredMessage="Заполните поле" />
+                    <p:inputText id="guestName" value="#{editOrderView.guestBean.name}" required="true" requiredMessage="Заполните поле" />
                 </p:column>
                 <p:column>
                     <p:message for="guestName" id="guestNameMessage" display="both" />
@@ -23,7 +23,7 @@
                     <h:outputLabel for="guestBD" value="Д.Р.:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:calendar id="guestBD" value="#{guest.birthDate}" showOn="button"
+                    <p:calendar id="guestBD" value="#{editOrderView.guestBean.birthDate}" showOn="button"
                                 required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
                 </p:column>
                 <p:column>
@@ -35,7 +35,7 @@
                     <h:outputLabel for="guestGender" value="Пол:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:selectOneMenu id="guestGender" value="#{guest.gender}" style="width:80px">
+                    <p:selectOneMenu id="guestGender" value="#{editOrderView.guestBean.gender}" style="width:80px">
                         <f:selectItem itemLabel="М" itemValue="М"/>
                         <f:selectItem itemLabel="Ж" itemValue="Ж"/>
                     </p:selectOneMenu>
@@ -49,7 +49,7 @@
                     <h:outputLabel for="guest_email_input" value="Email:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:inputText id="guest_email_input" value="#{guest.email}" validatorMessage="Здесь нужен Email">
+                    <p:inputText id="guest_email_input" value="#{editOrderView.guestBean.email}" validatorMessage="Здесь нужен Email">
                         <f:validator validatorId="custom.EmailValidator" />
                     </p:inputText>
                 </p:column>
@@ -61,8 +61,8 @@
                 <p:column colspan="2">
                     <div class="ui-inputgroup">
                         <!--<h:outputLabel for="guestAddress" value="Адрес:" />-->
-                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress(guest)}" update=":orderForm" process="@this"/>
-                        <p:inputText  id="guestAddress" placeholder="Адрес не задан" value="#{guest.address} " size="120"
+                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress(editOrderView.guestBean)}" update=":orderForm" process="@this"/>
+                        <p:inputText  id="guestAddress" placeholder="Адрес не задан" value="#{editOrderView.guestBean.address} " size="120"
                                       readonly="true" required="true" requiredMessage="Необходимо задать адрес" />
                         <p:message for="guestAddress" id="guestAddressMessage" display="both" />
                     </div>
@@ -71,8 +71,8 @@
             <p:row>
                 <p:column colspan="2">
                     <div class="ui-inputgroup">
-                        <p:commandButton value="Документ" actionListener="#{editOrderView.setGuestDocument(guest)}" update=":orderForm"  process="@this" />
-                        <p:inputText  id="guestDocument" placeholder="Документ не задан" value="#{guest.document}" size="120"
+                        <p:commandButton value="Документ" actionListener="#{editOrderView.setGuestDocument(editOrderView.guestBean)}" update=":orderForm"  process="@this" />
+                        <p:inputText  id="guestDocument" placeholder="Документ не задан" value="#{editOrderView.guestBean.document}" size="120"
                                       readonly="true" required="true" requiredMessage="Необходимо внести документ" />
                         <p:message for="guestDocument" id="guestDocumentMessage" display="both" />
                     </div>
@@ -83,12 +83,18 @@
 
             <p:row>
                 <p:column styleClass="ui-form-input-label">
+                    <h:outputText value="concept: #{editOrderView.guestBean.foodConcept}" />
+                    <h:outputText value="concept: #{editOrderView.guestBean.foodConcept.id}, #{editOrderView.guestBean.foodConcept.name}" />
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column styleClass="ui-form-input-label">
                     <h:outputLabel for="fcInput" value="Питание:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:selectOneMenu id="fcInput" value="#{guest.foodConcept.id}" style="width:150px" required="true" requiredMessage="Заполните поле" >
-                        <f:selectItem itemLabel="Тип питания" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value="#{hotel.foodConcepts}" var="fc"  itemValue="#{fc.id}" itemLabel="#{fc.description}"/>
+                    <p:selectOneMenu id="fcInput" value="#{editOrderView.guestBean.foodConcept}"  style="width:150px" required="true"
+                                     requiredMessage="Заполните поле" converter="foodConceptConverter">
+                        <f:selectItems value="#{hotel.foodConcepts}" var="fc"  itemValue="#{fc}"  itemLabel="#{fc.description}"/>
                     </p:selectOneMenu>
                 </p:column>
                 <p:column>
@@ -102,7 +108,7 @@
 
         <p:toolbar styleClass="ui-noborder">
             <f:facet name="left">
-                <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuest(guest)}" update=":orderForm" style="margin-right:20px;" />
+                <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuest(editOrderView.guestBean)}" update=":orderForm" style="margin-right:20px;" />
                 <p:commandButton value="Закрыть"
                                  action="#{editOrderView.cancelGuest()}" update=":orderForm" process="@this"
                                  style="margin-right:20px;"/>

@@ -72,18 +72,18 @@ public class EditOrderView implements Serializable {
         orderService.initGuestBean(guestBean,guestId);
 
         roomFeatures=new DualListModel<>(new ArrayList<>(), new ArrayList<>());
-        initFeatures();
+        initFeatures(roomBean);
     }
 
 
-    private void initFeatures(){
+    private void initFeatures(EditRoomOrderBean room){
         List<EditRoomFeatureBean> source=roomFeatures.getSource();
         List<EditRoomFeatureBean> dest=roomFeatures.getTarget();
         source.clear();
         dest.clear();
-        if (roomBean!=null){
-            List<EditRoomFeatureBean> features=roomBean.getFeatures();
-            features.stream().forEach(f->source.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
+        if (room!=null){
+            List<EditRoomFeatureBean> features=room.getFeatures();
+            features.stream().forEach(f->dest.add(hotelService.initRoomFeatureBean(new EditRoomFeatureBean(),f)));
             hotelBean.getRoomFeatures()
                     .stream()
                     .filter(f->!features.stream().anyMatch(x->x.getId().equals(f.getId())))
@@ -117,24 +117,10 @@ public class EditOrderView implements Serializable {
         state="guest";
     }
 
-    public void editGuest(){
-        log.log(Level.INFO, String.format("edit guest %s", guestBean.getName()));
+    public void removeGuest(EditGuestBean currentGuest){
+        log.log(Level.INFO, String.format("remove guest %s", currentGuest.getName()));
+        orderBean.getGuests().remove(currentGuest);
 //        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
-        state="guest";
-    }
-
-    public void removeGuest(){
-        log.log(Level.INFO, String.format("remove guest %s", guestBean.getName()));
-        orderBean.getGuests().remove(guestBean);
-//        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
-        state="order";
-    }
-
-    public void saveGuest(EditGuestBean guestBean){
-        log.log(Level.INFO,"save guest");
-        if (!orderBean.getGuests().contains(guestBean)){
-            orderBean.getGuests().add(orderService.initGuestBean(new EditGuestBean(),guestBean));
-        }
         state="order";
     }
 
@@ -189,28 +175,44 @@ public class EditOrderView implements Serializable {
         log.log(Level.INFO,"add new room order");
         EditRoomOrderBean bean=new EditRoomOrderBean();
         this.roomBean=orderService.initRoomOrderBean(bean,(EditRoomOrderBean) null);
-        this.initFeatures();
+        this.initFeatures(roomBean);
 //        this.roomFeatures.setTarget(roomBean.getFeatures());
         state="room-order";
     }
 
-    public void editRoom(){
-        log.log(Level.INFO, String.format("edit room order %s", roomBean.toString()));
-        initFeatures();
-        state="room-order";
-    }
-
-    public void removeRoom(){
-        log.log(Level.INFO, String.format("remove room order %s", roomBean.toString()));
-        orderBean.getRooms().remove(roomBean);
+    public void removeRoom(EditRoomOrderBean currentRoom){
+        log.log(Level.INFO, String.format("remove room order %s", currentRoom.toString()));
+        orderBean.getRooms().remove(currentRoom);
         state="order";
     }
 
-    public void saveRoom(EditRoomOrderBean roomBean){
+    public void editGuest(EditGuestBean currentGuest){
+        log.log(Level.INFO, String.format("edit guest %s", currentGuest.getName()));
+//        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
+        state="guest";
+    }
+
+    public void editRoom(EditRoomOrderBean currentRoom){
+        log.log(Level.INFO, String.format("edit room order %s", currentRoom.toString()));
+//        this.roomBean=orderService.initRoomOrderBean(roomBean,currentRoom);
+        initFeatures(currentRoom);
+        state="room-order";
+    }
+
+    public void saveGuest(EditGuestBean currentGuest){
+        log.log(Level.INFO,"save guest");
+        if (!orderBean.getGuests().contains(guestBean)){
+            guestBean=orderService.initGuestBean(new EditGuestBean(),currentGuest);
+            orderBean.getGuests().add(guestBean);
+        }
+        state="order";
+    }
+
+    public void saveRoom(EditRoomOrderBean currentRoom){
         log.log(Level.INFO,"save room order");
-        if (!orderBean.getRooms().contains(roomBean)){
-            orderService.updateRoomOrderFeatures(roomBean,roomFeatures.getTarget());
-            orderBean.getRooms().add(orderService.initRoomOrderBean(new EditRoomOrderBean(),roomBean));
+        orderService.updateRoomOrderFeatures(roomBean,roomFeatures.getTarget());
+        if (!orderBean.getRooms().contains(currentRoom)){
+            orderBean.getRooms().add(orderService.initRoomOrderBean(new EditRoomOrderBean(),currentRoom));
         }
         state="order";
     }

@@ -12,9 +12,13 @@
                     <h:outputLabel for="rpInput" value="Тип номера:" />
                 </p:column>
                 <p:column  styleClass="ui-form-input">
-                    <p:selectOneMenu id="rpInput" value="#{room.roomPool.id}" style="width:150px" required="true" requiredMessage="Заполните поле" >
-                        <f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>
-                        <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp.id}" itemLabel="#{rp.name}"/>
+                    <p:selectOneMenu id="rpInput" value="#{room.roomPool}"
+                                     style="width:150px" required="true"
+                                     requiredMessage="Заполните поле"
+                                     converter="genericConverter"   >
+                        <!--<f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>-->
+                        <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp}" itemLabel="#{rp.name}"
+                                       />
                     </p:selectOneMenu>
                 </p:column>
                 <p:column>

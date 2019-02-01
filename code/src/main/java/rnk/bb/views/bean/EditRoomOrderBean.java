@@ -79,14 +79,6 @@ public class EditRoomOrderBean implements Serializable {
         return list.stream().collect(Collectors.joining(","));
     }
 
-    public EditRoomPoolBean getRoomPoolBean(){
-        return roomPool;
-    }
-
-    public void setRoomPoolBean(EditRoomPoolBean roomPool){
-        this.roomPool=roomPool;
-    }
-
     public Date getCheckInDate(){
         return checkInDate;
     }

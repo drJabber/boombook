@@ -16,15 +16,15 @@ $(document).ready(function() {
     );
 });
 
-
-function commandButtonClick(element){
-    console.log("button clicked");
-}
-
-function commandButtonComplete(element){
-    console.log("button complete");
-}
-
-function commandButtonSubmit(element){
-    console.log("button submit");
-}
+//
+// function commandButtonClick(element){
+//     console.log("button clicked");
+// }
+//
+// function commandButtonComplete(element){
+//     console.log("button complete");
+// }
+//
+// function commandButtonSubmit(element){
+//     console.log("button submit");
+// }

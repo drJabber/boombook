@@ -1,10 +1,7 @@
 package rnk.bb.services;
 
 import org.primefaces.model.LazyDataModel;
-import rnk.bb.domain.hotel.resource.FoodConcept;
-import rnk.bb.domain.hotel.resource.Hotel;
-import rnk.bb.domain.hotel.resource.RoomFeature;
-import rnk.bb.domain.hotel.resource.RoomPool;
+import rnk.bb.domain.hotel.resource.*;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
@@ -14,10 +11,14 @@ import rnk.bb.views.bean.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
+@Named(value = "hotelService")
 @ApplicationScoped
 public class HotelService implements Serializable {
 
@@ -35,6 +36,11 @@ public class HotelService implements Serializable {
 
     @Inject
     RoomFeatureController roomFeatures;
+
+    @PostConstruct
+    private void init(){
+        FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("hotelService",this);
+    }
 
     public Hotel findById(Long id){
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
@@ -82,6 +88,20 @@ public class HotelService implements Serializable {
             return cleanHotelBean(hotelBean);
         }
     }
+
+    public EditFoodConceptBean initFoodConceptBean(EditFoodConceptBean conceptBean, Long conceptId){
+        rnk.bb.domain.hotel.resource.FoodConcept concept=null;
+        if (conceptId!=null){
+            concept=foodConcepts.findOptionalById(conceptId).orElse(null);
+        }
+        EditFoodConceptBean result=conceptBean;
+        if (conceptBean==null)
+        {
+            result=new EditFoodConceptBean();
+        }
+        return initFoodConceptBean(result,concept);
+    }
+
 
     private EditFoodConceptBean cleanFoodConceptBean(EditFoodConceptBean fcBean){
         fcBean.setId(null);
