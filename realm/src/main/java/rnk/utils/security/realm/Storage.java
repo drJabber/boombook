@@ -63,7 +63,7 @@ public class Storage {
     }
 
     public String getSaltForLogin(String login) {
-        String passwd_ans_salt = null;
+        String passwd_and_salt = null;
         String salt=null;
         try {
             PreparedStatement s = getConnection().prepareStatement(PASSWD_AND_SALT_FOR_USER);
@@ -71,8 +71,8 @@ public class Storage {
             ResultSet rs = s.executeQuery();
 
             if (rs.next()) {
-                passwd_ans_salt = rs.getString(1);
-                salt=String.split("-")[0];
+                passwd_and_salt = rs.getString(1);
+                salt=String.split("$")[0];
             }
 
         } catch (SQLException ex) {

@@ -14,9 +14,9 @@ SET check_function_bodies = false;
 SET client_min_messages = info;
 SET row_security = off;
 
-
-
 INSERT INTO public.role (role) VALUES ('Client'),('HotelStaff'),('HotelManager'),('SystemManager');
+INSERT INTO public.auth (login,password,email,phone) VALUES ('papaboom','$','dJabber@gmail.com','+7(929)511-1849');
+INSERT INTO public.auth_role (role,auth) VALUES ('SystemManager','papaboom');
 
 INSERT INTO public.document_type (id, description) VALUES (1, 'ПАСПОРТ'),(2, 'ВОДИТЕЛЬСКОЕ УДОСТОВЕРЕНИЕ');
 
