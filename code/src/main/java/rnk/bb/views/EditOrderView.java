@@ -136,7 +136,6 @@ public class EditOrderView implements Serializable {
 
     public void saveGuestAddress(EditGuestBean guest){
         log.log(Level.INFO,"save guest address");
-//        guest.getAddress().init(guest.getAddress());
         state="guest";
     }
 
@@ -148,7 +147,6 @@ public class EditOrderView implements Serializable {
 
     public void saveGuestDocument(EditGuestBean guest){
         log.log(Level.INFO,"save guest document");
-//        this.guestBean.getDocument().init(guest.getDocument());
         state="guest";
     }
 
@@ -159,7 +157,6 @@ public class EditOrderView implements Serializable {
 
     public void setGuestDocument(EditGuestBean guest){
         log.log(Level.INFO,"add new document");
-//        this.guestBean.getDocument().init(guest.getDocument());
         state="guest-document";
     }
 
@@ -176,7 +173,6 @@ public class EditOrderView implements Serializable {
         EditRoomOrderBean bean=new EditRoomOrderBean();
         this.roomBean=orderService.initRoomOrderBean(bean,(EditRoomOrderBean) null);
         this.initFeatures(roomBean);
-//        this.roomFeatures.setTarget(roomBean.getFeatures());
         state="room-order";
     }
 
@@ -188,13 +184,11 @@ public class EditOrderView implements Serializable {
 
     public void editGuest(EditGuestBean currentGuest){
         log.log(Level.INFO, String.format("edit guest %s", currentGuest.getName()));
-//        this.guestBean=orderService.initGuestBean(guestBean,(EditGuestBean) null);
         state="guest";
     }
 
     public void editRoom(EditRoomOrderBean currentRoom){
         log.log(Level.INFO, String.format("edit room order %s", currentRoom.toString()));
-//        this.roomBean=orderService.initRoomOrderBean(roomBean,currentRoom);
         initFeatures(currentRoom);
         state="room-order";
     }

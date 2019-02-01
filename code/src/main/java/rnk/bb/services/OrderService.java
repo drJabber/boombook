@@ -2,9 +2,7 @@ package rnk.bb.services;
 
 import rnk.bb.domain.book.Order;
 import rnk.bb.domain.book.RoomOrder;
-import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Guest;
-import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
 import rnk.bb.rest.book.GuestController;
