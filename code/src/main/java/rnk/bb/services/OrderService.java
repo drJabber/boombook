@@ -11,7 +11,7 @@ import rnk.bb.rest.book.RoomOrderController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
 import rnk.bb.services.bean.CountryBean;
-import rnk.bb.views.bean.*;
+import rnk.bb.views.bean.order.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

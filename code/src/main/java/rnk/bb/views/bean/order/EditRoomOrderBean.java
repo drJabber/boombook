@@ -1,13 +1,9 @@
-package rnk.bb.views.bean;
+package rnk.bb.views.bean.order;
 
 import rnk.bb.domain.book.Order;
-import rnk.bb.domain.hotel.resource.Hotel;
-import rnk.bb.domain.util.Document;
 
 import javax.enterprise.context.SessionScoped;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

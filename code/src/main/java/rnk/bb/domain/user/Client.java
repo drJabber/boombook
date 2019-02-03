@@ -2,6 +2,7 @@ package rnk.bb.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="client", schema="public")
 public class Client extends AbstractEntity {

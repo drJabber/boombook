@@ -2,6 +2,7 @@ package rnk.bb.domain.hotel.resource;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
 import rnk.bb.domain.blank.AbstractEntity;
 
@@ -10,6 +11,7 @@ import javax.validation.Constraint;
 import javax.validation.constraints.NotNull;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="hotel_payment_policy", schema = "public")
 public class HotelPaymentPolicy extends AbstractEntity {

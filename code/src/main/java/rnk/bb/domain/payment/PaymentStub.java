@@ -1,6 +1,7 @@
 package rnk.bb.domain.payment;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
 import rnk.bb.util.json.DateAdapter;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="payment", schema = "public")
 public class PaymentStub extends AbstractEntity {

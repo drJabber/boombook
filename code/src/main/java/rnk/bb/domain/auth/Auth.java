@@ -35,7 +35,8 @@ public class Auth implements Serializable {
 
     @NotNull
     @Column(nullable = false)
-    private Boolean blocked=false;
+    @Enumerated(EnumType.ORDINAL)
+    private AccountStateEnum state=AccountStateEnum.ACTIVE;
 
     @JoinColumn(name="role",nullable = false)
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "accounts", fetch=FetchType.LAZY )
@@ -58,7 +59,7 @@ public class Auth implements Serializable {
         byte[] bsalt=hu.salt(24);
         String salt=hu.toBase64(bsalt);
         byte[] bpaswd=hu.hash_strong(password,bsalt);
-        this.password=salt+"$"+hu.toBase64(bpaswd);
+        this.password=salt+hu.toBase64(bpaswd);
     }
 
     public Set<Role> getRoles(){

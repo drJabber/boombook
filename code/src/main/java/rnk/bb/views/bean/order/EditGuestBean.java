@@ -1,7 +1,6 @@
-package rnk.bb.views.bean;
+package rnk.bb.views.bean.order;
 
 import rnk.bb.domain.book.Order;
-import rnk.bb.domain.hotel.resource.FoodConcept;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Email;

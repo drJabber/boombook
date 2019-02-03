@@ -72,7 +72,7 @@ public class Storage {
 
             if (rs.next()) {
                 passwd_and_salt = rs.getString(1);
-                salt=String.split("$")[0];
+                salt=passwd_and_salt.split("==")[0]+"==";
             }
 
         } catch (SQLException ex) {

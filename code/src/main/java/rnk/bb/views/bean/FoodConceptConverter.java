@@ -1,23 +1,15 @@
 package rnk.bb.views.bean;
 
-import org.primefaces.component.selectonemenu.SelectOneMenu;
-import rnk.bb.services.HotelService;
+import rnk.bb.views.bean.order.EditFoodConceptBean;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.UISelectItems;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.WeakHashMap;
 
 
 @Named("foodConceptConverter")
@@ -34,7 +26,7 @@ public class FoodConceptConverter implements Converter {
 
    @Override
     public String getAsString(final FacesContext arg0, final UIComponent arg1, final Object object) {
-        if (object.getClass()==EditFoodConceptBean.class){
+        if (object.getClass()== EditFoodConceptBean.class){
             return ((EditFoodConceptBean)object).getId().toString();
         }
         return null;

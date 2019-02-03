@@ -1,8 +1,5 @@
-package rnk.bb.views.bean;
+package rnk.bb.views.bean.order;
 
-import rnk.bb.domain.book.Order;
-import rnk.bb.domain.book.RoomOrder;
-import rnk.bb.domain.hotel.resource.Guest;
 import rnk.bb.domain.user.Client;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Named("editOrderBean")
 @SessionScoped
 public class EditOrderBean implements Serializable {
     private Client client;

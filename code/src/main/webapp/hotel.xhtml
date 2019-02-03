@@ -17,7 +17,7 @@
     <ui:define name="pageContent">
         <h:form id="hotelForm">
             <p:panel styleClass="panel-no-header">
-                <p:button outcome="editorder" value="Make order" icon="pi" style="margin-right:20px;">
+                <p:button outcome="order/editorder" value="Make order" icon="pi" style="margin-right:20px;">
                     <f:param name="hotelId" value="#{hotel.id}" />
                 </p:button>
                 <p:commandButton value="Back" icon="pi" style="margin-right:20px;" onclick="window.history.back();" />

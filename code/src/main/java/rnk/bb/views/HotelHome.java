@@ -6,6 +6,7 @@ import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.services.HotelService;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -16,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("boomHome")
-@ViewScoped()
+@SessionScoped
 public class HotelHome implements Serializable {
     private static Logger log=Logger.getLogger(HotelHome.class.getName());
 

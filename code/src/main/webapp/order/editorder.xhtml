@@ -6,12 +6,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/layout/template.xhtml">
 
+    <!--<f:event listener="#{editOrderView.startConversation}" type="preRenderView" />-->
 
     <ui:define name="metadata">
         <f:metadata>
-            <f:viewAction action="#{editOrderView.init()}" />
+            <f:viewAction action="#{editOrderView.init()}"  />
             <ui:param name="order" value="#{editOrderView.orderBean}"/>
-            <!--<ui:param name="guest" value="#{editOrderView.guestBean}"/>-->
+            <ui:param name="guest" value="#{editOrderView.guestBean}" />
             <ui:param name="hotel" value="#{editOrderView.hotelBean}"/>
             <ui:param name="room" value="#{editOrderView.roomBean}"/>
         </f:metadata>
@@ -20,12 +21,12 @@
     <ui:define name="pageTitle">Заказ</ui:define>
     <ui:define name="pageContent">
         <h:form id="orderForm">
-            <h:outputText value="foodconcept : #{editOrderView.guestBean.foodConcept.name}, #{editOrderView.guestBean.foodConcept.description}" />
-            <ui:include src="/WEB-INF/layout/eo_order.xhtml" />
-            <ui:include src="/WEB-INF/layout/eo_guest.xhtml" />
-            <ui:include src="/WEB-INF/layout/eo_room.xhtml" />
-            <ui:include src="/WEB-INF/layout/eo_guest_address.xhtml" />
-            <ui:include src="/WEB-INF/layout/eo_guest_document.xhtml" />
+            <!--<h:outputText value="foodconcept : #{editOrderView.guestBean.foodConcept.name}, #{editOrderView.guestBean.foodConcept.description}" />-->
+            <ui:include src="/WEB-INF/layout/order/eo_order.xhtml" />
+            <ui:include src="/WEB-INF/layout/order/eo_guest.xhtml" />
+            <ui:include src="/WEB-INF/layout/order/eo_room.xhtml" />
+            <ui:include src="/WEB-INF/layout/order/eo_guest_address.xhtml" />
+            <ui:include src="/WEB-INF/layout/order/eo_guest_document.xhtml" />
 
             <p:confirmDialog closeOnEscape="true" global="true" showEffect="fade" hideEffect="fade">
                 <p:commandButton value="Удалить" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />

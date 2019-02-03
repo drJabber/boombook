@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                    xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/template.xhtml">
+
+
+    <!--<ui:define name="metadata">-->
+        <!--<f:metadata>-->
+            <!--<f:viewAction action="#{registerView.init()}" />-->
+            <!--<ui:param name="hotel" value="#{registerView.client}"/>-->
+        <!--</f:metadata>-->
+    <!--</ui:define>-->
+    <ui:define name="pageTitle">Регистрация</ui:define>
+    <ui:define name="pageContent">
+        <h:form id="registrationForm">
+            <p:panel header="Регистрация" >
+                <p:messages />
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="ФИО:*"/>
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="clientName" value="#{registrationView.user.name}" required="true" label="ФИО" >
+                            <p:ajax event="keyup"  update="clientNameMsg"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message id="clientNameMsg" for="clientName"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="Д.Р.:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:calendar id="clientBD" value="#{registrationView.user.birthDate}" showOn="button" label="Д.Р."
+                                    required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="clientBD" id="clientBDMessage" display="both"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <h:outputLabel for="clientGender" value="Пол:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:selectOneMenu id="clientGender" value="#{registrationView.user.gender}" style="width:80px">
+                            <f:selectItem itemLabel="М" itemValue="М"/>
+                            <f:selectItem itemLabel="Ж" itemValue="Ж"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="clientGender" id="clientGenderMessage" display="both" />
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <h:outputLabel for="client_email_input" value="Email:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="client_email_input" value="#{registrationView.user.email}" validatorMessage="Здесь нужен Email">
+                            <f:validator validatorId="custom.EmailValidator" />
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="client_email_input" id="clientEmailMessage" display="both" />
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel for="phone" value="Телефон:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputMask id="phone" value="#{registrationView.user.phone}" mask="(999) 999-9999"
+                                     required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="phone" id="phoneMessage" display="both" />
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel for="clientAddress" value="Адрес:" />
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="ui-inputgroup  ui-form-column-wide">
+                            <p:commandButton icon="fa fa-ellipsis-h" actionListener="#{registrationView.setClientAddress(registrationView.user)}" update=":registrationForm" process="@this"/>
+                            <p:inputText  id="clientAddress" placeholder="Адрес не задан" value="#{registrationView.user.address} "
+                                          readonly="true" required="true"
+                                          styleClass="ui-form-input-wide"
+                                          requiredMessage="Необходимо задать адрес" />
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="clientAddress" id="clientAddressMessage" display="both" />
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel for="clientDocument" value="Документ:" />
+                    </div>
+                    <div class="ui-g-6">
+                        <div class="ui-inputgroup ui-form-column-wide">
+                            <p:commandButton icon="fa fa-ellipsis-h" actionListener="#{registrationView.setClientDocument(registrationView.user)}" update=":registrationForm"  process="@this" />
+                            <p:inputText  id="clientDocument" placeholder="Документ не задан" value="#{registrationView.user.document}"
+                                          readonly="true" required="true"
+                                          styleClass="ui-form-input-wide"
+                                          requiredMessage="Необходимо внести документ" />
+                        </div>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="clientDocument" id="clientDocumentMessage" display="both" />
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="Login:*"/>
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="userName" value="#{registrationView.user.login}" required="true" label="UserName" >
+                            <p:ajax event="keyup"  update="userNameMsg"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message id="userNameMsg" for="userName"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="Password:*"/>
+                    </div>
+                    <div class="ui-g-4">
+                        <p:password id="password" value="#{registrationView.user.password}" required="true" label="Password">
+                            <f:validateLength minimum="4"/>
+                            <p:ajax update="passwordMsg" event="keyup"/>
+                        </p:password>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message id="passwordMsg" for="password"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-3">
+                        <p:commandButton action="#{registrationView.doRegister}" value="Регистрация" update=":registrationForm"/>
+                        <p:commandButton value="Закрыть"
+                                         onclick="window.history.back();"
+                                         style="margin-right:20px;" process="@all"/>
+                    </div>
+                </div>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

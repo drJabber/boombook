@@ -1,6 +1,7 @@
 package rnk.bb.domain.util;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @Data
 @Table(name="address", schema = "public")
 public class Address extends AbstractEntity {

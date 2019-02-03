@@ -12,7 +12,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 
 @Named("hotelView")
-@ViewScoped()
+@ViewScoped
 public class HotelView implements Serializable {
 
     private Hotel hotel;

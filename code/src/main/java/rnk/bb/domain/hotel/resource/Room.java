@@ -1,6 +1,7 @@
 package rnk.bb.domain.hotel.resource;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="room", schema = "public")
 public class Room extends AbstractEntity {

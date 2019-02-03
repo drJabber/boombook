@@ -6,13 +6,14 @@ import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
-import rnk.bb.services.bean.RoomTypeBean;
-import rnk.bb.views.bean.*;
+import rnk.bb.views.bean.order.EditFoodConceptBean;
+import rnk.bb.views.bean.order.EditHotelBean;
+import rnk.bb.views.bean.order.EditRoomFeatureBean;
+import rnk.bb.views.bean.order.EditRoomPoolBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;

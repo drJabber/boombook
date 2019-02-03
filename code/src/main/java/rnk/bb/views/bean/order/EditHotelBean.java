@@ -1,4 +1,4 @@
-package rnk.bb.views.bean;
+package rnk.bb.views.bean.order;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Size;

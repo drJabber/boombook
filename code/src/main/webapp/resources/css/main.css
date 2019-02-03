@@ -55,6 +55,55 @@ dl dt{
     border: none !important;
 }
 
+.ui-app-container{
+    width:100%;
+    float:left;
+}
+.ui-left-container{
+    width:13%;
+    float:left;
+    margin: 2px;
+    /*height:200px;*/
+}
+
+.ui-central-container{
+    width:70%;
+    float:left;
+}
+
+.ui-right-container{
+    width:13%;
+    float:left;
+    margin: 2px;
+    /*height:200px;*/
+}
+
+.ui-form-controls-grid{
+    table-layout: fixed;
+    width:100%;
+}
+
+.ui-form-column-labels{
+    width:15%;
+}
+
+.ui-form-column-wide{
+    width:100%;
+}
+
+.ui-form-input-wide{
+    width:100%;
+}
+
+
+.ui-form-column-controls{
+    width:35%;
+}
+
+.ui-form-column-messages{
+    width:50%;
+}
+
 .ui-panel-content{
     background: inherit;
 }
@@ -67,6 +116,7 @@ dl dt{
 .ui-form-input-label{
     width:100px;
 }
+
 /*.ui-form-input{*/
     /*width:300px;*/
 /*}*/

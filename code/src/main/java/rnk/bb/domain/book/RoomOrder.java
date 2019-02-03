@@ -1,6 +1,7 @@
 package rnk.bb.domain.book;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.hotel.resource.RoomFeature;
 import rnk.bb.domain.hotel.resource.RoomPool;
@@ -15,6 +16,7 @@ import java.util.Set;
 
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="room_order", schema = "public")
 public class RoomOrder  extends AbstractEntity {
