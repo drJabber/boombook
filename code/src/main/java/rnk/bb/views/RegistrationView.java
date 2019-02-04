@@ -92,24 +92,22 @@ public class RegistrationView implements Serializable {
         this.registrationState = registrationState;
     }
 
-    public String doRegister(){
+    public void doRegister(){
         log.log(Level.INFO,"perform registration...");
         try{
             if (registrationService.doRegister(user)){
                 registrationState="registered";
             }
+            FacesContext.getCurrentInstance().getViewRoot().processValidators(FacesContext.getCurrentInstance());
         }catch (Exception ex){
+            log.log(Level.INFO,"registration failed...");
             registrationState="failed";
         }
-
-        FacesContext.getCurrentInstance().getViewRoot().processValidators(FacesContext.getCurrentInstance());
-        return "window.history.back();";
     }
 
-    public String cancel(){
+    public void doCancel(){
         log.log(Level.INFO,"cancel registration");
         registrationState="notregistered";
-        return "    window.history.back();";
     }
 
     public void closeNotification(){
