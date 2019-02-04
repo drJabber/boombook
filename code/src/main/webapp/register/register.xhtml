@@ -144,7 +144,7 @@
                 </div>
                 <div class="ui-g">
                     <div class="ui-g-3">
-                        <p:commandButton onclick="#{registrationView.doRegister()}" value="Регистрация" update=":registrationForm" process=@form"/>
+                        <p:commandButton onclick="#{registrationView.doRegister()}" value="Регистрация" update=":registrationForm" process="@form"/>
                         <p:commandButton value="Закрыть"
                                          onclick="javascript:history.go(-1);"
                                          style="margin-right:20px;" process="@all"/>
