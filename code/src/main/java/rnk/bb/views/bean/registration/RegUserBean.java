@@ -1,5 +1,6 @@
 package rnk.bb.views.bean.registration;
 
+import rnk.bb.services.bean.RoleBean;
 import rnk.bb.views.bean.order.EditAddressBean;
 import rnk.bb.views.bean.order.EditDocumentBean;
 
@@ -39,6 +40,18 @@ public class RegUserBean implements Serializable {
 
     @NotNull
     private String login;
+
+    @NotNull
+    private RoleBean role=new RoleBean("Client");
+
+
+    public RoleBean getRole() {
+        return role;
+    }
+
+    public void setRole(RoleBean role) {
+        this.role = role;
+    }
 
     public String getPassword() {
         return password;

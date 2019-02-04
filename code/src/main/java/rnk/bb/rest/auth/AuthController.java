@@ -3,7 +3,9 @@ package rnk.bb.rest.auth;
 
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.auth.Role;
+import rnk.bb.domain.util.Country;
 import rnk.bb.util.json.JsonHelper;
+import rnk.bb.views.bean.registration.RegUserBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
@@ -11,16 +13,21 @@ import javax.ejb.Startup;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
+import java.io.Serializable;
+import java.util.List;
 
 @Singleton
 @Startup
 @DependsOn({"StartupController"})
 @Path("/v1")
-public class AuthController {
+public class AuthController implements Serializable {
 
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
@@ -49,6 +56,33 @@ public class AuthController {
         }
         return false;
     }
+
+    public Auth createUser(RegUserBean user){
+        Auth auth=new Auth();
+        auth.setLogin(user.getLogin());
+        auth.setPassword(user.getPassword());
+        auth.setEmail(user.getEmail());
+        auth.setPhone(user.getPhone());
+
+        Role role=new Role();
+        role.setRole(user.getRole().getRole());
+
+        auth.getRoles().add(role);
+
+
+        return auth;
+    }
+
+    public List<Role> getRoles() {
+
+        CriteriaBuilder cb = this.em.getCriteriaBuilder();
+
+        CriteriaQuery<Role> q = cb.createQuery(Role.class);
+        Root<Role> c = q.from(Role.class);
+
+        return em.createQuery(q).getResultList();
+    }
+
 
     @PUT
     @Path("auth")

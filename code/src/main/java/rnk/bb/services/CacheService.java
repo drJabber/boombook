@@ -1,15 +1,18 @@
 package rnk.bb.services;
 
 
+import rnk.bb.domain.auth.Role;
 import rnk.bb.domain.hotel.resource.Room;
 import rnk.bb.domain.hotel.resource.RoomType;
 import rnk.bb.domain.util.Country;
 import rnk.bb.domain.util.DocumentType;
+import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.hotel.resource.RoomTypeController;
 import rnk.bb.rest.util.CountryController;
 import rnk.bb.rest.util.DocumentTypeController;
 import rnk.bb.services.bean.CountryBean;
 import rnk.bb.services.bean.DocumentTypeBean;
+import rnk.bb.services.bean.RoleBean;
 import rnk.bb.services.bean.RoomTypeBean;
 
 import javax.annotation.PostConstruct;
@@ -32,9 +35,13 @@ public class CacheService {
     @Inject
     RoomTypeController roomTypeController;
 
+    @Inject
+    AuthController authController;
+
     private List<CountryBean> countries;
     private List<DocumentTypeBean> documentTypes;
     private List<RoomTypeBean> roomTypes;
+    private List<RoleBean> roles;
 
     @PostConstruct
     public void init(){
@@ -52,6 +59,10 @@ public class CacheService {
         List<RoomType> typesList=roomTypeController.findAll();
         this.roomTypes.clear();
         typesList.stream().forEach(t->this.roomTypes.add(new RoomTypeBean(t)));
+
+        this.roles=new ArrayList<>();
+        List<Role> rolesList=authController.getRoles();
+        rolesList.stream().forEach(r->this.roles.add(new RoleBean(r.getRole())));
     }
 
 
@@ -78,5 +89,10 @@ public class CacheService {
     public RoomTypeBean getRoomTypeById(String id){
         return roomTypes.stream().filter(c->c.getName()==id).findFirst().get();
     }
+
+    public List<RoleBean> getRoles() {
+        return roles;
+    }
+
 
 }

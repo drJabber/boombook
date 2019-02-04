@@ -10,12 +10,12 @@
             <f:facet name="left">
                 <p:commandButton type="submit" id="addGuestButton" ajax="true"
                                  name="addGuestButton" value="Добавить гостя"
-                                 action="#{editOrderView.addGuest}" update=":orderForm" process="@this"
+                                 action="#{editOrderView.addGuest}" update=":orderForm" process="@form"
                                  style="margin-right:20px;">
                 </p:commandButton>
                 <p:commandButton type="submit" id="addRoomButton" ajax="true"
                                  name="addRoomButton" value="Добавить комнату"
-                                 action="#{editOrderView.addRoom}" update=":orderForm" process="@this"
+                                 action="#{editOrderView.addRoom}" update=":orderForm" process="@form"
                                  style="margin-right:20px;">
                 </p:commandButton>
             </f:facet>
@@ -49,7 +49,7 @@
         <p:dataTable id="guestsTable" value="#{order.guests}" var="currentGuest" emptyMessage="Гости не указаны">
             <p:column style="width:90px">
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.editGuest(currentGuest)}"
+                                 process="@form" action="#{editOrderView.editGuest(currentGuest)}"
                                  icon="fa fa-edit">
                     <f:setPropertyActionListener value="#{currentGuest}" target="#{editOrderView.guestBean}"/>
                 </p:commandButton>
@@ -79,7 +79,7 @@
         <p:dataTable id="roomsTable" value="#{order.rooms}" var="currentRoom" emptyMessage="Комнаты не заказаны">
             <p:column style="width:90px">
                 <p:commandButton update=":orderForm"
-                                 process="@this" action="#{editOrderView.editRoom(currentRoom)}"
+                                 process="@form" action="#{editOrderView.editRoom(currentRoom)}"
                                  icon="fa fa-edit">
                     <f:setPropertyActionListener value="#{currentRoom}" target="#{editOrderView.roomBean}"/>
                 </p:commandButton>

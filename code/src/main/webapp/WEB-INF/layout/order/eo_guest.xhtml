@@ -61,7 +61,10 @@
                 <p:column colspan="2">
                     <div class="ui-inputgroup">
                         <!--<h:outputLabel for="guestAddress" value="Адрес:" />-->
-                        <p:commandButton value="Адрес" actionListener="#{editOrderView.setGuestAddress(editOrderView.guestBean)}" update=":orderForm" process="@this"/>
+                        <p:commandButton value="Адрес"
+                                         actionListener="#{editOrderView.setGuestAddress(editOrderView.guestBean)}"
+                                         update=":orderForm"
+                                         process="@form"/>
                         <p:inputText  id="guestAddress" placeholder="Адрес не задан" value="#{editOrderView.guestBean.address} " size="120"
                                       readonly="true" required="true" requiredMessage="Необходимо задать адрес" />
                         <p:message for="guestAddress" id="guestAddressMessage" display="both" />
@@ -71,7 +74,10 @@
             <p:row>
                 <p:column colspan="2">
                     <div class="ui-inputgroup">
-                        <p:commandButton value="Документ" actionListener="#{editOrderView.setGuestDocument(editOrderView.guestBean)}" update=":orderForm"  process="@this" />
+                        <p:commandButton value="Документ"
+                                         actionListener="#{editOrderView.setGuestDocument(editOrderView.guestBean)}"
+                                         update=":orderForm"
+                                         process="@form" />
                         <p:inputText  id="guestDocument" placeholder="Документ не задан" value="#{editOrderView.guestBean.document}" size="120"
                                       readonly="true" required="true" requiredMessage="Необходимо внести документ" />
                         <p:message for="guestDocument" id="guestDocumentMessage" display="both" />

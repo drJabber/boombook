@@ -1,0 +1,47 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="registerDocumentPanel" header="#{empty user.document?'Ввод документа':'Изменение документа'}"  rendered="#{clientRegistrationView.state.equals('client-document')}">
+        <p:panelGrid id="registerDocumentDetail" columns="3"  styleClass="ui-noborder">
+            <h:outputLabel for="documentTypeInput" value="Тип:" />
+            <p:selectOneMenu id="documentTypeInput" value="#{user.document.documentType}" style="width:300px">
+                <f:selectItem itemLabel="Выберите тип документа" itemValue="21" noSelectionOption="true"/>
+                <f:selectItems value="#{cacheService.documentTypes}" var="doctype"  itemValue="#{doctype.description}" itemLabel="#{doctype.description}"/>
+            </p:selectOneMenu>
+            <p:message for="documentTypeInput" id="documentTypeInputMessage" display="both" />
+
+            <h:outputLabel for="documentNumberInput" value="Номер:" />
+            <p:inputText id="documentNumberInput" value="#{user.document.number}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="documentNumberInput" id="documentNumberMessage" display="both" />
+
+            <h:outputLabel for="documentSerialInput" value="Серия:" />
+            <p:inputText id="documentSerialInput" value="#{user.document.serial}" required="true" requiredMessage="Заполните поле" />
+            <p:message for="documentSerialInput" id="documenSerialMessage" display="both" />
+
+            <h:outputLabel for="documentIssueInput" value="Действует с:" />
+            <p:calendar id="documentIssueInput" value="#{user.document.issueDate}" showOn="button"
+                        required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="documentIssueInput" id="documentIssueMessage" display="both"/>
+
+            <h:outputLabel for="documentExpirationInput" value="Действует до:" />
+            <p:calendar id="documentExpirationInput" value="#{user.document.expirationDate}" showOn="button"
+                        required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            <p:message for="documentExpirationInput" id="documentExpirationMessage" display="both"/>
+
+        </p:panelGrid>
+
+        <p:toolbar styleClass="ui-noborder">
+            <f:facet name="left">
+                <p:commandButton value="Сохранить" actionListener="#{clientRegistrationView.saveClientDocument(user)}" update=":registrationForm" style="margin-right:20px;" />
+                <p:commandButton value="Закрыть"
+                                 action="#{editOrderView.cancelClientDocument()}" update=":registrationForm" process="@this"
+                                 style="margin-right:20px;"/>
+            </f:facet>
+        </p:toolbar>
+    </p:panel>
+
+</ui:composition>

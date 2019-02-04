@@ -1,28 +1,26 @@
 package rnk.bb.views;
 
-import org.primefaces.context.RequestContext;
 import rnk.bb.services.RegistrationService;
 import rnk.bb.views.bean.registration.RegUserBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Named("registrationView")
+@Named("clientRegistrationView")
 @SessionScoped
-public class RegistrationView implements Serializable {
+public class ClientRegistrationView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
 
     private String state;
     private String registrationState;
 
     RegUserBean user;
+
 
     @Inject
     RegistrationService registrationService;
@@ -95,7 +93,7 @@ public class RegistrationView implements Serializable {
     public void doRegister(){
         log.log(Level.INFO,"perform registration...");
         try{
-            if (registrationService.doRegister(user)){
+            if (registrationService.doRegisterClient(user)){
                 registrationState="registered";
             }
         }catch (Exception ex){

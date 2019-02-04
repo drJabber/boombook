@@ -15,7 +15,7 @@
                     <p:selectOneMenu id="rpInput" value="#{room.roomPool}"
                                      style="width:150px" required="true"
                                      requiredMessage="Заполните поле"
-                                     converter="genericConverter"   >
+                                     converter="#{selectOneMenuConverter}"   >
                         <!--<f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>-->
                         <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp}" itemLabel="#{rp.name}"
                                        />

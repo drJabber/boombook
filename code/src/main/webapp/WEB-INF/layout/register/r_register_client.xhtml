@@ -1,0 +1,181 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="registrationPanel" header="Регистрация"  rendered="#{clientRegistrationView.state.equals('reg-user')}">
+        <p:messages />
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="ФИО:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="clientName" value="#{clientRegistrationView.user.name}" required="true" label="ФИО" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="clientNameMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="clientNameMsg" for="clientName"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Д.Р.:" />
+            </div>
+            <div class="ui-g-4">
+                <p:calendar id="clientBD" value="#{clientRegistrationView.user.birthDate}" showOn="button" label="Д.Р."
+                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientBD" id="clientBDMessage" display="both"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="clientGender" value="Пол:" />
+            </div>
+            <div class="ui-g-4">
+                <p:selectOneMenu id="clientGender" value="#{clientRegistrationView.user.gender}" style="width:80px">
+                    <f:selectItem itemLabel="М" itemValue="М"/>
+                    <f:selectItem itemLabel="Ж" itemValue="Ж"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientGender" id="clientGenderMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="client_email_input" value="Email:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="client_email_input" value="#{clientRegistrationView.user.email}" validatorMessage="Здесь нужен Email">
+                    <f:validator validatorId="custom.EmailValidator" />
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="client_email_input" id="clientEmailMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="phone" value="Телефон:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputMask id="phone" value="#{clientRegistrationView.user.phone}" mask="(999) 999-9999"
+                             required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="phone" id="phoneMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="clientAddress" value="Адрес:" />
+            </div>
+            <div class="ui-g-6">
+                <div class="ui-inputgroup  ui-form-column-wide">
+                    <p:commandButton icon="fa fa-ellipsis-h"
+                                     actionListener="#{clientRegistrationView.setClientAddress(clientRegistrationView.user)}"
+                                     update=":registrationForm"
+                                     process="@form"/>
+                    <p:inputText  id="clientAddress"
+                                  placeholder="Адрес не задан"
+                                  value="#{clientRegistrationView.user.address} "
+                                  readonly="true" required="true"
+                                  styleClass="ui-form-input-wide"
+                                  requiredMessage="Необходимо задать адрес" />
+                </div>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientAddress" id="clientAddressMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="clientDocument" value="Документ:" />
+            </div>
+            <div class="ui-g-6">
+                <div class="ui-inputgroup ui-form-column-wide">
+                    <p:commandButton icon="fa fa-ellipsis-h"
+                                     actionListener="#{clientRegistrationView.setClientDocument(clientRegistrationView.user)}"
+                                     update=":registrationForm"
+                                     process="@form" />
+                    <p:inputText  id="clientDocument"
+                                  placeholder="Документ не задан" value="#{clientRegistrationView.user.document}"
+                                  readonly="true" required="true"
+                                  styleClass="ui-form-input-wide"
+                                  requiredMessage="Необходимо внести документ" />
+                </div>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientDocument" id="clientDocumentMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Login:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="userName" value="#{clientRegistrationView.user.login}" required="true" label="UserName" >
+                    <p:ajax event="keyup"  update="userNameMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="userNameMsg" for="userName"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Password:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:password id="password" value="#{clientRegistrationView.user.password}" required="true" label="Password">
+                    <f:validateLength minimum="4"/>
+                    <p:ajax update="passwordMsg" event="keyup"/>
+                </p:password>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="passwordMsg" for="password"/>
+            </div>
+        </div>
+        <!--<div class="ui-g">-->
+            <!--<div class="ui-g-2">-->
+                <!--<h:outputLabel for="roleInput" value="Зарегистрировать как:" />-->
+            <!--</div>-->
+            <!--<div class="ui-g-3">-->
+                <!--<p:selectOneMenu id="roleInput" value="#{clientRegistrationView.user.role}"-->
+                                 <!--style="width:150px" required="true"-->
+                                 <!--requiredMessage="Заполните поле"-->
+                                 <!--converter="#{selectOneMenuConverter}">-->
+                    <!--<f:selectItems value="#{cacheService.roles}" var="role"  itemValue="#{role}" itemLabel="#{role.role}"-->
+                    <!--/>-->
+                <!--</p:selectOneMenu>-->
+            <!--</div>-->
+            <!--<div class="ui-g-3">-->
+                <!--<p:message for="roleInput" id="roleInputMessage" display="both" />-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="ui-g">
+            <div class="ui-g-3">
+                <p:commandButton value="Регистрация"
+                                 style="margin-right:20px;"
+                                 actionListener="#{clientRegistrationView.doRegister()}"
+                                 update="@form"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
+
+                <p:commandButton value="Закрыть"
+                                 style="margin-right:20px;"
+                                 action="#{clientRegistrationView.doCancel()}"
+                                 process="@this"
+                                 oncomplete="javascript:history.go(-1);"
+                />
+
+            </div>
+        </div>
+    </p:panel>
+
+</ui:composition>

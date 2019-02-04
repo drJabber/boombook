@@ -5,34 +5,34 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:panel id="guestAddressPanel" header="#{empty guest.address?'Ввод адреса':'Изменение адреса'}"  rendered="#{editOrderView.state.equals('guest-address')}">
-        <p:panelGrid id="guestAddressDetail" columns="3"  styleClass="ui-noborder">
+    <p:panel id="registerAddressPanel" header="#{empty user.address?'Ввод адреса':'Изменение адреса'}"  rendered="#{clientRegistrationView.state.equals('client-address')}">
+        <p:panelGrid id="registerAddressDetail" columns="3"  styleClass="ui-noborder">
             <h:outputLabel for="countryInput" value="Страна:" />
-            <p:selectOneMenu id="countryInput" value="#{guest.address.countryId}" style="width:80px">
-                <f:selectItem itemLabel="Выберите страну" itemValue="" noSelectionOption="true"/>
+            <p:selectOneMenu id="countryInput" value="#{user.address.countryId}" style="width:80px">
+                <f:selectItem itemLabel="Выберите страну" itemValue="М" noSelectionOption="true"/>
                 <f:selectItems value="#{cacheService.countries}" var="country"  itemValue="#{country.id}" itemLabel="#{country.name}"/>
             </p:selectOneMenu>
             <p:message for="countryInput" id="countryInputMessage" display="both" />
 
             <h:outputLabel for="zipInput" value="Индекс:" />
-            <p:inputText id="zipInput" value="#{guest.address.zip}" required="true" requiredMessage="Заполните поле" />
+            <p:inputText id="zipInput" value="#{user.address.zip}" required="true" requiredMessage="Заполните поле" />
             <p:message for="zipInput" id="zipInputMessage" display="both" />
 
             <h:outputLabel for="settlementInput" value="Город/населенный пункт:" />
-            <p:inputText id="settlementInput" value="#{guest.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
+            <p:inputText id="settlementInput" value="#{user.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
             <p:message for="settlementInput" id="settlementInputMessage" display="both"/>
 
             <h:outputLabel for="streetInput" value="Улица,дом,квартира:" />
-            <p:inputText id="streetInput" value="#{guest.address.streetPart}" required="true" requiredMessage="Заполните поле" />
+            <p:inputText id="streetInput" value="#{user.address.streetPart}" required="true" requiredMessage="Заполните поле" />
             <p:message for="streetInput" id="streetInputMessage" display="both"/>
 
         </p:panelGrid>
 
         <p:toolbar styleClass="ui-noborder">
             <f:facet name="left">
-                <p:commandButton value="Сохранить" actionListener="#{editOrderView.saveGuestAddress(guest)}" update=":orderForm" style="margin-right:20px;" />
+                <p:commandButton value="Сохранить" actionListener="#{clientRegistrationView.saveClientAddress(user)}" update=":registrationForm" style="margin-right:20px;" />
                 <p:commandButton value="Закрыть"
-                                 action="#{editOrderView.cancelGuestAddress()}" update=":orderForm" process="@this"
+                                 action="#{clientRegistrationView.cancelClientAddress()}" update=":registrationForm" process="@this"
                                  style="margin-right:20px;"/>
             </f:facet>
         </p:toolbar>

@@ -81,7 +81,7 @@ public class EditOrderView implements Serializable {
             orderService.initGuestBean(guestBean,guestId);
         }
 
-        if (roomFeatures!=null){
+        if (roomFeatures==null){
             roomFeatures=new DualListModel<>(new ArrayList<>(), new ArrayList<>());
             initFeatures(roomBean);
         }
