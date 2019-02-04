@@ -20,5 +20,13 @@
                 <p:commandButton type="button" value="Выйти" icon="fa fa-power-off" rendered="#{request.userPrincipal!=null}"/>
             </f:facet>
         </p:toolbar>
+        <p:panel rendered="#{registrationView.registrationState.equals('registered')}" header="notification" closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{registrationView.closeNotification()}" />
+            <h:outputText value="Client registered. Check email" />
+        </p:panel>
+        <p:panel rendered="#{registrationView.registrationState.equals('failed')}" header="notification" closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{registrationView.closeNotification()}" />
+            <h:outputText value="Registration failed" />
+        </p:panel>
     </h:form>
 </ui:composition>

@@ -7,12 +7,11 @@
                 template="/WEB-INF/layout/template.xhtml">
 
 
-    <!--<ui:define name="metadata">-->
-        <!--<f:metadata>-->
-            <!--<f:viewAction action="#{registerView.init()}" />-->
-            <!--<ui:param name="hotel" value="#{registerView.client}"/>-->
-        <!--</f:metadata>-->
-    <!--</ui:define>-->
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewAction action="#{registrationView.init()}" />
+        </f:metadata>
+    </ui:define>
     <ui:define name="pageTitle">Регистрация</ui:define>
     <ui:define name="pageContent">
         <h:form id="registrationForm">
@@ -145,7 +144,7 @@
                 </div>
                 <div class="ui-g">
                     <div class="ui-g-3">
-                        <p:commandButton action="#{registrationView.doRegister}" value="Регистрация" update=":registrationForm"/>
+                        <p:commandButton onclick="#{registrationView.doRegister()}" value="Регистрация" update=":registrationForm" process=@form"/>
                         <p:commandButton value="Закрыть"
                                          onclick="javascript:history.go(-1);"
                                          style="margin-right:20px;" process="@all"/>

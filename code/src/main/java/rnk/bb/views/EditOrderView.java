@@ -1,14 +1,11 @@
 package rnk.bb.views;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
 import rnk.bb.views.bean.order.*;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -21,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("editOrderView")
-//@ConversationScoped
 @SessionScoped
 public class EditOrderView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
@@ -90,24 +86,6 @@ public class EditOrderView implements Serializable {
             initFeatures(roomBean);
         }
     }
-
-    public void update() {
-//        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-//        RequestContext.getCurrentInstance().update("guestsTable"); ;
-//        RequestContext.getCurrentInstance().update("roomsTable"); ;
-    }
-
-//    private void startConversation(){
-//        if (!FacesContext.getCurrentInstance().isPostback()
-//                && conversation.isTransient()) {
-//
-//            conversation.begin();
-//        }
-//    }
-//
-//    public Conversation getConversation() {
-//        return conversation;
-//    }
 
     private void initFeatures(EditRoomOrderBean room){
         List<EditRoomFeatureBean> source=roomFeatures.getSource();

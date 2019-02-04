@@ -1,9 +1,14 @@
 package rnk.bb.views;
 
-import rnk.bb.views.bean.order.EditGuestBean;
+import org.primefaces.context.RequestContext;
+import rnk.bb.services.RegistrationService;
 import rnk.bb.views.bean.registration.RegUserBean;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -14,40 +19,51 @@ import java.util.logging.Logger;
 public class RegistrationView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
 
-    private String state="reg-user";
+    private String state;
+    private String registrationState;
 
-    RegUserBean user=new RegUserBean();
+    RegUserBean user;
+
+    @Inject
+    RegistrationService registrationService;
+
+    @PostConstruct
+    public void init(){
+        state="reg-user";
+        registrationState="notregistered";
+        user=new RegUserBean();
+    }
 
 
     public void setClientAddress(RegUserBean user){
         log.log(Level.INFO,"add client address");
-        state="guest-address";
+        state="client-address";
     }
 
     public void saveClientAddress(RegUserBean user){
         log.log(Level.INFO,"save  client address");
-        state="guest";
+        state="reg-user";
     }
 
     public void cancelClientAddress(){
         log.log(Level.INFO,"cancel  client address");
-        state="guest";
+        state="reg-user";
     }
 
 
     public void saveClientDocument(RegUserBean user){
         log.log(Level.INFO,"save  client document");
-        state="guest";
+        state="reg-user";
     }
 
     public void cancelClientDocument(){
         log.log(Level.INFO,"cancel  client document");
-        state="guest";
+        state="reg-user";
     }
 
     public void setClientDocument(RegUserBean user){
         log.log(Level.INFO,"add new  client document");
-        state="guest-document";
+        state="client-document";
     }
 
 
@@ -59,13 +75,44 @@ public class RegistrationView implements Serializable {
         this.user = user;
     }
 
-
-    public void doRegister(){
-        log.log(Level.INFO,"do registration...");
-
+    public String getState() {
+        return state;
     }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+
+    public String getRegistrationState() {
+        return registrationState;
+    }
+
+    public void setRegistrationState(String registrationState) {
+        this.registrationState = registrationState;
+    }
+
+    public String doRegister(){
+        log.log(Level.INFO,"perform registration...");
+        try{
+            if (registrationService.doRegister(user)){
+                registrationState="registered";
+            }
+        }catch (Exception ex){
+            registrationState="failed";
+        }
+
+        FacesContext.getCurrentInstance().getViewRoot().processValidators(FacesContext.getCurrentInstance());
+        return "window.history.back();";
+    }
+
     public String cancel(){
         log.log(Level.INFO,"cancel registration");
+        registrationState="notregistered";
         return "    window.history.back();";
+    }
+
+    public void closeNotification(){
+        registrationState="notregistered";
     }
 }
