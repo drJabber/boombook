@@ -144,18 +144,19 @@
                 </div>
                 <div class="ui-g">
                     <div class="ui-g-3">
-                        <p:commandButton value="Регистрация" 
-                                style="margin-right:20px;"
-                                action="#{registrationView.doRegister()}" 
-                                process="@form"
-                                oncomplete="javascript:history.go(-1);" />
+                        <p:commandButton value="Регистрация"
+                                         style="margin-right:20px;"
+                                         actionListener="#{registrationView.doRegister()}"
+                                         update="@form"
+                                         oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
 
                         <p:commandButton value="Закрыть"
                                          style="margin-right:20px;" 
                                          action="#{registrationView.doCancel()}"
                                          process="@this"
-                                         oncomplete="javascript:history.go(-1);" />
-                                         
+                                         oncomplete="javascript:history.go(-1);"
+                        />
+
                     </div>
                 </div>
             </p:panel>

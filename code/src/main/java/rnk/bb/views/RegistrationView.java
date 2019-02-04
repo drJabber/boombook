@@ -98,7 +98,6 @@ public class RegistrationView implements Serializable {
             if (registrationService.doRegister(user)){
                 registrationState="registered";
             }
-            FacesContext.getCurrentInstance().getViewRoot().processValidators(FacesContext.getCurrentInstance());
         }catch (Exception ex){
             log.log(Level.INFO,"registration failed...");
             registrationState="failed";
