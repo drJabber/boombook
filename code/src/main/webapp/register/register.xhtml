@@ -147,7 +147,7 @@
                     <div class="ui-g-3">
                         <p:commandButton action="#{registrationView.doRegister}" value="Регистрация" update=":registrationForm"/>
                         <p:commandButton value="Закрыть"
-                                         onclick="window.history.back();"
+                                         onclick="javascript:history.go(-1);"
                                          style="margin-right:20px;" process="@all"/>
                     </div>
                 </div>

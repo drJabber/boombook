@@ -11,6 +11,7 @@
     <ui:define name="metadata">
         <f:metadata>
             <f:viewAction action="#{editOrderView.init()}"  />
+            <f:event listener="#{editOrderView.update()}" type="preRenderView" />
             <ui:param name="order" value="#{editOrderView.orderBean}"/>
             <ui:param name="guest" value="#{editOrderView.guestBean}" />
             <ui:param name="hotel" value="#{editOrderView.hotelBean}"/>
@@ -21,6 +22,7 @@
     <ui:define name="pageTitle">Заказ</ui:define>
     <ui:define name="pageContent">
         <h:form id="orderForm">
+
             <!--<h:outputText value="foodconcept : #{editOrderView.guestBean.foodConcept.name}, #{editOrderView.guestBean.foodConcept.description}" />-->
             <ui:include src="/WEB-INF/layout/order/eo_order.xhtml" />
             <ui:include src="/WEB-INF/layout/order/eo_guest.xhtml" />

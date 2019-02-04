@@ -101,6 +101,7 @@
         
         <p:toolbar>
             <f:facet name="left">
+                <p:commandButton update=":orderForm" process="@this" action="#{editOrderView.update()}" value="DUMMY" />
                 <p:commandButton id="saveOrderButton" name="saveOrderButton" value="Сохранить" update=":orderForm" style="margin-right:20px;" />
                 <p:commandButton value="Очистить" type="reset" target=":orderForm" style="margin-right:20px;"/>
             </f:facet>

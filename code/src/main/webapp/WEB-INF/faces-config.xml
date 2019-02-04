@@ -34,6 +34,7 @@
 
     <lifecycle>
         <phase-listener>org.primefaces.component.lifecycle.LifecyclePhaseListener</phase-listener>
+        <phase-listener id="nocache">rnk.bb.util.CacheControlPhaseListener</phase-listener>
     </lifecycle>
 
     <factory>

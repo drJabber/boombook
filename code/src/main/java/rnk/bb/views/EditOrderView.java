@@ -1,5 +1,6 @@
 package rnk.bb.views;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
@@ -68,22 +69,32 @@ public class EditOrderView implements Serializable {
             this.guestId=Long.valueOf(params.get("guestId"));
         }
 
-        hotelBean=new EditHotelBean();
-        hotelService.initHotelBean(hotelBean,hotelId);
+        if (hotelBean==null){
+            hotelBean=new EditHotelBean();
+            hotelService.initHotelBean(hotelBean,hotelId);
+        }
 
-        orderBean=new EditOrderBean();
-        orderService.initOrderBean(orderBean,orderId);
 
-        guestBean=new EditGuestBean();
-        orderService.initGuestBean(guestBean,guestId);
+        if (orderBean==null){
+            orderBean=new EditOrderBean();
+            orderService.initOrderBean(orderBean,orderId);
+        }
 
-        roomFeatures=new DualListModel<>(new ArrayList<>(), new ArrayList<>());
-        initFeatures(roomBean);
+        if (guestBean==null){
+            guestBean=new EditGuestBean();
+            orderService.initGuestBean(guestBean,guestId);
+        }
+
+        if (roomFeatures!=null){
+            roomFeatures=new DualListModel<>(new ArrayList<>(), new ArrayList<>());
+            initFeatures(roomBean);
+        }
     }
 
     public void update() {
 //        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        FacesContext.getCurrentInstance().getViewRoot().processUpdates(FacesContext.getCurrentInstance());
+//        RequestContext.getCurrentInstance().update("guestsTable"); ;
+//        RequestContext.getCurrentInstance().update("roomsTable"); ;
     }
 
 //    private void startConversation(){
