@@ -18,6 +18,7 @@ public class ClientRegistrationView implements Serializable {
 
     private String state;
     private String registrationState;
+    private Boolean visible=false;
 
     RegUserBean user;
 
@@ -32,6 +33,11 @@ public class ClientRegistrationView implements Serializable {
         user=new RegUserBean();
     }
 
+
+    public void update(){
+        init();
+        visible=true;
+    }
 
     public void setClientAddress(RegUserBean user){
         log.log(Level.INFO,"add client address");
@@ -100,14 +106,21 @@ public class ClientRegistrationView implements Serializable {
             log.log(Level.INFO, String.format("registration failed...\n%s", ex.getMessage()));
             registrationState="failed";
         }
+
+        visible=false;
     }
 
     public void doCancel(){
         log.log(Level.INFO,"cancel registration");
         registrationState="notregistered";
+        visible=false;
     }
 
     public void closeNotification(){
         registrationState="notregistered";
+    }
+
+    public boolean isVisible(){
+        return visible;
     }
 }
