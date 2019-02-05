@@ -68,7 +68,8 @@ public class AuthController implements Serializable {
         role.setRole(user.getRole().getRole());
 
         auth.getRoles().add(role);
-
+//        role.getAccounts().add(auth);
+//        em.persist(auth);
 
         return auth;
     }
@@ -82,7 +83,6 @@ public class AuthController implements Serializable {
 
         return em.createQuery(q).getResultList();
     }
-
 
     @PUT
     @Path("auth")

@@ -46,14 +46,14 @@ public class CacheService {
     @PostConstruct
     public void init(){
         this.countries=new ArrayList<>();
-        List<Country> countries=countriesController.findAll();
+        List<Country> countries=countriesController.findAllCached();
         this.countries.clear();
         countries.stream().forEach(c->this.countries.add(new CountryBean(c)));
 
         this.documentTypes=new ArrayList<>();
-        List<DocumentType> list=documentTypeController.findAll();
+        List<DocumentType> list=documentTypeController.findAllCached();
         this.documentTypes.clear();
-        list.stream().forEach(t->this.documentTypes.add(new DocumentTypeBean(t.getDescription())));
+        list.stream().forEach(t->this.documentTypes.add(new DocumentTypeBean(t)));
 
         this.roomTypes=new ArrayList<>();
         List<RoomType> typesList=roomTypeController.findAll();

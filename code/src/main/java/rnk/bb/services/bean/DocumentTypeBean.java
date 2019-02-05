@@ -10,10 +10,13 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 public class DocumentTypeBean {
+    private Long id;
+
     @NotNull
     private String description;
 
     public DocumentTypeBean(DocumentType dt){
+        this.id=dt.getId();
         this.description=dt.getDescription();
     }
 }

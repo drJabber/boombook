@@ -20,16 +20,18 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
+import java.io.Serializable;
 import java.util.List;
 
 @Singleton
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class CountryController {
+public class CountryController implements Serializable {
     @PersistenceContext(unitName="RNK_PU")
     private EntityManager em;
 
+    private List<Country> countries;
 
     @GET
     @Path("util/country/{id}")
@@ -55,6 +57,22 @@ public class CountryController {
         }else{
             return Response.serverError().entity("cant find entity").build();
         }
+    }
+
+    private void ensureCached(){
+        if (countries==null){
+            countries=findAll();
+        }
+    }
+
+    public Country findByIdCached(Integer countryId){
+        ensureCached();
+        return countries.stream().filter(c->c.getId().equals(countryId)).findAny().orElse(null);
+    }
+
+    public List<Country> findAllCached(){
+        ensureCached();
+        return countries;
     }
 
     public List<Country> findAll() {

@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name="document",schema="public")
 public class Document extends AbstractEntity {
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="type_id")
     private DocumentType documentType;
 

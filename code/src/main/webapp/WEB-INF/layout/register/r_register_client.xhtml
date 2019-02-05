@@ -119,7 +119,7 @@
                 <p:outputLabel value="Login:*"/>
             </div>
             <div class="ui-g-4">
-                <p:inputText id="userName" value="#{clientRegistrationView.user.login}" required="true" label="UserName" >
+                <p:inputText id="userName" value="#{clientRegistrationView.user.login}" required="true" label="Login" >
                     <p:ajax event="keyup"  update="userNameMsg"/>
                 </p:inputText>
             </div>
@@ -129,10 +129,10 @@
         </div>
         <div class="ui-g">
             <div class="ui-g-1">
-                <p:outputLabel value="Password:*"/>
+                <p:outputLabel value="Пароль:*"/>
             </div>
             <div class="ui-g-4">
-                <p:password id="password" value="#{clientRegistrationView.user.password}" required="true" label="Password">
+                <p:password id="password" value="#{clientRegistrationView.user.password}" required="true" label="Пароль">
                     <f:validateLength minimum="4"/>
                     <p:ajax update="passwordMsg" event="keyup"/>
                 </p:password>

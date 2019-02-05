@@ -16,8 +16,10 @@ import java.util.Date;
 @SessionScoped
 public class RegUserBean implements Serializable {
 
+    Integer clientId;
+
     @NotNull
-    private String name;
+    private String name="";
 
     private Date birthDate=null;
 
@@ -32,17 +34,20 @@ public class RegUserBean implements Serializable {
     @NotNull
     @Size(max=100)
     @Email(message = "Введите правильный email")
-    private String email;
+    private String email="";
 
     @NotNull
     @Size(max=100)
-    private String phone;
+    private String phone="";
 
     @NotNull
-    private String login;
+    private String login="";
 
     @NotNull
-    private RoleBean role=new RoleBean("Client");
+    private String password="";
+
+    @NotNull
+    private RoleBean role=new RoleBean("client");
 
 
     public RoleBean getRole() {
@@ -60,9 +65,6 @@ public class RegUserBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    @NotNull
-    private String password;
 
     public RegUserBean()
     {

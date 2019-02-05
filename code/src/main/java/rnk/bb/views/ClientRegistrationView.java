@@ -97,7 +97,7 @@ public class ClientRegistrationView implements Serializable {
                 registrationState="registered";
             }
         }catch (Exception ex){
-            log.log(Level.INFO,"registration failed...");
+            log.log(Level.INFO, String.format("registration failed...\n%s", ex.getMessage()));
             registrationState="failed";
         }
     }

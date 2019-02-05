@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -38,5 +39,8 @@ public class Country implements Serializable {
     @Column(name = "order_id", nullable = true)
     private Integer order;
 
+
+    @OneToMany(mappedBy = "country")
+    private List<Address> addresses;
 
 }

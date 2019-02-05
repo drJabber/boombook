@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 @Table(name="address", schema = "public")
 public class Address extends AbstractEntity {
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name="country_id")
     private Country country;
 

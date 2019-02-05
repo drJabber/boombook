@@ -17,7 +17,10 @@ public class EditDocumentBean implements Serializable {
     private Long id;
 
     @NotNull
-    String documentType="ПАСПОРТ";
+    private String documentType="ПАСПОРТ";
+
+    @NotNull
+    private Long documentTypeId=21l;
 
     @NotNull
     @Size(max = 10)
@@ -51,6 +54,14 @@ public class EditDocumentBean implements Serializable {
 
     public void setDocumentType(String documentType) {
         this.documentType = documentType;
+    }
+
+    public Long getDocumentTypeId() {
+        return documentTypeId;
+    }
+
+    public void setDocumentTypeId(Long documentTypeId) {
+        this.documentTypeId = documentTypeId;
     }
 
     public String getSerial() {

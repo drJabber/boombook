@@ -4,12 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import rnk.bb.domain.blank.AbstractEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -20,4 +18,8 @@ public class DocumentType extends AbstractEntity {
     @Size(max=500)
     @Column(nullable = false)
     private String description;
+
+    @OneToMany(mappedBy = "documentType")
+    private List<Document> documents;
+
 }

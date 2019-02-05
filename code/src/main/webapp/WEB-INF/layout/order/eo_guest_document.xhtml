@@ -8,9 +8,9 @@
     <p:panel id="guestDocumentPanel" header="#{empty guest.document?'Ввод документа':'Изменение документа'}"  rendered="#{editOrderView.state.equals('guest-document')}">
         <p:panelGrid id="guestDocumentDetail" columns="3"  styleClass="ui-noborder">
             <h:outputLabel for="documentTypeInput" value="Тип:" />
-            <p:selectOneMenu id="documentTypeInput" value="#{guest.document.documentType}" style="width:300px">
-                <f:selectItem itemLabel="Выберите тип документа" itemValue="21" noSelectionOption="true"/>
-                <f:selectItems value="#{cacheService.documentTypes}" var="doctype"  itemValue="#{doctype.description}" itemLabel="#{doctype.description}"/>
+            <p:selectOneMenu id="documentTypeInput" value="#{guest.document.documentTypeId}" style="width:300px">
+                <f:selectItem itemLabel="Выберите тип документа" itemValue="" noSelectionOption="true"/>
+                <f:selectItems value="#{cacheService.documentTypes}" var="doctype"  itemValue="#{doctype.id}" itemLabel="#{doctype.description}"/>
             </p:selectOneMenu>
             <p:message for="documentTypeInput" id="documentTypeInputMessage" display="both" />
 

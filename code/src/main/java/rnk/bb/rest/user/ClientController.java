@@ -1,13 +1,26 @@
 package rnk.bb.rest.user;
 
 
+import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.auth.Role;
 import rnk.bb.domain.user.Client;
+import rnk.bb.domain.util.Address;
+import rnk.bb.domain.util.Country;
+import rnk.bb.domain.util.Document;
+import rnk.bb.domain.util.DocumentType;
+import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.blank.CustomController;
+import rnk.bb.rest.util.AddressController;
+import rnk.bb.rest.util.DocumentController;
+import rnk.bb.views.bean.order.EditAddressBean;
+import rnk.bb.views.bean.registration.RegUserBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,6 +30,41 @@ import javax.ws.rs.core.Response;
 @DependsOn({"StartupController"})
 @Path("v1")
 public class ClientController  extends CustomController<Client, Long> {
+
+    @Inject
+    AddressController addresses;
+
+    @Inject
+    DocumentController documents;
+
+    @Inject
+    AuthController auths;
+
+    private Client createClient(RegUserBean clientBean){
+        Client client=new Client();
+
+        client.setName(clientBean.getName());
+        client.setGender(clientBean.getGender());
+        client.setBirthDate(clientBean.getBirthDate());
+
+        Auth auth=auths.createUser(clientBean);
+        Address address=addresses.createAddress(clientBean.getAddress());
+        Document document=documents.createDocument(clientBean.getDocument());
+
+        client.setLogin(auth);
+        client.setAddress(address);
+        client.setDocument(document);
+
+        return client;
+    }
+
+    public void registerClient(RegUserBean clientBean){
+        EntityManager em=entityManager();
+
+        Client client=createClient(clientBean);
+        em.merge(client);
+    }
+
     @PUT
     @Path("client")
     @Consumes(MediaType.APPLICATION_JSON)

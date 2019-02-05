@@ -261,6 +261,7 @@ public class OrderService implements Serializable {
 
     private EditDocumentBean cleanDocumentbean(EditDocumentBean documentBean){
         documentBean.setDocumentType("ПАСПОРТ");
+        documentBean.setDocumentTypeId(21l);
         documentBean.setId(null);
         documentBean.setSerial("");
         documentBean.setNumber("");
@@ -282,6 +283,7 @@ public class OrderService implements Serializable {
         if (document!=null) {
             documentBean.setId(document.getId());
 
+            documentBean.setDocumentTypeId(document.getDocumentType().getId());
             documentBean.setDocumentType(document.getDocumentType().getDescription());
             documentBean.setNumber(document.getNumber());
             documentBean.setSerial(document.getSerial());
@@ -297,6 +299,7 @@ public class OrderService implements Serializable {
         if ((documentBean!=null)&&(anotherBean!=null)) {
             documentBean.setId(anotherBean.getId());
 
+            documentBean.setDocumentTypeId(anotherBean.getDocumentTypeId());
             documentBean.setDocumentType(anotherBean.getDocumentType());
             documentBean.setNumber(anotherBean.getNumber());
             documentBean.setSerial(anotherBean.getSerial());

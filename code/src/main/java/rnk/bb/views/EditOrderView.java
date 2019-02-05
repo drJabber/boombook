@@ -243,4 +243,8 @@ public class EditOrderView implements Serializable {
     public void setRoomFeatures(DualListModel<EditRoomFeatureBean> roomFeatures) {
         this.roomFeatures = roomFeatures;
     }
+
+    public void clean(){
+        init();
+    }
 }
