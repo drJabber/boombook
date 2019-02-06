@@ -3,6 +3,7 @@ package rnk.bb.services;
 import rnk.bb.rest.user.ClientController;
 import rnk.bb.views.bean.registration.RegUserBean;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("registrationService")
-@SessionScoped
+@ApplicationScoped
 public class RegistrationService implements Serializable {
     private static Logger log=Logger.getLogger(RegistrationService.class.getName());
 

@@ -133,6 +133,23 @@
   </login-config>
 
 
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>rnk.bb.services.auth.LoginFilter</filter-class>
+    <init-param>
+      <param-name>admin</param-name>
+      <param-value>boom-manager:admin,cl,hstaff,hman;client:cl;hotel-staff:hstaff;hotel-manager:hstaff,hman</param-value>
+    </init-param>
+
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/cl/*</url-pattern>
+    <url-pattern>/hstaff/*</url-pattern>
+    <url-pattern>/hman/*</url-pattern>
+  </filter-mapping>
+
 
 
   <mime-mapping>
