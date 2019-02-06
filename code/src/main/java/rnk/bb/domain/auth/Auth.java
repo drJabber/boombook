@@ -1,7 +1,7 @@
 package rnk.bb.domain.auth;
 
 import lombok.Data;
-import rnk.utils.security.HashUtils;
+import rnk.bb.utils.security.HashUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -55,6 +55,10 @@ public class Auth implements Serializable {
     }
 
     public void setPassword(String password){
+        this.password=password;
+    }
+
+    public void setHashedPassword(String password){
         HashUtils hu=new HashUtils();
         byte[] bsalt=hu.salt(24);
         String salt=hu.toBase64(bsalt);

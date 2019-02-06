@@ -5,25 +5,25 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://xmlns.jcp.org/jsf/html">
 
-    <h:form id="menuForm">
+    <h:form id="menuForm" >
         <p:toolbar>
             <f:facet name="left">
                 <p:commandButton type="button" value="Boom!" icon="fa fa-hotel" action="hotels"/>
             </f:facet>
             <f:facet name="right">
                 <p:commandButton type="button" value="#{request.remoteUser}" icon="fa fa-cog" rendered="#{request.userPrincipal!=null}"/>
-                <p:button outcome="#{loginView.doLogin()}" 
-                                 value="Войти" 
-                                 icon="fa fa-user" 
-                                 rendered="#{(request.userPrincipal==null)and not (loginView.isVisible())}"/>
-                <p:button outcome="#{loginView.logout()}"  
-                                 value="Выйти" 
-                                 icon="fa fa-user" 
-                                 rendered="#{(request.userPrincipal!=null)and not (loginView.isVisible()}"/>
+                <p:button outcome="#{loginView.doLogin()}"
+                                 value="Войти"
+                                 icon="fa fa-user"
+                                 rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}"/>
+                <p:button outcome="#{loginView.logout()}"
+                                 value="Выйти"
+                                 icon="fa fa-user"
+                                 rendered="#{(request.userPrincipal!=null)and not (loginView.isVisible())}"/>
                 <p:button outcome="#{navView.doRegister()}"
                                  value="Регистрация"
-                                 icon="fa fa-edit" 
-                                 rendered="#{(request.userPrincipal==null)and not (clientRegistrationView.isVisible())}">
+                                 icon="fa fa-edit"
+                                 rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}">
                 </p:button>
             </f:facet>
         </p:toolbar>

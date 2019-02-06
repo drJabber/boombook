@@ -5,8 +5,52 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>rnk.bb</groupId>
-    <artifactId>hashutils</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>rnkutils</artifactId>
+    <version>0.1</version>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>Rnk specific realm</description>
+    <url>http://example.com</url>
+    <developers>
+        <developer>
+            <id>dJabber</id>
+            <name>dJabber</name>
+            <email>djabber@gmail.com</email>
+            <url>http://example.com</url>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>No License</name>
+        </license>
+    </licenses>
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <encoding>UTF-8</encoding>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+            </plugin>
+        </plugins>
+    </build>
+
 
 
 </project>

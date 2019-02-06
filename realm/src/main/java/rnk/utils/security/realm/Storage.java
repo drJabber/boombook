@@ -21,7 +21,7 @@ public class Storage {
     private final static Logger LOGGER = Logger.getLogger(Storage.class.getName());
 
     private final static String PASSWD_AND_SALT_FOR_USER = "SELECT password FROM public.auth u WHERE login = ?;";
-    private final static String VERIFY_USER = "SELECT login FROM public.auth u WHERE login = ? AND pasword = ?;";
+    private final static String VERIFY_USER = "SELECT login FROM public.auth u WHERE login = ? AND password = ?;";
     private final static String EXTRACT_GROUPS = "SELECT role FROM public.auth_role r WHERE login = ?;";
 
     public Storage(String dataSource) {

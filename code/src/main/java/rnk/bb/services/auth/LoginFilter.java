@@ -1,25 +1,31 @@
 package rnk.bb.services.auth;
 
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LoginFilter extends HttpFilter {
-    private Map<String,List<String>> restrictions;
-    
+    private Map<String, List<String>> restrictions;
+
+    private FilterConfig config;
 
     @Override
-    public void init (FilterConfig config) throws ServletException 
+    public void init (FilterConfig config) throws ServletException
     { 
-        this.config = config; 
-        restrictions=new HashMap<String,List<String>>();
-        List<String> alllist=new ArrayList<String>;
-        restrictions.put('all',alllist);
+        this.config = config;
+        restrictions=new HashMap<>();
+        List<String> alllist=new ArrayList<>();
+        restrictions.put("all",alllist);
         
         String restrictions_string = config.getInitParameter("restrictions"); 
         if (restrictions_string != null) {
@@ -28,7 +34,7 @@ public class LoginFilter extends HttpFilter {
                 String[] r=part.split(":");
                 String[] patterns=r[1].split(",");
                 
-                List<String> list=new ArrayList<String>;
+                List<String> list=new ArrayList<String>();
                 restrictions.put(r[0],list);
                 for(String pattern:patterns){
                     list.add(pattern);
@@ -69,7 +75,7 @@ public class LoginFilter extends HttpFilter {
     }
 
     private Boolean isAllowedForCurrentUser(String pattern, HttpServletRequest request){
-        for (Map.Entry<String, Object> entry:restrictions.entrySet()){
+        for (Map.Entry<String, List<String>> entry:restrictions.entrySet()){
             if (request.isUserInRole(entry.getKey())){
                 if (entry.getValue().indexOf(pattern)>=0){
                     return true;

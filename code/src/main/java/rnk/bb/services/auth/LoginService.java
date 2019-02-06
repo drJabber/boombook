@@ -3,6 +3,7 @@ package rnk.bb.services.auth;
 
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.rest.auth.AuthController;
+import rnk.bb.views.bean.auth.AuthUserBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,8 +17,8 @@ public class LoginService implements Serializable {
     @Inject
     AuthController users;
 
-    public Auth findUser(String login){
-        return users.getAuth(login);
+    public AuthUserBean findUser(String login){
+        return new AuthUserBean(users.getAuth(login));
     }
     
     

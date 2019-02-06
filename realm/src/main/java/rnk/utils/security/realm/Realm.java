@@ -5,11 +5,14 @@ import com.sun.enterprise.security.auth.realm.BadRealmException;
 import com.sun.enterprise.security.auth.realm.InvalidOperationException;
 import com.sun.enterprise.security.auth.realm.NoSuchRealmException;
 import com.sun.enterprise.security.auth.realm.NoSuchUserException;
-import rnk.utils.security.HashUtils;
+import rnk.bb.utils.security.HashUtils;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Realm extends AppservRealm {
+    private final static Logger LOGGER = Logger.getLogger(AppservRealm.class.getName());
 
     private String jaasCtxName;
     private String dsName;
@@ -35,6 +38,7 @@ public class Realm extends AppservRealm {
     public Boolean authenticate(String login, String password) {
         Boolean result=false;
 
+        LOGGER.log(Level.INFO,"password:"+password);
         // salt it
         String salt = storage.getSaltForLogin(login);
         if (salt != null) {

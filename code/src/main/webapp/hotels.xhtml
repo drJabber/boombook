@@ -7,6 +7,9 @@
                 template="/WEB-INF/layout/template.xhtml">
     <ui:define name="metadata">
         <f:metadata>
+            <ui:param name="originalURL" value="#{request.requestURI}?#{request.queryString}" />
+            <f:event rendered="#{not userSession.loggedIn}" type="preRenderView" listener="#{userSession.recordOriginalURL(originalURL)}" />
+
             <f:viewAction action="#{boomHome.init()}" />
         </f:metadata>
     </ui:define>

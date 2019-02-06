@@ -37,7 +37,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: org.rnk.security:rnkutils:0.1">
+      <library name="Maven: rnk.bb:rnkutils:0.1">
         <CLASSES>
           <root url="jar:///opt/payara5/glassfish/domains/production/lib/rnkutils-0.1.jar!/" />
         </CLASSES>

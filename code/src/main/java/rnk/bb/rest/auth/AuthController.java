@@ -60,7 +60,7 @@ public class AuthController implements Serializable {
     public Auth createUser(RegUserBean user){
         Auth auth=new Auth();
         auth.setLogin(user.getLogin());
-        auth.setPassword(user.getPassword());
+        auth.setHashedPassword(user.getPassword());
         auth.setEmail(user.getEmail());
         auth.setPhone(user.getPhone());
 

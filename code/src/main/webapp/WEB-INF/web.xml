@@ -130,8 +130,18 @@
       <form-login-page>/auth/login</form-login-page>
       <form-error-page>/auth/loginerror</form-error-page>
     </form-login-config>
-  </login-config> -->
+  </login-config>
 
+  -->
+
+  <login-config>
+    <!--<auth-method>FORM</auth-method>-->
+    <realm-name>RnkRealm</realm-name>
+    <!--<form-login-config>-->
+      <!--<form-login-page>/auth/login</form-login-page>-->
+      <!--<form-error-page>/auth/loginerror</form-error-page>-->
+    <!--</form-login-config>-->
+  </login-config>
 
   <filter>
     <filter-name>LoginFilter</filter-name>

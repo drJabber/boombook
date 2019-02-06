@@ -55,7 +55,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.rnk.security</groupId>
+            <groupId>rnk.bb</groupId>
             <artifactId>rnkutils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
