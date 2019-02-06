@@ -11,19 +11,58 @@
         <f:metadata>
             <f:viewAction action="#{loginView.update()}" />
             <ui:param name="user" value="#{loginView.user}"/>
-
         </f:metadata>
     </ui:define>
     <ui:define name="pageTitle">Вход</ui:define>
     <ui:define name="pageContent">
-        <h:form id="loginForm" prependId="false" onsubmit="action='j_security_check'">
-            <p:panelGrid columns="2">
-                <p:outputLabel for="j_username" value="Login" />
-                <p:inputText id="j_username" name="j_username" />
-                <p:outputLabel for="j_password" value="Пароль" />
-                <p:password id="j_password" name="j_password"/>
-                <p:commandButton id="submit" value="Login" ajax="false"/>
-            </p:panelGrid>
+        <h:form id="loginForm" >
+            <p:panel id="registrationPanel" header="Войти"  rendered="#{clientRegistrationView.state.equals('reg-user')}">
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="Login:*"/>
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="userName" value="#{clientRegistrationView.user.login}" required="true" label="Login" >
+                            <p:ajax event="keyup"  update="userNameMsg"/>
+                        </p:inputText>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message id="userNameMsg" for="userName"/>
+                    </div>
+                </div>
+                <div class="ui-g">
+                    <div class="ui-g-1">
+                        <p:outputLabel value="Пароль:*"/>
+                    </div>
+                    <div class="ui-g-4">
+                        <p:password id="password" value="#{clientRegistrationView.user.password}" required="true" label="Пароль">
+                            <f:validateLength minimum="4"/>
+                            <p:ajax update="passwordMsg" event="keyup"/>
+                        </p:password>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message id="passwordMsg" for="password"/>
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-3">
+                        <p:commandButton value="Войти"
+                                        style="margin-right:20px;"
+                                        actionListener="#{loginView.login()}"
+                                        update="@form"
+                                        oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
+
+                        <p:commandButton value="Закрыть"
+                                        style="margin-right:20px;"
+                                        action="#{loginView.cancel()}"
+                                        process="@this"
+                                        oncomplete="javascript:history.go(-1);"
+                        />
+
+                    </div>
+                </div>
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

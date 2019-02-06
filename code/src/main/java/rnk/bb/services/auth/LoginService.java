@@ -19,4 +19,6 @@ public class LoginService implements Serializable {
     public Auth findUser(String login){
         return users.getAuth(login);
     }
+    
+    
 }

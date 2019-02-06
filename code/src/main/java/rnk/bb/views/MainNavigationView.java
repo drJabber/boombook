@@ -13,9 +13,15 @@ import java.util.logging.Logger;
 public class MainNavigationView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
 
+    @Inject
+    HttpServletRequest request;
+
+    @Inject
+    LoginView loginView;
+
     public String doRegister(){
         log.log(Level.INFO,"start registration...");
         return "/register/register.xhtml";
     }
-
+    
 }

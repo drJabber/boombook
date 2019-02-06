@@ -10,6 +10,9 @@
 
     <ui:define name="metadata">
         <f:metadata>
+            <ui:param name="originalURL" value="#{request.requestURI}?#{request.queryString}" />
+            <f:event rendered="#{not userSession.loggedIn}" type="preRenderView" listener="#{userSession.recordOriginalURL(originalURL)}" />
+            
             <f:viewAction action="#{editOrderView.init()}"  />
             <ui:param name="order" value="#{editOrderView.orderBean}"/>
             <ui:param name="guest" value="#{editOrderView.guestBean}" />
