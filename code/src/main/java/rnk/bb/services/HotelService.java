@@ -47,8 +47,12 @@ public class HotelService implements Serializable {
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
     }
 
-    public LazyDataModel<Hotel> getController(){
+    public LazyDataModel<Hotel> getHotelsLazy(){
         return this.hotels;
+    }
+
+    public List<Hotel> getHotels(){
+        return this.hotels.findAll();
     }
 
 

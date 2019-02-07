@@ -115,4 +115,13 @@ public class StaffUserBean implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public EditHotelBean getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(EditHotelBean hotel) {
+        this.hotel = hotel;
+    }
+
 }

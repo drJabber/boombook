@@ -1,14 +1,18 @@
 package rnk.bb.views;
 
+import rnk.bb.services.HotelService;
 import rnk.bb.services.RegistrationService;
-import rnk.bb.views.bean.registration.StaffUserBean;
+import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,11 +31,18 @@ public class StaffRegistrationView implements Serializable {
     @Inject
     RegistrationService registrationService;
 
+    @Inject
+    HotelService hotelService;
+
+    List<EditHotelBean> hotels;
+
     @PostConstruct
     public void init(){
         state="reg-user";
         registrationState="notregistered";
         user=new StaffUserBean();
+        this.hotels=new ArrayList<>();
+        hotelService.getHotels().stream().forEach(h->this.hotels.add(hotelService.initHotelBean(new EditHotelBean(),h)));
     }
 
 
@@ -95,6 +106,10 @@ public class StaffRegistrationView implements Serializable {
 
     public void setRegistrationState(String registrationState) {
         this.registrationState = registrationState;
+    }
+
+    public List<EditHotelBean> getHotels(){
+        return hotels;
     }
 
     public void doRegister(){

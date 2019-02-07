@@ -33,11 +33,6 @@
                                 icon="fa fa-edit"
                                 rendered="#{not (staffRegistrationView.isVisible())}">
                     </p:menuitem>
-                    <p:menuitem outcome="#{navView.getClientRegUrl()}"
-                                value="Регистрация сотрудника отеля"
-                                icon="fa fa-edit"
-                                rendered="#{not (clientRegistrationView.isVisible())}">
-                    </p:menuitem>
                 </p:menuButton>
             </f:facet>
         </p:toolbar>
@@ -47,6 +42,14 @@
         </p:panel>
         <p:panel rendered="#{clientRegistrationView.registrationState.equals('failed')}" header="notification" closable="true" closeSpeed="300">
             <p:ajax event="close" listener="#{clientRegistrationView.closeNotification()}" />
+            <h:outputText value="Registration failed" />
+        </p:panel>
+        <p:panel rendered="#{staffRegistrationView.registrationState.equals('registered')}" header="notification" closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{staffRegistrationView.closeNotification()}" />
+            <h:outputText value="Staff registered. Check email" />
+        </p:panel>
+        <p:panel rendered="#{staffRegistrationView.registrationState.equals('failed')}" header="notification" closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{staffRegistrationView.closeNotification()}" />
             <h:outputText value="Registration failed" />
         </p:panel>
         <p:panel rendered="#{(not loginView.isVisible()) and (loginView.notificationState.equals('open')) and (loginView.user.isLoggedIn())}"

@@ -8,7 +8,6 @@ import rnk.bb.services.HotelService;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class HotelHome implements Serializable {
     @PostConstruct
     public void init(){
         log.log(Level.INFO,"boomHome startup...");
-        this.hotelsModel=hotelService.getController();
+        this.hotelsModel=hotelService.getHotelsLazy();
     }
 
     public LazyDataModel<Hotel> getHotelsModel(){

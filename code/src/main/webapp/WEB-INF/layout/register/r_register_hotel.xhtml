@@ -76,12 +76,12 @@
                 <p:outputLabel for="hotelInput" value="Отель:"/>
             </div>
             <div class="ui-g-4">
-                <p:selectOneMenu id="rpInput" value="#{room.roomPool}"
+                <p:selectOneMenu id="hotelInput" value="#{user.hotel}"
                                  style="width:150px" required="true"
                                  requiredMessage="Заполните поле"
                                  converter="#{selectOneMenuConverter}"   >
                     <!--<f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>-->
-                    <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp}" itemLabel="#{rp.name}"
+                    <f:selectItems value="#{staffRegistrationView.hotels}" var="hotel"  itemValue="#{hotel}" itemLabel="#{hotel.name}"
                     />
                 </p:selectOneMenu>
             </div>

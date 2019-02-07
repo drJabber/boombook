@@ -60,10 +60,10 @@ public class Auth implements Serializable {
 
     public void setHashedPassword(String password){
         HashUtils hu=new HashUtils();
-        byte[] bsalt=hu.salt(24);
+        byte[] bsalt=hu.salt(10);
         String salt=hu.toBase64(bsalt);
         byte[] bpaswd=hu.hash_strong(password,bsalt);
-        this.password=salt+"=="+hu.toBase64(bpaswd);
+        this.password=salt+hu.toBase64(bpaswd);
     }
 
     public Set<Role> getRoles(){
