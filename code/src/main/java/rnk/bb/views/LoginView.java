@@ -24,6 +24,7 @@ public class LoginView implements Serializable {
     private static Logger log=Logger.getLogger(LoginView.class.getName());
 
     private Boolean visible=false;
+    private String notification="closed";
 
     @Inject
     HttpServletRequest request;
@@ -32,7 +33,7 @@ public class LoginView implements Serializable {
     private LoginService loginService;
 
     @Inject 
-    private AuthUserBean userSession;
+    private AuthUserBean userSession=new AuthUserBean();
 
     private String originalUrl;
 
@@ -69,15 +70,10 @@ public class LoginView implements Serializable {
         visible=true;
     }
 
-    public String doLogin(){
-        log.log(Level.INFO,"start login...");
-        return "/auth/login.xhtml";
-    }
-
     public void logout() throws ServletException {
         log.log(Level.INFO,"logout...");
         request.logout();
-        userSession=null;
+        userSession=new AuthUserBean();
     }
 
 
@@ -86,13 +82,19 @@ public class LoginView implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-
+        String login=userSession.getLogin();
         try {
-            request.login(userSession.getLogin(), userSession.getPassword());
+            request.login(login, userSession.getPassword());
 
             userSession.setLoggedIn(true);
+            notification="open";
+
+            userSession.setNotificationMessage(String.format("Client %s logged in", login));
+
             externalContext.redirect(originalUrl);
         } catch (Exception ex) {
+            notification="open";
+            userSession.setNotificationMessage(String.format("LOGIN FAILED FOR %s", login));
             log.log(Level.SEVERE,String.format("Login exception:\n%s", ex.toString()));
         }
     }
@@ -103,7 +105,7 @@ public class LoginView implements Serializable {
     }
 
     public AuthUserBean getUser() {
-        if (userSession.getLogin() == null) {
+        if (userSession.getLogin().isEmpty()) {
             Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
             if (principal != null) {
                 userSession = loginService.findUser(principal.getName());
@@ -118,6 +120,18 @@ public class LoginView implements Serializable {
 
     public Boolean isVisible() {
         return visible;
+    }
+
+    public String getNotificationState() {
+        return notification;
+    }
+
+    public void closeNotification(){
+        notification="closed";
+    }
+
+    public String getNotificationMessage() {
+        return userSession.getNotificationMessage();
     }
 }
 

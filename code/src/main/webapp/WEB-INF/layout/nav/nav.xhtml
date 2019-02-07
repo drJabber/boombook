@@ -12,15 +12,15 @@
             </f:facet>
             <f:facet name="right">
                 <p:commandButton type="button" value="#{request.remoteUser}" icon="fa fa-cog" rendered="#{request.userPrincipal!=null}"/>
-                <p:button outcome="#{loginView.doLogin()}"
+                <p:button outcome="#{navView.getLoginUrl()}"
                                  value="Войти"
                                  icon="fa fa-user"
                                  rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}"/>
-                <p:button outcome="#{loginView.logout()}"
+                <p:commandButton action="#{loginView.logout()}" update=":menuForm"
                                  value="Выйти"
                                  icon="fa fa-user"
                                  rendered="#{(request.userPrincipal!=null)and not (loginView.isVisible())}"/>
-                <p:button outcome="#{navView.doRegister()}"
+                <p:button outcome="#{navView.getRegUrl()}"
                                  value="Регистрация"
                                  icon="fa fa-edit"
                                  rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}">
@@ -34,6 +34,18 @@
         <p:panel rendered="#{clientRegistrationView.registrationState.equals('failed')}" header="notification" closable="true" closeSpeed="300">
             <p:ajax event="close" listener="#{clientRegistrationView.closeNotification()}" />
             <h:outputText value="Registration failed" />
+        </p:panel>
+        <p:panel rendered="#{(not loginView.isVisible()) and (loginView.notificationState.equals('open')) and (loginView.user.isLoggedIn())}"
+                 header="notification"
+                 closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{loginView.closeNotification()}" />
+            <h:outputText value="#{loginView.notificationMessage}" />
+        </p:panel>
+        <p:panel rendered="#{(not loginView.isVisible()) and (not loginView.notificationState.equals('open')) and (loginView.user.isLoggedIn())}"
+                 header="notification"
+                 closable="true" closeSpeed="300">
+            <p:ajax event="close" listener="#{loginView.closeNotification()}" />
+            <h:outputText value="#{loginView.notificationMessage}" />
         </p:panel>
     </h:form>
 </ui:composition>

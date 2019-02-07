@@ -15,7 +15,7 @@ SET client_min_messages = info;
 SET row_security = off;
 
 INSERT INTO public.role (role) VALUES ('client'),('hotel-staff'),('hotel-manager'),('boom-manager');
-INSERT INTO public.auth (login,password,email,phone,state) VALUES ('papaboom','uTUUgVDeg73h8w==2q/M5mohNUqKpj6lN9XRR95/C0bcEEMFzD7LX8LUpriMaySVdIWVhQtUpzKjrYNq2PE3640vKSXo6y56dTJxlA==','dJabber@gmail.com','+7(929)511-1849',0);
+INSERT INTO public.auth (login,password,email,phone,state) VALUES ('papaboom','BoTRVLpZU4908Q==hJi2GZ+Q1k+GlIvljyHMPtGw7PjQEzPXu8o8NIbCAKoVwtcmwfbBdEyQADS5nSEnkbO1sUE3owEr2oTM4g6/nw==','dJabber@gmail.com','+7(929)511-1849',0);
 INSERT INTO public.role_auth (roles_role,accounts_login) VALUES ('boom-manager','papaboom');
 
 INSERT INTO public.document_type (id, description) VALUES (21, 'ПАСПОРТ'),(102, 'ВОДИТЕЛЬСКОЕ УДОСТОВЕРЕНИЕ');

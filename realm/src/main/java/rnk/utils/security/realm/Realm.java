@@ -38,9 +38,11 @@ public class Realm extends AppservRealm {
     public Boolean authenticate(String login, String password) {
         Boolean result=false;
 
-        LOGGER.log(Level.INFO,"password:"+password);
         // salt it
         String salt = storage.getSaltForLogin(login);
+        LOGGER.log(Level.INFO,"login:"+login);
+        LOGGER.log(Level.INFO,"password:"+password);
+        LOGGER.log(Level.INFO,"salt:"+salt);
         if (salt != null) {
             HashUtils utils = new HashUtils();
 
@@ -49,12 +51,13 @@ public class Realm extends AppservRealm {
             byte[] saltBytes = utils.fromBase64(salt);
 
             // hash password and salt
-            byte[] passwordBytes = utils.hash(password, saltBytes);
+            byte[] passwordBytes = utils.hash_strong(password, saltBytes);
 
             // Base64 encode to String
             String encoded_passwd = utils.toBase64(passwordBytes);
+            LOGGER.log(Level.INFO,"encoded_password:"+encoded_passwd);
 
-            return storage.validateUser(login,encoded_passwd);
+            return storage.validateUser(login,salt+encoded_passwd);
         }
         return result;
     }

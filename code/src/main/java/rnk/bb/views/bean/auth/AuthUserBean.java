@@ -10,8 +10,9 @@ import java.io.Serializable;
 @Named("userSession")
 @SessionScoped
 public class AuthUserBean implements Serializable {
-    private boolean loggedIn;
+    private boolean loggedIn=false;
     private String  originalURL;
+    private String notificationMessage;
 
     @NotNull
     private String login="";
@@ -59,4 +60,13 @@ public class AuthUserBean implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
+
 }

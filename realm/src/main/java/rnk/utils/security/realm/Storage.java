@@ -22,7 +22,7 @@ public class Storage {
 
     private final static String PASSWD_AND_SALT_FOR_USER = "SELECT password FROM public.auth u WHERE login = ?;";
     private final static String VERIFY_USER = "SELECT login FROM public.auth u WHERE login = ? AND password = ?;";
-    private final static String EXTRACT_GROUPS = "SELECT role FROM public.auth_role r WHERE login = ?;";
+    private final static String EXTRACT_GROUPS = "SELECT roles_role FROM public.role_auth r WHERE accounts_login = ?;";
 
     public Storage(String dataSource) {
 //            this does not work directly in init phase, so use lazy connection init
@@ -106,7 +106,7 @@ public class Storage {
             s.setString(1, login);
             ResultSet rs = s.executeQuery();
             while (rs.next()){
-                l.add(rs.getString("role"));
+                l.add(rs.getString("roles_role"));
             }
             return l;
 

@@ -11,9 +11,12 @@ import java.util.logging.Logger;
 public class MainNavigationView implements Serializable {
     private static Logger log=Logger.getLogger(EditOrderView.class.getName());
 
-    public String doRegister(){
-        log.log(Level.INFO,"start registration...");
+    public String getRegUrl(){
         return "/register/register.xhtml";
     }
-    
+
+    public String getLoginUrl(){
+        return "/auth/login.xhtml";
+    }
+
 }
