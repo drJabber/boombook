@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
+import rnk.bb.domain.book.Order;
+import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.util.json.DateAdapter;
 
 import javax.json.bind.annotation.JsonbTypeAdapter;
@@ -36,4 +38,13 @@ public class Staff extends AbstractHotelRefEntity {
     @Size(max=2)
     @Column(nullable = false)
     private String gender;
+
+    @NotNull
+    @Column(nullable = false)
+    private Boolean approved=false;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="hotel_id")
+    private Hotel hotel;
+
 }

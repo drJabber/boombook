@@ -6,6 +6,7 @@ import rnk.bb.domain.auth.Role;
 import rnk.bb.domain.util.Country;
 import rnk.bb.util.json.JsonHelper;
 import rnk.bb.views.bean.registration.RegUserBean;
+import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
@@ -68,8 +69,21 @@ public class AuthController implements Serializable {
         role.setRole(user.getRole().getRole());
 
         auth.getRoles().add(role);
-//        role.getAccounts().add(auth);
-//        em.persist(auth);
+
+        return auth;
+    }
+
+    public Auth createUser(StaffUserBean user){
+        Auth auth=new Auth();
+        auth.setLogin(user.getLogin());
+        auth.setHashedPassword(user.getPassword());
+        auth.setEmail(user.getEmail());
+        auth.setPhone(user.getPhone());
+
+        Role role=new Role();
+        role.setRole(user.getRole().getRole());
+
+        auth.getRoles().add(role);
 
         return auth;
     }

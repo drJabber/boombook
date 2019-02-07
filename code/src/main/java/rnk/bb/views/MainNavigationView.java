@@ -9,10 +9,14 @@ import java.util.logging.Logger;
 @Named("navView")
 @ApplicationScoped
 public class MainNavigationView implements Serializable {
-    private static Logger log=Logger.getLogger(EditOrderView.class.getName());
+    private static Logger log=Logger.getLogger(MainNavigationView.class.getName());
 
-    public String getRegUrl(){
+    public String getClientRegUrl(){
         return "/register/register.xhtml";
+    }
+
+    public String getHManagerRegUrl(){
+        return "/register/hregister.xhtml";
     }
 
     public String getLoginUrl(){

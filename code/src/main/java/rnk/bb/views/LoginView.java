@@ -1,8 +1,7 @@
 package rnk.bb.views;
 
-import rnk.bb.domain.auth.Auth;
 import rnk.bb.services.auth.LoginService;
-import rnk.bb.views.bean.auth.AuthUserBean;
+import rnk.bb.views.bean.auth.SessionDataBean;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
@@ -33,7 +32,7 @@ public class LoginView implements Serializable {
     private LoginService loginService;
 
     @Inject 
-    private AuthUserBean userSession=new AuthUserBean();
+    private SessionDataBean userSession=new SessionDataBean();
 
     private String originalUrl;
 
@@ -48,7 +47,7 @@ public class LoginView implements Serializable {
             return;
         
         } else if (forwardedRequestURI == null) { 
-            // If the user logged in directly from the top bar, simply redirect to the originalURL recorded by AuthUserBean
+            // If the user logged in directly from the top bar, simply redirect to the originalURL recorded by SessionDataBean
             this.originalUrl = userSession.getOriginalURL();
             if (originalUrl == null) {
                 // Redirect to home page in case the user didn't surf any pages before logging in
@@ -73,7 +72,7 @@ public class LoginView implements Serializable {
     public void logout() throws ServletException {
         log.log(Level.INFO,"logout...");
         request.logout();
-        userSession=new AuthUserBean();
+        userSession=new SessionDataBean();
     }
 
 
@@ -104,7 +103,7 @@ public class LoginView implements Serializable {
         visible=false;
     }
 
-    public AuthUserBean getUser() {
+    public SessionDataBean getUser() {
         if (userSession.getLogin().isEmpty()) {
             Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
             if (principal != null) {
@@ -114,7 +113,7 @@ public class LoginView implements Serializable {
         return userSession;
     }
 
-    public void setUser(AuthUserBean user) {
+    public void setUser(SessionDataBean user) {
         this.userSession = user;
     }
 

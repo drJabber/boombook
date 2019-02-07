@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Named("userSession")
 @SessionScoped
-public class AuthUserBean implements Serializable {
+public class SessionDataBean implements Serializable {
     private boolean loggedIn=false;
     private String  originalURL;
     private String notificationMessage;
@@ -20,11 +20,11 @@ public class AuthUserBean implements Serializable {
     @NotNull
     private String password="";
 
-    public AuthUserBean(){
+    public SessionDataBean(){
 
     }
 
-    public AuthUserBean(Auth auth){
+    public SessionDataBean(Auth auth){
         this.setLogin(auth.getLogin());
 //        this.setPassword(auth.getPassword());
     }

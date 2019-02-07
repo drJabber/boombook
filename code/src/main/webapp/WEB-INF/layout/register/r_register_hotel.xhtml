@@ -1,0 +1,140 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="registrationPanel" header="Регистрация учетной записи сотрудника отеля"  rendered="#{staffRegistrationView.state.equals('reg-user')}">
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="ФИО:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="staffName" value="#{staffRegistrationView.user.name}" required="true" label="ФИО" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="staffNameMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="staffNameMsg" for="staffName"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Д.Р.:" />
+            </div>
+            <div class="ui-g-4">
+                <p:calendar id="staffBD" value="#{staffRegistrationView.user.birthDate}" showOn="button" label="Д.Р."
+                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="staffBD" id="staffBDMessage" display="both"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="staffGender" value="Пол:" />
+            </div>
+            <div class="ui-g-4">
+                <p:selectOneMenu id="staffGender" value="#{staffRegistrationView.user.gender}" style="width:80px">
+                    <f:selectItem itemLabel="М" itemValue="М"/>
+                    <f:selectItem itemLabel="Ж" itemValue="Ж"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="staffGender" id="staffGenderMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="staff_email_input" value="Email:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="staff_email_input" value="#{staffRegistrationView.user.email}" validatorMessage="Здесь нужен Email">
+                    <f:validator validatorId="custom.EmailValidator" />
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="staff_email_input" id="staffEmailMessage" display="both" />
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="phone" value="Телефон:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputMask id="phone" value="#{staffRegistrationView.user.phone}" mask="(999) 999-9999"
+                             required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="phone" id="phoneMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="hotelInput" value="Отель:"/>
+            </div>
+            <div class="ui-g-4">
+                <p:selectOneMenu id="rpInput" value="#{room.roomPool}"
+                                 style="width:150px" required="true"
+                                 requiredMessage="Заполните поле"
+                                 converter="#{selectOneMenuConverter}"   >
+                    <!--<f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>-->
+                    <f:selectItems value="#{hotel.roomPools}" var="rp"  itemValue="#{rp}" itemLabel="#{rp.name}"
+                    />
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="hotelInput" id="hotelInputMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Login:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="userName" value="#{staffRegistrationView.user.login}" required="true" label="Login" >
+                    <p:ajax event="keyup"  update="userNameMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="userNameMsg" for="userName"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Пароль:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:password id="password" value="#{staffRegistrationView.user.password}" required="true" label="Пароль">
+                    <f:validateLength minimum="4"/>
+                    <p:ajax update="passwordMsg" event="keyup"/>
+                </p:password>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="passwordMsg" for="password"/>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-3">
+                <p:commandButton value="Регистрация"
+                                 style="margin-right:20px;"
+                                 actionListener="#{staffRegistrationView.doRegister()}"
+                                 update="@form"
+                                 oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
+
+                <p:commandButton value="Закрыть"
+                                 style="margin-right:20px;"
+                                 action="#{staffRegistrationView.doCancel()}"
+                                 process="@this"
+                                 oncomplete="javascript:history.go(-1);"
+                />
+
+            </div>
+        </div>
+    </p:panel>
+
+</ui:composition>

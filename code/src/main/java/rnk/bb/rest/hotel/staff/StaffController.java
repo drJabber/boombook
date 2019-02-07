@@ -1,13 +1,22 @@
 package rnk.bb.rest.hotel.staff;
 
 
+import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.hotel.staff.Staff;
+import rnk.bb.domain.user.Client;
+import rnk.bb.domain.util.Address;
+import rnk.bb.domain.util.Document;
+import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.blank.CustomController;
+import rnk.bb.views.bean.registration.RegUserBean;
+import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,6 +26,33 @@ import javax.ws.rs.core.Response;
 @DependsOn({"StartupController"})
 @Path("v1")
 public class StaffController extends CustomController<Staff, Long> {
+
+    @Inject
+    AuthController auths;
+
+    private Staff createStaff(StaffUserBean staffBean){
+        Staff staff=new Staff();
+
+        staff.setName(staffBean.getName());
+        staff.setGender(staffBean.getGender());
+        staff.setBirthDate(staffBean.getBirthDate());
+
+        Auth auth=auths.createUser(staffBean);
+
+        staff.setLogin(auth);
+
+        return staff;
+    }
+
+    public void registerStaff(StaffUserBean staffBean){
+        EntityManager em=entityManager();
+
+        Staff staff=createStaff(staffBean);
+        em.merge(staff);
+    }
+
+
+
     @PUT
     @Path("hotel/staff")
     @Consumes(MediaType.APPLICATION_JSON)

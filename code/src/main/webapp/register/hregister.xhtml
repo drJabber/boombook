@@ -12,17 +12,15 @@
             <ui:param name="originalURL" value="#{request.requestURI}?#{request.queryString}" />
             <f:event rendered="#{not userSession.loggedIn}" type="preRenderView" listener="#{userSession.recordOriginalURL(originalURL)}" />
 
-            <f:viewAction action="#{clientRegistrationView.update()}" />
-            <ui:param name="user" value="#{clientRegistrationView.user}"/>
+            <f:viewAction action="#{staffRegistrationView.update()}" />
+            <ui:param name="user" value="#{staffRegistrationView.user}"/>
 
         </f:metadata>
     </ui:define>
-    <ui:define name="pageTitle">Регистрация учетной записи клиента</ui:define>
+    <ui:define name="pageTitle">Регистрация</ui:define>
     <ui:define name="pageContent">
         <h:form id="registrationForm">
-            <ui:include src="/WEB-INF/layout/register/r_register_client.xhtml" />
-            <ui:include src="/WEB-INF/layout/register/r_address.xhtml" />
-            <ui:include src="/WEB-INF/layout/register/r_document.xhtml" />
+            <ui:include src="/WEB-INF/layout/register/r_register_hotel.xhtml" />
         </h:form>
     </ui:define>
 </ui:composition>

@@ -7,7 +7,7 @@ import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
 import rnk.bb.views.bean.order.EditFoodConceptBean;
-import rnk.bb.views.bean.order.EditHotelBean;
+import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.order.EditRoomFeatureBean;
 import rnk.bb.views.bean.order.EditRoomPoolBean;
 

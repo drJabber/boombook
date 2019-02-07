@@ -20,21 +20,23 @@
                                  value="Выйти"
                                  icon="fa fa-user"
                                  rendered="#{(request.userPrincipal!=null)and not (loginView.isVisible())}"/>
-                <p:menuButton value="Регистрация">
-                    <p:menuitem outcome="#{navView.getRegUrl()}"
+                <p:menuButton value="Регистрация" rendered="#{(request.userPrincipal==null)
+                                                                    and not (loginView.isVisible())
+                                                                    and not (clientRegistrationView.isVisible())}">
+                    <p:menuitem outcome="#{navView.getClientRegUrl()}"
                               value="Регистрация клиента"
                               icon="fa fa-edit"
-                              rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}">
+                              rendered="#{not (clientRegistrationView.isVisible())}">
                     </p:menuitem>
-                    <p:menuitem outcome="#{navView.getRegUrl()}"
-                                value="Регистрация отеля"
+                    <p:menuitem outcome="#{navView.getHManagerRegUrl()}"
+                                value="Регистрация менеджера отеля"
                                 icon="fa fa-edit"
-                                rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}">
+                                rendered="#{not (staffRegistrationView.isVisible())}">
                     </p:menuitem>
-                    <p:menuitem outcome="#{navView.getRegUrl()}"
+                    <p:menuitem outcome="#{navView.getClientRegUrl()}"
                                 value="Регистрация сотрудника отеля"
                                 icon="fa fa-edit"
-                                rendered="#{(request.userPrincipal==null)and not (loginView.isVisible()) and not (clientRegistrationView.isVisible())}">
+                                rendered="#{not (clientRegistrationView.isVisible())}">
                     </p:menuitem>
                 </p:menuButton>
             </f:facet>

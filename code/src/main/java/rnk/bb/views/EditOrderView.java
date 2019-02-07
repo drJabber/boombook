@@ -3,6 +3,7 @@ package rnk.bb.views;
 import org.primefaces.model.DualListModel;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.OrderService;
+import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.order.*;
 
 import javax.annotation.PostConstruct;

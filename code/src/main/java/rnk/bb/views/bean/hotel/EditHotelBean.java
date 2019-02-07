@@ -1,4 +1,8 @@
-package rnk.bb.views.bean.order;
+package rnk.bb.views.bean.hotel;
+
+import rnk.bb.views.bean.order.EditFoodConceptBean;
+import rnk.bb.views.bean.order.EditRoomFeatureBean;
+import rnk.bb.views.bean.order.EditRoomPoolBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Size;
