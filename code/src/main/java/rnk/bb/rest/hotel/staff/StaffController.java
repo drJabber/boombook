@@ -2,12 +2,15 @@ package rnk.bb.rest.hotel.staff;
 
 
 import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
 import rnk.bb.domain.user.Client;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Document;
 import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.blank.CustomController;
+import rnk.bb.rest.hotel.resource.HotelController;
+import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.registration.RegUserBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
@@ -30,6 +33,9 @@ public class StaffController extends CustomController<Staff, Long> {
     @Inject
     AuthController auths;
 
+    @Inject
+    HotelController hotels;
+
     private Staff createStaff(StaffUserBean staffBean){
         Staff staff=new Staff();
 
@@ -38,6 +44,12 @@ public class StaffController extends CustomController<Staff, Long> {
         staff.setBirthDate(staffBean.getBirthDate());
 
         Auth auth=auths.createUser(staffBean);
+
+        EditHotelBean hotelBean=staffBean.getHotel();
+        if (hotelBean !=null ){
+            Hotel hotel=hotels.findByLongId(hotelBean.getId());
+            staff.setHotel(hotel);
+        }
 
         staff.setLogin(auth);
 
