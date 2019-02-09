@@ -13,16 +13,21 @@ import java.util.Date;
 @Entity
 @Table(name="staff", schema = "public")
 @EqualsAndHashCode(callSuper = false)
-public class Approval extends AbstractHotelRefEntity {
+public class Approval extends AbstractEntity {
     @Id
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="awaiting_hotel_id")
     private Hotel awaitingHotel;
 
-    private Boolean state;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="hotel_id")
+    private Hotel Hotel;
+
+    private Boolean state=false;
 
     @Column(name = "approval_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date approvalDate;
+    private Date approvalDate=null;
 }

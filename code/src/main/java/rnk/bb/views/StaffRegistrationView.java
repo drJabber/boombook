@@ -7,7 +7,7 @@ import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -40,7 +40,7 @@ public class StaffRegistrationView implements Serializable {
     public void init(){
         state="reg-user";
         registrationState="notregistered";
-        user=new StaffUserBean();
+        user=new StaffUserBean("hotel-staff");
         this.hotels=new ArrayList<>();
         hotelService.getHotels().stream().forEach(h->this.hotels.add(hotelService.initHotelBean(new EditHotelBean(),h)));
     }
@@ -48,6 +48,16 @@ public class StaffRegistrationView implements Serializable {
 
     public void update(){
         init();
+        visible=true;
+    }
+
+    public void updatemanager(){
+        state="reg-user";
+        registrationState="notregistered";
+        user=new StaffUserBean("hotel-manager");
+        this.hotels=new ArrayList<>();
+        hotelService.getHotels().stream().forEach(h->this.hotels.add(hotelService.initHotelBean(new EditHotelBean(),h)));
+
         visible=true;
     }
 
@@ -112,10 +122,11 @@ public class StaffRegistrationView implements Serializable {
         return hotels;
     }
 
-    public void doRegister(){
+    public void doRegisterManager(){
         log.log(Level.INFO,"perform registration...");
         try{
-            if (registrationService.doRegisterStaff(user)){
+            if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("hotel-manager"))
+            if (registrationService.doRegisterManager(user)){
                 registrationState="registered";
             }
         }catch (Exception ex){

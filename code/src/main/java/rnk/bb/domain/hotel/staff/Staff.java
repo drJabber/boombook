@@ -4,9 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
-import rnk.bb.domain.hotel.approval.ApprovableInterface;
-import rnk.bb.domain.hotel.approval.ApprovableListener;
-import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.util.json.DateAdapter;
 
@@ -20,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name="staff", schema = "public")
 @EqualsAndHashCode(callSuper = false)
-public class Staff extends AbstractHotelRefEntity implements ApprovableInterface {
+public class Staff extends AbstractHotelRefEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="login")
     private Auth login;

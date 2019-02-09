@@ -3,7 +3,6 @@ package rnk.bb.rest.auth;
 
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.auth.Role;
-import rnk.bb.domain.util.Country;
 import rnk.bb.util.json.JsonHelper;
 import rnk.bb.views.bean.registration.RegUserBean;
 import rnk.bb.views.bean.registration.StaffUserBean;

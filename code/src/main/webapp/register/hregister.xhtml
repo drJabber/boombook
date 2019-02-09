@@ -12,7 +12,7 @@
             <ui:param name="originalURL" value="#{request.requestURI}?#{request.queryString}" />
             <f:event rendered="#{not userSession.loggedIn}" type="preRenderView" listener="#{userSession.recordOriginalURL(originalURL)}" />
 
-            <f:viewAction action="#{staffRegistrationView.update()}" />
+            <f:viewAction action="#{staffRegistrationView.updatemanager()}" />
             <ui:param name="user" value="#{staffRegistrationView.user}"/>
 
         </f:metadata>

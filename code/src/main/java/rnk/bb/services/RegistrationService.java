@@ -6,7 +6,6 @@ import rnk.bb.views.bean.registration.RegUserBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -33,6 +32,12 @@ public class RegistrationService implements Serializable {
     public Boolean doRegisterStaff(StaffUserBean user){
         log.log(Level.INFO, "new hotel staff registered");
         staff_list.registerStaff(user);
+        return true;
+    }
+
+    public Boolean doRegisterManager(StaffUserBean user){
+        log.log(Level.INFO, "new hotel staff registered");
+        staff_list.registerManager(user);
         return true;
     }
 }

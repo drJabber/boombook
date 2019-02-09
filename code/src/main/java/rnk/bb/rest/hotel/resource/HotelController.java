@@ -1,15 +1,25 @@
 package rnk.bb.rest.hotel.resource;
 
 import org.primefaces.model.LazyDataModel;
+import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.domain.hotel.staff.Staff;
+import rnk.bb.domain.util.Address;
 import rnk.bb.rest.blank.CustomController;
+import rnk.bb.rest.hotel.staff.StaffController;
+import rnk.bb.rest.util.AddressController;
+import rnk.bb.views.bean.hotel.EditHotelBean;
+import rnk.bb.views.bean.order.EditAddressBean;
+import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
@@ -65,6 +75,12 @@ public class HotelController  extends CustomController<Hotel, Long> {
     }
 
 
+    @Inject
+    StaffController staff;
+
+    @Inject
+    AddressController addresses;
+
     public List<FoodConcept> getFoodConceptList(Long hotelId){
         CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
         CriteriaQuery<FoodConcept> q = cb.createQuery(FoodConcept.class);
@@ -76,5 +92,53 @@ public class HotelController  extends CustomController<Hotel, Long> {
 
         return entityManager().createQuery(q).getResultList();
     }
+
+    public Hotel createHotel(EditHotelBean hotelBean){
+        Hotel hotel=new Hotel();
+
+        hotel.setName(hotelBean.getName());
+        hotel.setPhone(hotelBean.getPhone());
+        hotel.setEmail(hotelBean.getEmail());
+        hotel.setSite(hotelBean.getSite());
+        hotel.setPublished(hotelBean.getPublished());
+        hotel.setFax(hotelBean.getFax());
+        hotel.setDescr(hotelBean.getDescr());
+        hotel.setFb(hotelBean.getFb());
+        hotel.setVk(hotelBean.getVk());
+        hotel.setLongDescr(hotelBean.getLongDescr());
+        hotel.setPlace(hotelBean.getPlace());
+        hotel.setStars(hotelBean.getStars());
+
+
+        StaffUserBean managerBean=hotelBean.getManager();
+        if (managerBean!=null){
+            Staff manager=staff.findById(managerBean.getStaffId());
+            hotel.setManager(manager);
+        }
+
+        ///todo - fill empty fields
+        hotel.setAddress(null);
+
+        hotel.setApproval(null);
+
+        hotel.setFoodConcepts(null);
+
+        hotel.setPaymenPpolicy(null);
+
+        hotel.setRoomFeatures(null);
+
+        hotel.setRoomPools(null);
+
+        hotel.setScheduleItems(null);
+
+        hotel.setStaffList(null);
+
+        return hotel;
+    }
+
+
+
+
+
 
 }

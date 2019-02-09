@@ -1,17 +1,15 @@
 package rnk.bb.rest.hotel.staff;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import rnk.bb.domain.auth.Auth;
+import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
-import rnk.bb.domain.user.Client;
-import rnk.bb.domain.util.Address;
-import rnk.bb.domain.util.Document;
 import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.blank.CustomController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.views.bean.hotel.EditHotelBean;
-import rnk.bb.views.bean.registration.RegUserBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.ejb.DependsOn;
@@ -36,7 +34,7 @@ public class StaffController extends CustomController<Staff, Long> {
     @Inject
     HotelController hotels;
 
-    private Staff createStaff(StaffUserBean staffBean){
+    private Staff createStaff(StaffUserBean staffBean, Boolean isManager){
         Staff staff=new Staff();
 
         staff.setName(staffBean.getName());
@@ -48,6 +46,10 @@ public class StaffController extends CustomController<Staff, Long> {
         EditHotelBean hotelBean=staffBean.getHotel();
         if (hotelBean !=null ){
             Hotel hotel=hotels.findByLongId(hotelBean.getId());
+            if (isManager){
+                Hotel awaitingHotel=hotels.createHotel(hotelBean);
+                createApproval(awaitingHotel, hotel,staff);
+            }
             staff.setHotel(hotel);
         }
 
@@ -56,10 +58,25 @@ public class StaffController extends CustomController<Staff, Long> {
         return staff;
     }
 
+    private void createApproval(Hotel awaitingHotel,Hotel hotel, Staff staff){
+        Approval approval=new Approval();
+        awaitingHotel.setManager(staff);
+        awaitingHotel.setApproval(approval);
+        approval.setAwaitingHotel(awaitingHotel);
+        approval.setHotel(hotel);
+    }
+
     public void registerStaff(StaffUserBean staffBean){
         EntityManager em=entityManager();
 
-        Staff staff=createStaff(staffBean);
+        Staff staff=createStaff(staffBean, false);
+        em.merge(staff);
+    }
+
+    public void registerManager(StaffUserBean staffBean){
+        EntityManager em=entityManager();
+
+        Staff staff=createStaff(staffBean, true);
         em.merge(staff);
     }
 

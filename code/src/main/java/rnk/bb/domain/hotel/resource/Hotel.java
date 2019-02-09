@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.validator.constraints.Range;
 import rnk.bb.domain.blank.AbstractEntity;
 import rnk.bb.domain.book.Order;
-import rnk.bb.domain.hotel.approval.ApprovableListener;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.schedule.ScheduleItem;
 import rnk.bb.domain.hotel.staff.Staff;
@@ -20,7 +19,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="hotel", schema = "public")
-@EntityListeners(ApprovableListener.class)
 public class Hotel extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="manager_id")
@@ -84,7 +82,6 @@ public class Hotel extends AbstractEntity {
     @JoinColumn(name="approval_id")
     private Approval approval;
 
-    @Override
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="policy_id")
     private HotelPaymentPolicy paymenPpolicy;

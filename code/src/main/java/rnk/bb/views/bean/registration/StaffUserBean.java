@@ -15,7 +15,7 @@ import java.util.Date;
 @SessionScoped
 public class StaffUserBean implements Serializable {
 
-    Integer staffId;
+    private Long staffId=null;
 
     @NotNull
     private String name="";
@@ -44,8 +44,12 @@ public class StaffUserBean implements Serializable {
     private EditHotelBean hotel=null;
 
     @NotNull
-    private RoleBean role=new RoleBean("hotel-staff");
+    private RoleBean role;
 
+
+    public StaffUserBean(){
+
+    }
 
     public RoleBean getRole() {
         return role;
@@ -63,9 +67,9 @@ public class StaffUserBean implements Serializable {
         this.password = password;
     }
 
-    public StaffUserBean()
+    public StaffUserBean(String role_name)
     {
-
+        role=new RoleBean(role_name);
     }
 
     public String getName() {
@@ -123,5 +127,14 @@ public class StaffUserBean implements Serializable {
     public void setHotel(EditHotelBean hotel) {
         this.hotel = hotel;
     }
+
+    public Long getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(Long staffId) {
+        this.staffId = staffId;
+    }
+
 
 }

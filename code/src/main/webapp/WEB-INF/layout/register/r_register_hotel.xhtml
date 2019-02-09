@@ -78,9 +78,8 @@
             <div class="ui-g-4">
                 <p:selectOneMenu id="hotelInput" value="#{user.hotel}"
                                  style="width:150px" required="true"
-                                 requiredMessage="Заполните поле"
                                  converter="#{selectOneMenuConverter}"   >
-                    <!--<f:selectItem itemLabel="Тип номера" itemValue="" noSelectionOption="true"/>-->
+                    <f:selectItem itemLabel="Выбрать отель" itemValue="#{null}"/>
                     <f:selectItems value="#{staffRegistrationView.hotels}" var="hotel"  itemValue="#{hotel}" itemLabel="#{hotel.name}"
                     />
                 </p:selectOneMenu>
@@ -122,7 +121,7 @@
             <div class="ui-g-3">
                 <p:commandButton value="Регистрация"
                                  style="margin-right:20px;"
-                                 actionListener="#{staffRegistrationView.doRegister()}"
+                                 actionListener="#{staffRegistrationView.doRegisterManager()}"
                                  update="@form"
                                  oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
 
