@@ -80,7 +80,16 @@
   </servlet-mapping>
 
   <security-role>
-    <role-name>*</role-name>
+    <role-name>boom-manager</role-name>
+  </security-role>
+  <security-role>
+    <role-name>client</role-name>
+  </security-role>
+  <security-role>
+    <role-name>hotel-staff</role-name>
+  </security-role>
+  <security-role>
+    <role-name>hotel-manager</role-name>
   </security-role>
 
   <!-- <security-constraint>

@@ -35,13 +35,14 @@ public class RnkLoginModule extends AppservPasswordLoginModule {
             throw new LoginException("NoSuchUserException was thrown for getGroupNames() on RnkRealm");
         }
 
-        List<String> g = new ArrayList<String>();
+        List<String> g = new ArrayList<>();
         while (enumeration != null && enumeration.hasMoreElements()) {
-            g.add((String) enumeration.nextElement());
+            String s=(String) enumeration.nextElement();
+
+            g.add(s);
         }
 
         String[] authenticatedGroups = g.toArray(new String[g.size()]);
-
         commitUserAuthentication(authenticatedGroups);
     }
 

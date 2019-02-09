@@ -12,6 +12,7 @@ import javax.inject.Named;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
@@ -32,7 +33,7 @@ public class LoginView implements Serializable {
     private LoginService loginService;
 
     @Inject 
-    private SessionDataBean userSession=new SessionDataBean();
+    private SessionDataBean userSession;
 
     private String originalUrl;
 
@@ -69,10 +70,12 @@ public class LoginView implements Serializable {
         visible=true;
     }
 
-    public void logout() throws ServletException {
+    public void logout() throws ServletException, IOException {
         log.log(Level.INFO,"logout...");
-        request.logout();
         userSession=new SessionDataBean();
+        request.logout();
+        request.getSession().invalidate();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath());
     }
 
 
@@ -88,9 +91,18 @@ public class LoginView implements Serializable {
             userSession.setLoggedIn(true);
             notification="open";
 
-            userSession.setNotificationMessage(String.format("Client %s logged in", login));
 
-            externalContext.redirect(originalUrl);
+            if (request.isUserInRole("boom-manager")){
+                userSession.setNotificationMessage(String.format("System manager %s logged in", login));
+                externalContext.redirect(request.getContextPath()+ "/admin/admin.xhtml");
+            }else if (request.isUserInRole("hotel-manager")){
+                userSession.setNotificationMessage(String.format("Hotel manager %s logged in", login));
+                externalContext.redirect(request.getContextPath()+"/admin/admin.xhtml");
+            }else{
+
+                userSession.setNotificationMessage(String.format("Client %s logged in", login));
+                externalContext.redirect(originalUrl);
+            }
         } catch (Exception ex) {
             notification="open";
             userSession.setNotificationMessage(String.format("LOGIN FAILED FOR %s", login));

@@ -16,7 +16,7 @@
     <ui:define name="pageTitle">Вход</ui:define>
     <ui:define name="pageContent">
         <h:form id="loginForm" >
-            <p:panel id="registrationPanel" header="Войти" >
+            <p:panel id="loginPanel" header="Войти" >
                 <div class="ui-g">
                     <div class="ui-g-1">
                         <p:outputLabel value="Login:*"/>
@@ -55,7 +55,7 @@
                                         style="margin-right:20px;"
                                         actionListener="#{loginView.login()}"
                                         update="@form"
-                                        oncomplete="if (args &amp;&amp; !args.validationFailed ) {history.go(-1);}" />
+                        />
 
                         <p:commandButton value="Закрыть"
                                         style="margin-right:20px;"

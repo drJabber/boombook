@@ -84,7 +84,7 @@ public class Storage {
     public boolean validateUser(String login, String password) {
 
         try {
-            LOGGER.log(Level.INFO, String.format("rnk realm - validate user %s, password %s", login, password));
+//            LOGGER.log(Level.INFO, String.format("rnk realm - validate user %s, password %s", login, password));
             PreparedStatement s = getConnection().prepareStatement(VERIFY_USER,ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
             s.setString(1, login);
             s.setString(2, password);
@@ -105,8 +105,11 @@ public class Storage {
             List<String> l=new ArrayList<>();
             s.setString(1, login);
             ResultSet rs = s.executeQuery();
+//            LOGGER.log(Level.INFO,"groups:");
             while (rs.next()){
-                l.add(rs.getString("roles_role"));
+                String ss=rs.getString("roles_role");
+//                LOGGER.log(Level.INFO,"\tgroup: "+ss);
+                l.add(ss);
             }
             return l;
 

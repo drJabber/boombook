@@ -40,9 +40,9 @@ public class Realm extends AppservRealm {
 
         // salt it
         String salt = storage.getSaltForLogin(login);
-        LOGGER.log(Level.INFO,"login:"+login);
-        LOGGER.log(Level.INFO,"password:"+password);
-        LOGGER.log(Level.INFO,"salt:"+salt);
+//        LOGGER.log(Level.INFO,"login:"+login);
+//        LOGGER.log(Level.INFO,"password:"+password);
+//        LOGGER.log(Level.INFO,"salt:"+salt);
         if (salt != null) {
             HashUtils utils = new HashUtils();
 
@@ -55,7 +55,7 @@ public class Realm extends AppservRealm {
 
             // Base64 encode to String
             String encoded_passwd = utils.toBase64(passwordBytes);
-            LOGGER.log(Level.INFO,"encoded_password:"+encoded_passwd);
+//            LOGGER.log(Level.INFO,"encoded_password:"+encoded_passwd);
 
             return storage.validateUser(login,salt+encoded_passwd);
         }

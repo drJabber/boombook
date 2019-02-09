@@ -26,11 +26,12 @@ public class SessionDataBean implements Serializable {
 
     public SessionDataBean(Auth auth){
         this.setLogin(auth.getLogin());
-//        this.setPassword(auth.getPassword());
     }
 
     public void recordOriginalURL(String originalURL) {
-        this.originalURL = originalURL;
+        if (!originalURL.isEmpty()){
+            this.originalURL = originalURL;
+        }
     }
 
     public String getOriginalURL(){

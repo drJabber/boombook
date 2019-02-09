@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,13 +61,15 @@ public class LoginFilter extends HttpFilter {
 
     private Boolean isAuthorized(HttpServletRequest request){
         String uri=request.getRequestURI().trim();
+        String contextPath=request.getContextPath();
         List<String> alllist=restrictions.get("all");
         HttpSession session = request.getSession(false);
 
-        Boolean isAuthorized=(session!=null)&&(session.getAttribute("user")!=null);
+        Principal principal=request.getUserPrincipal();
+        Boolean isAuthorized=(principal!=null)&&(principal.getName()!=null);
 
         for (String restriction:alllist){
-            if (uri.startsWith("/"+restriction+"/")){
+            if (uri.startsWith(contextPath+"/"+restriction+"/")){
                 return isAuthorized && isAllowedForCurrentUser(restriction, request);
             }
         }
