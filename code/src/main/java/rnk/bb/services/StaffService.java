@@ -1,8 +1,13 @@
 package rnk.bb.services;
 
+import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.book.Order;
+import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
 import rnk.bb.rest.hotel.staff.StaffController;
+import rnk.bb.services.auth.LoginService;
+import rnk.bb.views.bean.hotel.EditHotelBean;
+import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +19,12 @@ public class StaffService {
 
     @Inject
     StaffController staff;
+
+    @Inject
+    HotelService hotelService;
+
+    @Inject
+    LoginService loginService;
 
     public Staff findByLogin(String login){
         return this.staff.findByLogin(login);
@@ -29,31 +40,29 @@ public class StaffService {
         {
             result=new StaffUserBean();
         }
-        return initFoodConceptBean(result,staff);
+        return initStaffBean(result,staff);
     }
 
 
-    private EditFoodConceptBean cleanStaffBean(StaffUserBean staffBean){
-        staffBean.setId(null);
-        staffBean.setLogin(null);
-        staffBean.setHotel(null);
+    private StaffUserBean cleanStaffBean(StaffUserBean staffBean){
+        staffBean.setStaffId((null);
+        loginService.initAccountBean(staffBean.getLogin(),(Auth)null));
+        hotelService.initHotelBean(staffBean.getHotel(),(Hotel) null);
         staffBean.setName("");
         staffBean.setBirthDate(null);
         staffBean.setGender("М");
-        staffBean.setApproved(false);
 
-        return fcBean;
+        return staffBean;
     }
 
     public StaffUserBean initStaffBean(StaffUserBean staffBean, Staff staff){
         if (staff!=null) {
-            staffBean.setId(staff.getId());
-            staffBean.setLogin(staff.getLogin());
-            staffBean.setHotel(staff.getHotel());
+            staffBean.setStaffId(staff.getId());
+            loginService.initAccountBean(staffBean.getLogin(),staff.getLogin());
+            hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
             staffBean.setName(staff.getName());
             staffBean.setBirthDate(staff.getBirthDate());
             staffBean.setGender(staff.getGender());
-            staffBean.setApproved(false);
 
             return staffBean;
         }else{
@@ -63,15 +72,15 @@ public class StaffService {
 
     public StaffUserBean initStaffBean(StaffUserBean staffBean, StaffUserBean anotherBean){
         if ((staffBean!=null)&&(anotherBean!=null)) {
-            Staff staff=this.staff.findByLongId(anotherBean.getId());
+            Staff staff=this.staff.findByLongId(anotherBean.getStaffId());
 
-            staffBean.setId(staff.getId());
-            staffBean.setLogin(staff.getLogin());
-            staffBean.setHotel(staff.getHotel());
+            staffBean.setStaffId(staff.getId());
+            loginService.initAccountBean(staffBean.getLogin(),staff.getLogin());
+            hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
+
             staffBean.setName(staff.getName());
             staffBean.setBirthDate(staff.getBirthDate());
             staffBean.setGender(staff.getGender());
-            staffBean.setApproved(false);
 
             return staffBean;
         }else{
