@@ -10,6 +10,7 @@ import rnk.bb.views.bean.registration.StaffUserBean;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -64,10 +65,10 @@ public class AuthController implements Serializable {
         auth.setEmail(user.getEmail());
         auth.setPhone(user.getPhone());
 
-        Role role=new Role();
-        role.setRole(user.getRole().getRole());
+        Role role=this.getRoles().stream().filter(r->r.getRole().equals(user.getRole().getRole())).findFirst().orElse(null);
 
         auth.getRoles().add(role);
+        role.getAccounts().add(auth);
 
         return auth;
     }
@@ -79,11 +80,10 @@ public class AuthController implements Serializable {
         auth.setEmail(user.getEmail());
         auth.setPhone(user.getPhone());
 
-        Role role=new Role();
-        role.setRole(user.getRole().getRole());
+        Role role=this.getRoles().stream().filter(r->r.getRole().equals(user.getRole().getRole())).findFirst().orElse(null);
 
         auth.getRoles().add(role);
-
+        role.getAccounts().add(auth);
         return auth;
     }
 

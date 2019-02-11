@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @Named("staffRegistrationView")
 @SessionScoped
 public class StaffRegistrationView implements Serializable {
-    private static Logger log=Logger.getLogger(EditOrderView.class.getName());
+    private static Logger log=Logger.getLogger(StaffRegistrationView.class.getName());
 
     private String state;
     private String registrationState;
@@ -125,7 +125,6 @@ public class StaffRegistrationView implements Serializable {
     public void doRegisterManager(){
         log.log(Level.INFO,"perform registration...");
         try{
-            if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole("hotel-manager"))
             if (registrationService.doRegisterManager(user)){
                 registrationState="registered";
             }

@@ -1,5 +1,6 @@
 package rnk.bb.domain.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import rnk.bb.utils.security.HashUtils;
 

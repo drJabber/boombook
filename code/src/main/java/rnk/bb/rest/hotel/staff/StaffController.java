@@ -18,9 +18,13 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
 import javax.ws.rs.*;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 @Startup
@@ -80,6 +84,18 @@ public class StaffController extends CustomController<Staff, Long> {
         em.merge(staff);
     }
 
+    public Staff findByLogin(String login){
+        CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
+        CriteriaQuery<Staff> q = cb.createQuery(Staff.class);
+
+        Root<Staff> root = q.from(Staff.class);
+        Join<Staff,Auth> authJoin=root.join("login", JoinType.INNER);
+        List<Predicate> predicates=new ArrayList<>();
+        predicates.add(cb.equal(authJoin.get("login"),login));
+        q.select(root).where(predicates.toArray(new Predicate[0]));
+
+        return entityManager().createQuery(q).getSingleResult();
+    }
 
 
     @PUT

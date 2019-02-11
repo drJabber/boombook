@@ -23,7 +23,7 @@ import java.util.List;
 @Entity
 @Table(name="client", schema="public")
 public class Client extends AbstractEntity {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="login")
     private Auth login;
 

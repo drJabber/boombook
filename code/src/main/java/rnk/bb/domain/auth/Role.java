@@ -1,5 +1,6 @@
 package rnk.bb.domain.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,9 @@ public class Role implements Serializable {
     @Id
     private String role;
 
+
     @JoinColumn(name="login",nullable = false)
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Auth> accounts=new HashSet<>();
 
     public Set<Auth> getAccounts(){
@@ -34,5 +36,13 @@ public class Role implements Serializable {
 
     public Role(String role){
         this.role=role;
+    }
+
+    public String toString(){
+        return role;
+    }
+
+    public int hashCode(){
+        return role.hashCode();
     }
 }

@@ -97,7 +97,7 @@ public class LoginView implements Serializable {
                 externalContext.redirect(request.getContextPath()+ "/admin/admin.xhtml");
             }else if (request.isUserInRole("hotel-manager")){
                 userSession.setNotificationMessage(String.format("Hotel manager %s logged in", login));
-                externalContext.redirect(request.getContextPath()+"/admin/admin.xhtml");
+                externalContext.redirect(request.getContextPath()+"/hotel/hotelstaff.xhtml");
             }else{
 
                 userSession.setNotificationMessage(String.format("Client %s logged in", login));
