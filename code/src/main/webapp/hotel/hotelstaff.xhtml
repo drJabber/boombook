@@ -13,7 +13,7 @@
             <f:event rendered="#{not userSession.loggedIn}" type="preRenderView" listener="#{userSession.recordOriginalURL(originalURL)}" />
 
             <f:viewAction action="#{staffView.update()}" />
-            <ui:param name="user" value="#{ыефааView.user}"/>
+            <ui:param name="user" value="#{staffView.user}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="pageTitle">#{request.isUserInRole("hotel-manager")?"Менеджер отеля":"Работник отеля"}</ui:define>
@@ -44,7 +44,7 @@
                                 <p:panel>
                                     <h:outputText value="Измененные данные. Сохранить?" />
                                 </p:panel>
-                                <p:commandButton value="Сохранить" action="#{staffView.saveHotel}" update="growl" process="@this"/>
+                                <p:commandButton value="Сохранить" action="#{staffView.saveHotel()}" update="growl" process="@this"/>
                             </p:tab>
                         </p:wizard>
                     </p:panel>

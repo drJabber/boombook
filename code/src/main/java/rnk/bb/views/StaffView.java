@@ -49,13 +49,30 @@ public class StaffView implements Serializable {
         init();
     }
 
-//    public Hotel getHotel(){
-//        return hotel;
-//    }
-
     public String getEditHotelButtonTitle(){
-        return "Создать отель";
+        if (staffBean.getHotel().getId()==null){
+            return "Создать отель";
+        }else{
+            return "Изменить данные отеля";
+        }
     }
+
+    public String editHotel(){
+        return "";
+    }
+
+    public String saveHotel(){
+        return "";
+    }
+
+    public String onHotelFlow(){
+        return "";
+    }
+
+    public String requestApproval(){
+        return "";
+    }
+
 
     public StaffUserBean getUser(){
         return staffBean;

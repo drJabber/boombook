@@ -41,45 +41,30 @@ public class LoginService implements Serializable {
 
     private SessionDataBean cleanAccountBean(SessionDataBean accountBean){
         accountBean.setLogin("");
-        loginService.initAuthBean(staffBean.getLogin(),(Auth)null));
-        hotelService.initHotelBean(staffBean.getHotel(),(Hotel) null);
-        staffBean.setName("");
-        staffBean.setBirthDate(null);
-        staffBean.setGender("М");
+        accountBean.setPassword("");
 
         return staffBean;
     }
 
-    public StaffUserBean initStaffBean(StaffUserBean staffBean, Staff staff){
-        if (staff!=null) {
-            staffBean.setStaffId(staff.getId());
-            loginService.initAuthBean(staffBean.getLogin(),staff.getLogin());
-            hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
-            staffBean.setName(staff.getName());
-            staffBean.setBirthDate(staff.getBirthDate());
-            staffBean.setGender(staff.getGender());
+    public SessionDataBean initAccountBean(SessionDataBean accountBean, Auth auth){
+        if (auth!=null) {
+            accountBean.setLogin(auth.getLogin());
 
-            return staffBean;
+            return accountBean;
         }else{
-            return cleanStaffBean(staffBean);
+            return cleanAccountBean(accountBean);
         }
     }
 
-    public StaffUserBean initStaffBean(StaffUserBean staffBean, StaffUserBean anotherBean){
-        if ((staffBean!=null)&&(anotherBean!=null)) {
-            Staff staff=this.staff.findByLongId(anotherBean.getStaffId());
+    public SessionDataBean initAccountBean(SessionDataBean accountBean, SessionDataBean anotherBean){
+        if ((accountBean!=null)&&(anotherBean!=null)) {
+            Auth auth=this.users.findUser(anotherBean.getLogin());
 
-            staffBean.setStaffId(staff.getId());
-            loginService.initAuthBean(staffBean.getLogin(),staff.getLogin());
-            hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
+            accountBean.setLogin(auth.getLogin());
 
-            staffBean.setName(staff.getName());
-            staffBean.setBirthDate(staff.getBirthDate());
-            staffBean.setGender(staff.getGender());
-
-            return staffBean;
+            return accountBean;
         }else{
-            return cleanStaffBean(staffBean);
+            return cleanAccountBean(accountBean);
         }
     }
 
