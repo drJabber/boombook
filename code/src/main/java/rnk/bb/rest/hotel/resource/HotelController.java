@@ -123,7 +123,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
 
         hotel.setFoodConcepts(null);
 
-        hotel.setPaymenPpolicy(null);
+        hotel.setPaymentPolicy(null);
 
         hotel.setRoomFeatures(null);
 

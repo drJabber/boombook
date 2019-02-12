@@ -6,6 +6,31 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <p:panel header="#{staffView.editHotelHeaderTitle} : описание"  styleClass="ui-wizard-panel ui-panel">
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <p:outputLabel for="hotelDescr" value="Краткое описание:"/>
+            </div>
+            <div class="ui-g-10">
+
+                <p:textEditor id="hotelDescr" widgetVar="hotelDescrW" value="#{hotel.descr}" height="200" style="margin-bottom:3px" placeholder="Краткое описание отеля">
+                    <f:facet name="toolbar">
+                         <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-font"></select>
+                            <select class="ql-size"></select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-link" />
+                        </span>
+                    </f:facet>
+                </p:textEditor>
+            </div>
+        </div>
 
     </p:panel>
 

@@ -7,8 +7,8 @@
 
     <p:panel header="#{staffView.editHotelHeaderTitle} : общая информация"  styleClass="ui-wizard-panel ui-panel">
         <div class="ui-g">
-            <div class="ui-g-1">
-                <p:outputLabel for="hotelName" value="Отель:*"/>
+            <div class="ui-g-2">
+                <p:outputLabel for="hotelName" value="Отель:"/>
             </div>
             <div class="ui-g-4">
                 <p:inputText id="hotelName" value="#{hotel.name}" required="true" label="Название отеля" requiredMessage="Заполните поле">
@@ -21,11 +21,18 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
+            <div class="ui-g-5">
+                <p:rating value="#{hotel.stars}" />
+            </div>
+        </div>
+
+
+        <div class="ui-g">
+            <div class="ui-g-2">
                 <h:outputLabel for="hotel_email_input" value="Email:" />
             </div>
             <div class="ui-g-4">
-                <p:inputText id="hotel_email_input" value="#{hotel.email}" validatorMessage="Здесь нужен Email">
+                <p:inputText id="hotel_email_input" value="#{hotel.email}" required="true" requiredMessage="Здесь нужен Email" validatorMessage="Здесь нужен Email">
                     <f:validator validatorId="custom.EmailValidator" />
                 </p:inputText>
             </div>
@@ -35,12 +42,12 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
-                <p:outputLabel for="hotelPlace" value="Отель:*"/>
+            <div class="ui-g-2">
+                <p:outputLabel for="hotelPlace" value="Местоположение:"/>
             </div>
             <div class="ui-g-4">
-                <p:inputText id="hotePlace" value="#{hotel.place}" required="true" label="Местоположение:" requiredMessage="Заполните поле">
-                    <p:ajax event="keyup"  update="hotePlaceMsg"/>
+                <p:inputText id="hotelPlace" value="#{hotel.place}" required="true" label="Местоположение:" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="hotelPlaceMsg"/>
                 </p:inputText>
             </div>
             <div class="ui-g-3">
@@ -49,11 +56,11 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
-                <p:outputLabel for="hotelSite" value="Отель:*"/>
+            <div class="ui-g-2">
+                <p:outputLabel for="hotelSite" value="Сайт:"/>
             </div>
             <div class="ui-g-4">
-                <p:inputText id="hoteSite" value="#{hotel.site}" required="true" label="Сайт:" requiredMessage="Заполните поле">
+                <p:inputText id="hotelSite" value="#{hotel.site}" label="Сайт:" >
                     <p:ajax event="keyup"  update="hotelSiteMsg"/>
                 </p:inputText>
             </div>
@@ -63,7 +70,7 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
+            <div class="ui-g-2">
                 <p:outputLabel for="phone_input" value="Телефон:" />
             </div>
             <div class="ui-g-4">
@@ -76,12 +83,12 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
+            <div class="ui-g-2">
                 <p:outputLabel for="fax_input" value="Факс:" />
             </div>
             <div class="ui-g-4">
-                <p:inputMask id="fax_input" value="#{hotel.phone}" mask="(999) 999-9999" label="Факс отеля"
-                             required="true" validatorMessage="Введите телефон" requiredMessage="Введите факс"/>
+                <p:inputMask id="fax_input" value="#{hotel.fax}" mask="(999) 999-9999" label="Факс отеля"
+                             validatorMessage="Введите телефон" />
             </div>
             <div class="ui-g-3">
                 <p:message for="fax_input" id="faxMessage" display="both" />
@@ -89,11 +96,11 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
+            <div class="ui-g-2">
                 <p:outputLabel for="vk_input" value="VK:" />
             </div>
             <div class="ui-g-4">
-                <p:inputText id="vk_input" value="#{hotel.vk}" required="true" label="VK:" requiredMessage="Заполните поле">
+                <p:inputText id="vk_input" value="#{hotel.vk}"  label="VK:" >
                     <p:ajax event="keyup"  update="vkMsg"/>
                 </p:inputText>
             </div>
@@ -103,31 +110,19 @@
         </div>
 
         <div class="ui-g">
-            <div class="ui-g-1">
-                <p:outputLabel value="Email:" />
+            <div class="ui-g-2">
+                <p:outputLabel for="fb_input" value="FB:" />
             </div>
             <div class="ui-g-4">
-                <p:calendar id="clientBD" value="#{clientRegistrationView.user.birthDate}" showOn="button" label="Д.Р."
-                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+                <p:inputText id="fb_input" value="#{hotel.fb}"  label="FB:" >
+                    <p:ajax event="keyup"  update="fbMsg"/>
+                </p:inputText>
             </div>
             <div class="ui-g-3">
-                <p:message for="clientBD" id="clientBDMessage" display="both"/>
+                <p:message for="fb_input" id="fbMsg" display="both" />
             </div>
         </div>
-        <div class="ui-g">
-            <div class="ui-g-1">
-                <h:outputLabel for="clientGender" value="Пол:" />
-            </div>
-            <div class="ui-g-4">
-                <p:selectOneMenu id="clientGender" value="#{clientRegistrationView.user.gender}" style="width:80px">
-                    <f:selectItem itemLabel="М" itemValue="М"/>
-                    <f:selectItem itemLabel="Ж" itemValue="Ж"/>
-                </p:selectOneMenu>
-            </div>
-            <div class="ui-g-3">
-                <p:message for="clientGender" id="clientGenderMessage" display="both" />
-            </div>
-        </div>
+
     </p:panel>
 
 </ui:composition>

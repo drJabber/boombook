@@ -84,7 +84,7 @@ public class Hotel extends AbstractEntity {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="policy_id")
-    private HotelPaymentPolicy paymenPpolicy;
+    private HotelPaymentPolicy paymentPolicy;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Staff> staffList;

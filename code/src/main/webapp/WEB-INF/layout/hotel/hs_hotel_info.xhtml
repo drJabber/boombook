@@ -7,7 +7,10 @@
 
     <p:panel header="Информация об отеле" styleClass="ui-wizard-panel ui-panel">
         <p><strong><h:outputText value="#{hotel.name}" /></strong></p>
+        <p:rating value="#{hotel.stars}" disabled="true" />
+        <h:panelGroup rendered="#{not empty hotel.email}"><p>Email:<h:outputText value="#{hotel.email}" /></p></h:panelGroup>
         <h:panelGroup rendered="#{not empty hotel.place}"><p>Местонахождение:<h:outputText value="#{hotel.place}" /></p></h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.site}"><p>Сайт:<h:outputText value="#{hotel.site}" /></p></h:panelGroup>
         <h:panelGroup rendered="#{not empty hotel.descr}"><p>Описание:<h:outputText value="#{hotel.descr}" /></p></h:panelGroup>
         <h:panelGroup rendered="#{not empty hotel.vk}">
             <p>VK:<h:outputLink value="#{hotel.vk}">#{hotel.vk}</h:outputLink></p>
