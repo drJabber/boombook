@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 @Startup
@@ -95,6 +96,14 @@ public class AuthController implements Serializable {
         Root<Role> c = q.from(Role.class);
 
         return em.createQuery(q).getResultList();
+    }
+
+    public Auth findById(String id) {
+        return em.find(Auth.class, id);
+    }
+
+    public Optional<Auth> findOptionalById(String id) {
+        return Optional.ofNullable(findById(id));
     }
 
     @PUT

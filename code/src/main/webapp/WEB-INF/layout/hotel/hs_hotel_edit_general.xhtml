@@ -1,0 +1,133 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel header="#{staffView.editHotelHeaderTitle} : общая информация"  styleClass="ui-wizard-panel ui-panel">
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="hotelName" value="Отель:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="hotelName" value="#{hotel.name}" required="true" label="Название отеля" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="hotelNameMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="hotelNameMsg" for="hotelName"/>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="hotel_email_input" value="Email:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="hotel_email_input" value="#{hotel.email}" validatorMessage="Здесь нужен Email">
+                    <f:validator validatorId="custom.EmailValidator" />
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="hotel_email_input" id="hotelEmailMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="hotelPlace" value="Отель:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="hotePlace" value="#{hotel.place}" required="true" label="Местоположение:" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="hotePlaceMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="hotelPlaceMsg" for="hotelPlace"/>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="hotelSite" value="Отель:*"/>
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="hoteSite" value="#{hotel.site}" required="true" label="Сайт:" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="hotelSiteMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message id="hotelSiteMsg" for="hotelSite"/>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="phone_input" value="Телефон:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputMask id="phone_input" value="#{hotel.phone}" mask="(999) 999-9999" label="телефон отеля"
+                             required="true" validatorMessage="Введите телефон" requiredMessage="Введите телефон"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="phone_input" id="phoneMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="fax_input" value="Факс:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputMask id="fax_input" value="#{hotel.phone}" mask="(999) 999-9999" label="Факс отеля"
+                             required="true" validatorMessage="Введите телефон" requiredMessage="Введите факс"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="fax_input" id="faxMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel for="vk_input" value="VK:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="vk_input" value="#{hotel.vk}" required="true" label="VK:" requiredMessage="Заполните поле">
+                    <p:ajax event="keyup"  update="vkMsg"/>
+                </p:inputText>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="vk_input" id="vkMsg" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <p:outputLabel value="Email:" />
+            </div>
+            <div class="ui-g-4">
+                <p:calendar id="clientBD" value="#{clientRegistrationView.user.birthDate}" showOn="button" label="Д.Р."
+                            required="true" requiredMessage="Заполните поле" validatorMessage="Заполните дату правильно" lang="ru" pattern="dd.MM.yyyy"/>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientBD" id="clientBDMessage" display="both"/>
+            </div>
+        </div>
+        <div class="ui-g">
+            <div class="ui-g-1">
+                <h:outputLabel for="clientGender" value="Пол:" />
+            </div>
+            <div class="ui-g-4">
+                <p:selectOneMenu id="clientGender" value="#{clientRegistrationView.user.gender}" style="width:80px">
+                    <f:selectItem itemLabel="М" itemValue="М"/>
+                    <f:selectItem itemLabel="Ж" itemValue="Ж"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="clientGender" id="clientGenderMessage" display="both" />
+            </div>
+        </div>
+    </p:panel>
+
+</ui:composition>

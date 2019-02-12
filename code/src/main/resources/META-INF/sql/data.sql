@@ -16,7 +16,10 @@ SET row_security = off;
 
 INSERT INTO public.role (role) VALUES ('client'),('hotel-staff'),('hotel-manager'),('boom-manager');
 INSERT INTO public.auth (login,password,email,phone,state) VALUES ('papaboom','BoTRVLpZU4908Q==hJi2GZ+Q1k+GlIvljyHMPtGw7PjQEzPXu8o8NIbCAKoVwtcmwfbBdEyQADS5nSEnkbO1sUE3owEr2oTM4g6/nw==','dJabber@gmail.com','+7(929)511-1849',0);
+INSERT INTO public.auth (login,password,email,phone,state) VALUES ('1111','BoTRVLpZU4908Q==hJi2GZ+Q1k+GlIvljyHMPtGw7PjQEzPXu8o8NIbCAKoVwtcmwfbBdEyQADS5nSEnkbO1sUE3owEr2oTM4g6/nw==','a@b','+7(111)111-1111',0);
 INSERT INTO public.role_auth (roles_role,accounts_login) VALUES ('boom-manager','papaboom');
+INSERT INTO public.role_auth (roles_role,accounts_login) VALUES ('hotel-manager','1111');
+insert into public.staff (login, name, gender, birthdate, approved) values('1111','1111','М','1998-12-12',false);
 
 INSERT INTO public.document_type (id, description) VALUES (21, 'ПАСПОРТ'),(102, 'ВОДИТЕЛЬСКОЕ УДОСТОВЕРЕНИЕ');
 

@@ -43,7 +43,7 @@ public class LoginService implements Serializable {
         accountBean.setLogin("");
         accountBean.setPassword("");
 
-        return staffBean;
+        return accountBean;
     }
 
     public SessionDataBean initAccountBean(SessionDataBean accountBean, Auth auth){
@@ -58,7 +58,7 @@ public class LoginService implements Serializable {
 
     public SessionDataBean initAccountBean(SessionDataBean accountBean, SessionDataBean anotherBean){
         if ((accountBean!=null)&&(anotherBean!=null)) {
-            Auth auth=this.users.findUser(anotherBean.getLogin());
+            Auth auth=this.users.findOptionalById(anotherBean.getLogin()).orElse(null);
 
             accountBean.setLogin(auth.getLogin());
 

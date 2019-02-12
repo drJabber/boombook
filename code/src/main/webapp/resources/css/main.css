@@ -125,3 +125,10 @@ dl dt{
     /*width:300px;*/
 /*}*/
 
+.ui-wizard-panel.ui-panel
+{
+    border: 1px solid ;
+    padding: 1px;
+    margin: 2px;
+    min-height: 200px;
+}

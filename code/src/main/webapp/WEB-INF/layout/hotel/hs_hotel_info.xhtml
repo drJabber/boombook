@@ -1,0 +1,23 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel header="Информация об отеле" styleClass="ui-wizard-panel ui-panel">
+        <p><strong><h:outputText value="#{hotel.name}" /></strong></p>
+        <h:panelGroup rendered="#{not empty hotel.place}"><p>Местонахождение:<h:outputText value="#{hotel.place}" /></p></h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.descr}"><p>Описание:<h:outputText value="#{hotel.descr}" /></p></h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.vk}">
+            <p>VK:<h:outputLink value="#{hotel.vk}">#{hotel.vk}</h:outputLink></p>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.fb}">
+            <p>FB:<h:outputLink value="#{hotel.fb}">#{hotel.fb}</h:outputLink></p>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.phone}"><p>Телефон:<h:outputText value="#{hotel.phone}" /></p></h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.fax}"><p>Факс:<h:outputText value="#{hotel.fax}" /></p></h:panelGroup>
+        <h:panelGroup rendered="#{not empty hotel.manager}"><p>Менеджер:<h:outputText value="#{hotel.manager.name}"/></p></h:panelGroup>
+    </p:panel>
+
+</ui:composition>

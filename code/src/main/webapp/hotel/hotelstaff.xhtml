@@ -14,37 +14,40 @@
 
             <f:viewAction action="#{staffView.update()}" />
             <ui:param name="user" value="#{staffView.user}"/>
+            <ui:param name="hotel" value="#{user.hotel}"/>
         </f:metadata>
     </ui:define>
     <ui:define name="pageTitle">#{request.isUserInRole("hotel-manager")?"Менеджер отеля":"Работник отеля"}</ui:define>
     <ui:define name="pageContent">
         <h:form id="staffForm">
-            <p:tabView id="tabs" dynamic="true" cache="true" activeIndex="hotel">
+            <p:tabView id="tabs" dynamic="true" cache="false">
                 <p:tab id="hotelTab" title="Отель" rendered="#{request.isUserInRole('hotel-manager')}" >
                     <f:facet name="actions" >
                         <p:commandButton value="#{staffView.editHotelButtonTitle}" actionListener="#{staffView.editHotel()}"
-                                         update=":staffForm:tabs:hotelTab" process="@this" style="margin-right:20px;" />
+                                         update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
                         <p:commandButton value="Запрос подтверждения" actionListener="#{staffView.requestApproval()}"
-                                         update=":staffForm:tabs:hotelTab" process="@this" style="margin-right:20px;" />
+                                         update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
                     </f:facet>
 
                     <p:panel>
-                        <p:wizard flowListener="staffView.onHotelFlow" >
-                            <p:tab title="Информация" >
-                                <p:panel>
-                                    <h:outputText value="Это информация об отеле" />
-                                </p:panel>
+                        <p:wizard flowListener="#{staffView.onHotelFlow}"
+                                  backLabel="Назад"  nextLabel="Далее"
+                                  showStepStatus="false"
+                                  showNavBar="#{staffView.showHotelWizardNavBar}"
+                                  step="#{staffView.hotelWizardCurrentStep}"
+                                  widgetVar="hotelWizardW" styleClass="ui-noborder" id="hotelWizard"
+                        >
+                            <p:tab title="Информация" id="hotelInfoTab" >
+                                <ui:include src="/WEB-INF/layout/hotel/hs_hotel_info.xhtml" />
                             </p:tab>
-                            <p:tab title="Изменение данных отеля">
-                                <p:panel>
-                                    <h:outputText value="Редактор данных отеля" />
-                                </p:panel>
+                            <p:tab title="Изменение данных отеля: общая информация" id="hotelEditGeneralTab" >
+                                <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_general.xhtml" />
                             </p:tab>
-                            <p:tab title="Сохранение данных отеля">
-                                <p:panel>
-                                    <h:outputText value="Измененные данные. Сохранить?" />
-                                </p:panel>
-                                <p:commandButton value="Сохранить" action="#{staffView.saveHotel()}" update="growl" process="@this"/>
+                            <p:tab title="Изменение данных отеля: описание" id="hotelEditDescriptionTab" >
+                                <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_description.xhtml" />
+                            </p:tab>
+                            <p:tab title="Сохранение данных отеля" id="hotelSaveTab">
+                                <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_save.xhtml" />
                             </p:tab>
                         </p:wizard>
                     </p:panel>
@@ -52,13 +55,13 @@
                 <p:tab id="staffTab" title="Сотрудник" >
                     <f:facet name="actions" >
                         <p:commandButton value="Изменить" actionListener="#{staffView.requestApproval()}"
-                                         update=":staffForm:tabs:hotelTab" process="@this" style="margin-right:20px;" />
+                                         update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
                         <p:commandButton value="Запрос подтверждения" actionListener="#{staffView.requestApproval()}"
-                                         update=":staffForm:tabs:hotelTab" process="@this" style="margin-right:20px;" />
+                                         update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
                     </f:facet>
 
                     <p:panel>
-                        <p:wizard flowListener="staffView.onFlow" >
+                        <p:wizard flowListener="#{staffView.onStaffFlow}" >
                             <p:tab title="Информация" >
                                 <p:panel>
                                     <h:outputText value="Это информация об отеле" />

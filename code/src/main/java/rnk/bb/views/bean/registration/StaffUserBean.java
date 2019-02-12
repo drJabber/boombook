@@ -41,7 +41,7 @@ public class StaffUserBean implements Serializable {
     @NotNull
     private String password="";
 
-    private EditHotelBean hotel=null;
+    private EditHotelBean hotel=new EditHotelBean();
 
     @NotNull
     private RoleBean role;

@@ -45,8 +45,8 @@ public class StaffService {
 
 
     private StaffUserBean cleanStaffBean(StaffUserBean staffBean){
-        staffBean.setStaffId((null);
-        loginService.initAccountBean(staffBean.getLogin(),(Auth)null));
+        staffBean.setStaffId((null));
+        staffBean.setLogin("");
         hotelService.initHotelBean(staffBean.getHotel(),(Hotel) null);
         staffBean.setName("");
         staffBean.setBirthDate(null);
@@ -58,7 +58,7 @@ public class StaffService {
     public StaffUserBean initStaffBean(StaffUserBean staffBean, Staff staff){
         if (staff!=null) {
             staffBean.setStaffId(staff.getId());
-            loginService.initAccountBean(staffBean.getLogin(),staff.getLogin());
+            staffBean.setLogin(staff.getLogin().getLogin());
             hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
             staffBean.setName(staff.getName());
             staffBean.setBirthDate(staff.getBirthDate());
@@ -75,7 +75,7 @@ public class StaffService {
             Staff staff=this.staff.findByLongId(anotherBean.getStaffId());
 
             staffBean.setStaffId(staff.getId());
-            loginService.initAccountBean(staffBean.getLogin(),staff.getLogin());
+            staffBean.setLogin(staff.getLogin().getLogin());
             hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
 
             staffBean.setName(staff.getName());
