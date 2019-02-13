@@ -3,7 +3,7 @@ package rnk.bb.rest.util;
 import rnk.bb.domain.util.Address;
 import rnk.bb.domain.util.Country;
 import rnk.bb.rest.blank.CustomController;
-import rnk.bb.views.bean.order.EditAddressBean;
+import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;

@@ -1,11 +1,8 @@
 package rnk.bb.rest.util;
 
-import rnk.bb.domain.util.Address;
-import rnk.bb.domain.util.Country;
 import rnk.bb.domain.util.Document;
 import rnk.bb.domain.util.DocumentType;
 import rnk.bb.rest.blank.CustomController;
-import rnk.bb.views.bean.order.EditAddressBean;
 import rnk.bb.views.bean.order.EditDocumentBean;
 
 import javax.ejb.DependsOn;

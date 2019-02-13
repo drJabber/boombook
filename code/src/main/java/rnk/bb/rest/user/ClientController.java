@@ -2,17 +2,13 @@ package rnk.bb.rest.user;
 
 
 import rnk.bb.domain.auth.Auth;
-import rnk.bb.domain.auth.Role;
 import rnk.bb.domain.user.Client;
 import rnk.bb.domain.util.Address;
-import rnk.bb.domain.util.Country;
 import rnk.bb.domain.util.Document;
-import rnk.bb.domain.util.DocumentType;
 import rnk.bb.rest.auth.AuthController;
 import rnk.bb.rest.blank.CustomController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
-import rnk.bb.views.bean.order.EditAddressBean;
 import rnk.bb.views.bean.registration.RegUserBean;
 
 import javax.ejb.DependsOn;

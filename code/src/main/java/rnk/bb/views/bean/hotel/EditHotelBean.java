@@ -2,10 +2,12 @@ package rnk.bb.views.bean.hotel;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import rnk.bb.domain.util.Address;
 import rnk.bb.views.bean.order.EditFoodConceptBean;
 import rnk.bb.views.bean.order.EditRoomFeatureBean;
 import rnk.bb.views.bean.order.EditRoomPoolBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
+import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.persistence.Basic;
@@ -59,6 +61,8 @@ public class EditHotelBean implements Serializable {
     @NotNull
     private Integer stars=5;
 
+    @NotNull
+    private EditAddressBean address=new EditAddressBean();
 
     private List<EditFoodConceptBean> foodConcepts=new ArrayList<>();
     private List<EditRoomFeatureBean> roomFeatures=new ArrayList<>();

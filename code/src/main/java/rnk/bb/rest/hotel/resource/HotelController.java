@@ -1,16 +1,12 @@
 package rnk.bb.rest.hotel.resource;
 
-import org.primefaces.model.LazyDataModel;
-import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
-import rnk.bb.domain.util.Address;
 import rnk.bb.rest.blank.CustomController;
 import rnk.bb.rest.hotel.staff.StaffController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.views.bean.hotel.EditHotelBean;
-import rnk.bb.views.bean.order.EditAddressBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +15,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
 import javax.persistence.criteria.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;

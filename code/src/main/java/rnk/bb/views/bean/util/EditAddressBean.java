@@ -1,4 +1,4 @@
-package rnk.bb.views.bean.order;
+package rnk.bb.views.bean.util;
 
 import rnk.bb.domain.util.Address;
 import rnk.bb.services.CacheService;

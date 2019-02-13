@@ -12,6 +12,7 @@ import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
 import rnk.bb.services.bean.CountryBean;
 import rnk.bb.views.bean.order.*;
+import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

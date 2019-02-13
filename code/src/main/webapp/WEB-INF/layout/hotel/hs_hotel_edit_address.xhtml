@@ -1,0 +1,62 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel header="#{staffView.editHotelHeaderTitle} : адрес"  styleClass="ui-wizard-panel ui-panel">
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <p:outputLabel for="hotelDescrFull" value="Полное описание:"/>
+            </div>
+            <div class="ui-g-4">
+                <p:selectOneMenu id="countryInput" value="#{hotel.address.countryId}" style="width:200px">
+                    <f:selectItem itemLabel="Выберите страну" itemValue="" noSelectionOption="false" />
+                    <f:selectItems value="#{cacheService.countries}" var="country"  itemValue="#{country.id}" itemLabel="#{country.name}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g-3">
+                <p:message for="countryInput" id="countryInputMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h:outputLabel for="zipInput" value="Индекс:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="zipInput" value="#{hotel.address.zip}" required="true" requiredMessage="Заполните поле" />
+            </div>
+            <div class="ui-g-3">
+                <p:message for="zipInput" id="zipInputMessage" display="both" />
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h:outputLabel for="settlementInput" value="Город/населенный пункт:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="settlementInput" value="#{hotel.address.settlementPart}" required="true" requiredMessage="Заполните поле" />
+            </div>
+            <div class="ui-g-3">
+                <p:message for="settlementInput" id="settlementInputMessage" display="both"/>
+            </div>
+        </div>
+
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h:outputLabel for="streetInput" value="Улица,дом,квартира:" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="streetInput" value="#{hotel.address.streetPart}" required="true" requiredMessage="Заполните поле" />
+            </div>
+            <div class="ui-g-3">
+                <p:message for="streetInput" id="streetInputMessage" display="both"/>
+            </div>
+        </div>
+    \</p:panel>
+
+
+</ui:composition>

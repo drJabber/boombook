@@ -1,7 +1,7 @@
 package rnk.bb.views.bean.registration;
 
 import rnk.bb.services.bean.RoleBean;
-import rnk.bb.views.bean.order.EditAddressBean;
+import rnk.bb.views.bean.util.EditAddressBean;
 import rnk.bb.views.bean.order.EditDocumentBean;
 
 import javax.enterprise.context.SessionScoped;

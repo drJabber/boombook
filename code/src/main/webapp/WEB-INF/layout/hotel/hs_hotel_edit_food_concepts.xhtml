@@ -5,9 +5,90 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:panel header="#{staffView.editHotelHeaderTitle} : концепции питания"  styleClass="ui-wizard-panel ui-panel">
-        <div class="ui-g">
-        </div>
+    <p:panel id="foodConceptsPanel" header="#{staffView.editHotelHeaderTitle} : концепции питания"  styleClass="ui-wizard-panel ui-panel">
+        <p:dataTable  var="concept" id="conceptsTable" rowIndexVar="conceptRow"
+                      value="#{hotel.foodConcepts}" lazy="false" paginator="true" rows="6"
+                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                      rowsPerPageTemplate="6"
+                      selectionMode="single" selection="#{staffView.selectedFoodConcept}" rowKey="#{concept.fakeId}"
+                      styleClass="datatable-no-header">
+
+            <p:column headerText="Название">
+                <h:outputText value="#{concept.name}" />
+            </p:column>
+
+            <p:column headerText="Базовая стоимость">
+                <h:outputText value="#{concept.basePrice}" />
+            </p:column>
+
+            <p:column headerText="Описание">
+                <h:outputText value="#{concept.description}" />
+            </p:column>
+
+            <p:column style="width:32px">
+                <p:commandButton update=":staffForm:foodConceptsPanel" action="#{staffView.editFoodConcept()}" icon="pi pi-edit">
+                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                </p:commandButton>
+            </p:column>
+            <p:column style="width:32px">
+                <p:commandButton update=":staffForm:foodConceptsPanel" action="#{staffView.removeFoodConcept}" icon="pi pi-remove">
+                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+
+        <p:panel >
+            <h:panelGroup rendered="#{staffView.foodConceptEditState}">
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="fcNameInput" value="Название:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="fcNameInput" value="#{staffView.selectedFoodConcept.name}" required="true" requiredMessage="Заполните поле" />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="fcNameInput" id="fcNameInputMessage" display="both" />
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="fcBasePriceInput" value="Базовая стоимость:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="fcBasePriceInput" value="#{staffView.selectedFoodConcept.basePrice}" required="true" requiredMessage="Заполните поле" />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="basePriceInput" id="basePricetInputMessage" display="both"/>
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="fcDescrInput" value="Улица,дом,квартира:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="fcDescrInput" value="#{staffView.selectedFoodConcept.descr}" />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="fcDescrInput" id="fcDescrInputMessage" display="both"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <p:toolbar styleClass="ui-noborder">
+                <f:facet name="left">
+                    <p:commandButton rendered="#{not staffView.editFoodConceptState}" value="Добавить"
+                                     action="#{staffView.editFoodConcept}" update=":staffForm:foodConceptsPanel" style="margin-left:20px;" />
+                    <p:commandButton rendered="#{staffView.editFoodConceptState}" value="Сохранить"
+                                 action="#{staffView.saveFoodConcept}" update=":staffForm:foodConceptsPanel" process="@this :staffForm:foodConceptsPanel"
+                    style="margin-left:20px;"/>
+                    <p:commandButton rendered="#{staffView.editFoodConceptState}" value="Отменить"
+                                 action="#{staffView.cancelFoodConcept}" update=":staffForm:foodConceptsPanel" process="@this :staffForm:foodConceptsPanel"
+                    style="margin-left:20px;"/>
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
 
     </p:panel>
 

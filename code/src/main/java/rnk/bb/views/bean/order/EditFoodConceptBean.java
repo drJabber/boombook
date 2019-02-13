@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @SessionScoped
 public class EditFoodConceptBean implements Serializable {
     private Long id=null;
+    private Long fakeId=null;
 
     private Hotel hotel=null;
 
@@ -45,6 +46,14 @@ public class EditFoodConceptBean implements Serializable {
         }
 
         return list.stream().collect(Collectors.joining(","));
+    }
+
+    public EditFoodConceptBean(){
+        this.fakeId=null;
+    }
+
+    public EditFoodConceptBean(Long fakeId){
+        this.fakeId=fakeId;
     }
 
     public String getName() {
@@ -77,6 +86,14 @@ public class EditFoodConceptBean implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getFakeId() {
+        return fakeId;
+    }
+
+    public void setFakeId(Long id) {
+        this.fakeId = fakeId;
     }
 
     public Hotel getHotel() {

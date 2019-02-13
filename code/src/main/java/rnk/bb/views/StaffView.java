@@ -9,6 +9,7 @@ import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.StaffService;
 import rnk.bb.views.bean.hotel.EditHotelBean;
+import rnk.bb.views.bean.order.EditFoodConceptBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.util.WizardButtonTitles;
 
@@ -31,8 +32,10 @@ public class StaffView implements Serializable {
     private static Logger log=Logger.getLogger(StaffView.class.getName());
 
     private StaffUserBean staffBean;
+    private EditFoodConceptBean selectedFoodConcept;
 
     private Boolean hotelEditState=false;
+    private Boolean editFoodConceptState=false;
     private String hotelWizardCurrentState="";
 
     @Inject
@@ -59,6 +62,12 @@ public class StaffView implements Serializable {
     private Boolean isNewHotel(){
         return staffBean.getHotel().getId()==null;
     }
+
+    public StaffUserBean getUser(){
+        return staffBean;
+    }
+
+    public EditHotelBean getHotel(){return staffBean.getHotel();}
 
     public void update(){
         init();
@@ -123,9 +132,40 @@ public class StaffView implements Serializable {
     }
 
 
-    public StaffUserBean getUser(){
-        return staffBean;
+    public EditFoodConceptBean getSelectedFoodConcept(){
+        return selectedFoodConcept;
     }
 
-    public EditHotelBean getHotel(){return staffBean.getHotel();}
+    public void setSelectedFoodConcept(EditFoodConceptBean fc){
+        this.selectedFoodConcept=fc;
+    }
+
+    public Boolean getEditFoodConceptState(){
+        return this.editFoodConceptState;
+    }
+
+    public void setEditFoodConceptState(Boolean state){
+        this.editFoodConceptState=state;
+    }
+
+    public void editFoodConcept(){
+        if (selectedFoodConcept==null){
+            selectedFoodConcept=new EditFoodConceptBean();
+        }
+        this.editFoodConceptState=true;
+    }
+
+    public void removeFoodConcept(){
+        hotelService.removeFoodConcept(staffBean.getHotel(),selectedFoodConcept);
+    }
+
+    public void cancelFoodConcept(){
+        this.editFoodConceptState=false;
+        this.selectedFoodConcept=null;
+    }
+
+    public void saveFoodConcept(){
+        hotelService.saveFoodConcept(selectedFoodConcept);
+    }
+
 }

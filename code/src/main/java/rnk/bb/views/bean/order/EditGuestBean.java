@@ -1,6 +1,7 @@
 package rnk.bb.views.bean.order;
 
 import rnk.bb.domain.book.Order;
+import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.Email;

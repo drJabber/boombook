@@ -78,7 +78,7 @@ public class HotelService implements Serializable {
 
             List<EditFoodConceptBean> list=hotelBean.getFoodConcepts();
             list.clear();
-            hotel.getFoodConcepts().stream().forEach(fc->list.add(initFoodConceptBean(new EditFoodConceptBean(),fc)));
+            hotel.getFoodConcepts().stream().forEach(fc->list.add(initFoodConceptBean(new EditFoodConceptBean(Long.valueOf(list.size())),fc)));
 
             List<EditRoomFeatureBean> rflist=hotelBean.getRoomFeatures();
             rflist.clear();
