@@ -18,8 +18,10 @@ import java.util.stream.Collectors;
 @SessionScoped
 public class EditRoomFeatureBean implements Serializable {
     private Long id=null;
+    private Long fakeId;
 
     private Hotel hotel=null;
+
 
     @NotNull
     @Size(max=200)
@@ -32,6 +34,14 @@ public class EditRoomFeatureBean implements Serializable {
     @NotNull
     @Size(max=500)
     private String description="";
+
+    public EditRoomFeatureBean(){
+        this.fakeId=null;
+    }
+
+    public EditRoomFeatureBean(Long fakeId){
+        this.fakeId=fakeId;
+    }
 
     public String toString(){
         StringBuilder sb=new StringBuilder();
@@ -81,6 +91,14 @@ public class EditRoomFeatureBean implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getFakeId() {
+        return fakeId;
+    }
+
+    public void setFakeId(Long fakeId) {
+        this.fakeId = fakeId;
     }
 
     public Hotel getHotel() {

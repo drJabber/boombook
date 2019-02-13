@@ -10,6 +10,7 @@ import rnk.bb.services.HotelService;
 import rnk.bb.services.StaffService;
 import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.order.EditFoodConceptBean;
+import rnk.bb.views.bean.order.EditRoomFeatureBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.util.WizardButtonTitles;
 
@@ -33,9 +34,11 @@ public class StaffView implements Serializable {
 
     private StaffUserBean staffBean;
     private EditFoodConceptBean selectedFoodConcept;
+    private EditRoomFeatureBean selectedRoomFeature;
 
     private Boolean hotelEditState=false;
     private Boolean editFoodConceptState=false;
+    private Boolean editRoomFeatureState=false;
     private String hotelWizardCurrentState="";
 
     @Inject
@@ -156,7 +159,8 @@ public class StaffView implements Serializable {
     }
 
     public void removeFoodConcept(){
-        hotelService.removeFoodConcept(staffBean.getHotel(),selectedFoodConcept);
+        hotelService.removeFoodConceptBean(staffBean.getHotel(),selectedFoodConcept);
+        this.selectedFoodConcept=null;
     }
 
     public void cancelFoodConcept(){
@@ -165,7 +169,48 @@ public class StaffView implements Serializable {
     }
 
     public void saveFoodConcept(){
-        hotelService.saveFoodConcept(selectedFoodConcept);
+        hotelService.saveFoodConceptBean(staffBean.getHotel(),selectedFoodConcept);
+        this.editFoodConceptState=false;
+        this.selectedFoodConcept=null;
+    }
+
+    public EditRoomFeatureBean getSelectedRoomFeature(){
+        return selectedRoomFeature;
+    }
+
+    public void setSelectedRoomFeature(EditRoomFeatureBean fc){
+        this.selectedRoomFeature=fc;
+    }
+
+    public Boolean getEditRoomFeatureState(){
+        return this.editRoomFeatureState;
+    }
+
+    public void setEditRoomFeatureState(Boolean state){
+        this.editRoomFeatureState=state;
+    }
+
+    public void editRoomFeature(){
+        if (selectedRoomFeature==null){
+            selectedRoomFeature=new EditRoomFeatureBean();
+        }
+        this.editRoomFeatureState=true;
+    }
+
+    public void removeRoomFeature(){
+        hotelService.removeRoomFeatureBean(staffBean.getHotel(),selectedRoomFeature);
+        this.selectedRoomFeature=null;
+    }
+
+    public void cancelRoomFeature(){
+        this.editRoomFeatureState=false;
+        this.selectedRoomFeature=null;
+    }
+
+    public void saveRoomFeature(){
+        hotelService.saveRoomFeatureBean(staffBean.getHotel(),selectedRoomFeature);
+        this.editRoomFeatureState=false;
+        this.selectedRoomFeature=null;
     }
 
 }

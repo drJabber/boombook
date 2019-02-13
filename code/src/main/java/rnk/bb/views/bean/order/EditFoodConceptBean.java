@@ -92,7 +92,7 @@ public class EditFoodConceptBean implements Serializable {
         return fakeId;
     }
 
-    public void setFakeId(Long id) {
+    public void setFakeId(Long fakeId) {
         this.fakeId = fakeId;
     }
 

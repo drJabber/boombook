@@ -5,51 +5,51 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:panel id="foodConceptsPanel"
+    <p:panel id="roomFeaturesPanel"
              header="#{staffView.editHotelHeaderTitle} : концепции питания"
              styleClass="ui-wizard-panel ui-panel">
-        <p:dataTable rendered="#{hotel.foodConcepts.size()>0}"
-                      var="concept" id="conceptsTable" rowIndexVar="conceptRow"
-                      value="#{hotel.foodConcepts}" lazy="false" paginator="true" rows="6"
+        <p:dataTable rendered="#{hotel.roomFeatures.size()>0}"
+                      var="feature" id="featuresTable" rowIndexVar="featureRow"
+                      value="#{hotel.roomFeatures}" lazy="false" paginator="true" rows="6"
                       paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                       paginatorPosition="bottom"
                       rowsPerPageTemplate="6"
-                      rowKey="#{concept.fakeId}"
+                      rowKey="#{feature.fakeId}"
                       >
 
             <p:column headerText="Название">
-                <h:outputText value="#{concept.name}" />
+                <h:outputText value="#{feature.name}" />
             </p:column>
 
             <p:column headerText="Базовая стоимость">
-                <h:outputText value="#{concept.basePrice}" />
+                <h:outputText value="#{feature.price}" />
             </p:column>
 
             <p:column headerText="Описание">
-                <h:outputText value="#{concept.description}" />
+                <h:outputText value="#{feature.description}" />
             </p:column>
 
             <p:column style="width:32px">
-                <p:commandButton update=":staffForm:tabs:foodConceptsPanel" process="@this" action="#{staffView.editFoodConcept}" icon="fa fa-edit">
-                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                <p:commandButton update=":staffForm:tabs:roomFeaturesPanel" process="@this" action="#{staffView.editRoomFeature}" icon="fa fa-edit">
+                    <f:setPropertyActionListener value="#{feature}" target="#{staffView.selectedRoomFeature}" />
                 </p:commandButton>
             </p:column>
             <p:column style="width:32px">
-                <p:commandButton update=":staffForm:tabs:foodConceptsPanel" process="@this" action="#{staffView.removeFoodConcept}" icon="fa fa-remove">
-                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                <p:commandButton update=":staffForm:tabs:roomFeaturesPanel" process="@this" action="#{staffView.removeRoomFeature}" icon="fa fa-remove">
+                    <f:setPropertyActionListener value="#{feature}" target="#{staffView.selectedRoomFeature}" />
                 </p:commandButton>
             </p:column>
 
         </p:dataTable>
 
         <p:panel >
-            <h:panelGroup rendered="#{staffView.editFoodConceptState}">
+            <h:panelGroup rendered="#{staffView.editRoomFeatureState}">
                 <div class="ui-g">
                     <div class="ui-g-2">
                         <h:outputLabel for="fcNameInput" value="Название:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcNameInput" value="#{staffView.selectedFoodConcept.name}" required="true" requiredMessage="Заполните поле" />
+                        <p:inputText id="fcNameInput" value="#{staffView.selectedRoomFeature.name}" required="true" requiredMessage="Заполните поле" />
                     </div>
                     <div class="ui-g-3">
                         <p:message for="fcNameInput" id="fcNameInputMessage" display="both" />
@@ -61,7 +61,7 @@
                         <h:outputLabel for="fcBasePriceInput" value="Базовая стоимость:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcBasePriceInput" value="#{staffView.selectedFoodConcept.basePrice}" required="true" requiredMessage="Заполните поле" />
+                        <p:inputText id="fcBasePriceInput" value="#{staffView.selectedRoomFeature.basePrice}" required="true" requiredMessage="Заполните поле" />
                     </div>
                     <div class="ui-g-3">
                         <p:message for="fcBasePriceInput" id="basePricetInputMessage" display="both"/>
@@ -73,7 +73,7 @@
                         <h:outputLabel for="fcDescrInput" value="Улица,дом,квартира:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcDescrInput" value="#{staffView.selectedFoodConcept.description}" />
+                        <p:inputText id="fcDescrInput" value="#{staffView.selectedRoomFeature.description}" />
                     </div>
                     <div class="ui-g-3">
                         <p:message for="fcDescrInput" id="fcDescrInputMessage" display="both"/>
@@ -82,13 +82,13 @@
             </h:panelGroup>
             <p:toolbar styleClass="ui-noborder">
                 <f:facet name="left">
-                    <p:commandButton rendered="#{not staffView.editFoodConceptState}" value="Добавить"
-                                     action="#{staffView.editFoodConcept()}" update=":staffForm:tabs:foodConceptsPanel" style="margin-left:20px;" />
-                    <p:commandButton rendered="#{staffView.editFoodConceptState}" value="Сохранить"
-                                 action="#{staffView.saveFoodConcept()}" update=":staffForm:tabs:foodConceptsPanel" process="@this :staffForm:tabs:foodConceptsPanel"
+                    <p:commandButton rendered="#{not staffView.editRoomFeatureState}" value="Добавить"
+                                     action="#{staffView.editRoomFeature()}" update=":staffForm:tabs:roomFeaturesPanel" style="margin-left:20px;" />
+                    <p:commandButton rendered="#{staffView.editRoomFeatureState}" value="Сохранить"
+                                 action="#{staffView.saveRoomFeature()}" update=":staffForm:tabs:roomFeaturesPanel" process="@this :staffForm:tabs:roomFeaturesPanel"
                     style="margin-left:20px;"/>
-                    <p:commandButton rendered="#{staffView.editFoodConceptState}" value="Отменить"
-                                 action="#{staffView.cancelFoodConcept()}" update=":staffForm:tabs:foodConceptsPanel" process="@this"
+                    <p:commandButton rendered="#{staffView.editRoomFeatureState}" value="Отменить"
+                                 action="#{staffView.cancelRoomFeature()}" update=":staffForm:tabs:roomFeaturesPanel" process="@this"
                     style="margin-left:20px;"/>
                 </f:facet>
             </p:toolbar>

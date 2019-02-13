@@ -82,7 +82,7 @@ public class HotelService implements Serializable {
 
             List<EditRoomFeatureBean> rflist=hotelBean.getRoomFeatures();
             rflist.clear();
-            hotel.getRoomFeatures().stream().forEach(rf->rflist.add(initRoomFeatureBean(new EditRoomFeatureBean(),rf)));
+            hotel.getRoomFeatures().stream().forEach(rf->rflist.add(initRoomFeatureBean(new EditRoomFeatureBean(Long.valueOf(rflist.size())),rf)));
 
             List<EditRoomPoolBean> rplist=hotelBean.getRoomPools();
             rplist.clear();
@@ -106,7 +106,6 @@ public class HotelService implements Serializable {
         }
         return initFoodConceptBean(result,concept);
     }
-
 
     private EditFoodConceptBean cleanFoodConceptBean(EditFoodConceptBean fcBean){
         fcBean.setId(null);
@@ -145,6 +144,29 @@ public class HotelService implements Serializable {
             return cleanFoodConceptBean(fcBean);
         }
     }
+
+    public void removeFoodConceptBean(EditHotelBean hotelBean, EditFoodConceptBean fcBean){
+        hotelBean.getFoodConcepts().remove(fcBean);
+    }
+
+    public void saveFoodConceptBean(EditHotelBean hotelBean, EditFoodConceptBean fcBean){
+        if (fcBean.getFakeId()==null){
+            fcBean.setFakeId(Long.valueOf(hotelBean.getFoodConcepts().size()));
+            hotelBean.getFoodConcepts().add(fcBean);
+        }
+    }
+
+    public void removeRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
+        hotelBean.getRoomFeatures().remove(rfBean);
+    }
+
+    public void saveRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
+        if (rfBean.getFakeId()==null){
+            rfBean.setFakeId(Long.valueOf(hotelBean.getRoomFeatures().size()));
+            hotelBean.getRoomFeatures().add(rfBean);
+        }
+    }
+
 
     private EditRoomPoolBean cleanRoomPoolBean(EditRoomPoolBean rpBean){
         rpBean.setId(null);

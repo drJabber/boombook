@@ -18,6 +18,7 @@ import java.util.Set;
 @Table(name="room_feature", schema = "public")
 @EqualsAndHashCode(callSuper = false)
 public class RoomFeature extends AbstractHotelRefEntity {
+
     @NotNull
     @Size(max=200)
     @Column(nullable = false)
