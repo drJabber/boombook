@@ -91,8 +91,9 @@ public class EditAddressBean implements Serializable {
         StringBuilder sb=new StringBuilder();
         List<String> list=new ArrayList<>();
         String country=getCountry();
-        
-        if (!zip.trim().isEmpty()){
+
+
+        if ((zip!=null) && (!zip.trim().isEmpty())){
             ((ArrayList) list).add(zip.trim());
         }
 

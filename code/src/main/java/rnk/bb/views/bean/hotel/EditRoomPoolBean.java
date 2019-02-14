@@ -1,4 +1,4 @@
-package rnk.bb.views.bean.order;
+package rnk.bb.views.bean.hotel;
 
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Document;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @SessionScoped
 public class EditRoomPoolBean implements Serializable {
     private Long id=null;
+    private Long fakeId=null;
 
     private Hotel hotel=null;
 
@@ -30,6 +31,14 @@ public class EditRoomPoolBean implements Serializable {
     @NotNull
     @Min(0)
     private Double basePrice=0.0;
+
+    public EditRoomPoolBean(){
+        this.fakeId=null;
+    }
+
+    public EditRoomPoolBean(Long fakeId){
+        this.fakeId=fakeId;
+    }
 
     public String toString(){
         return name;
@@ -75,4 +84,13 @@ public class EditRoomPoolBean implements Serializable {
     public void setBasePrice(Double basePrice) {
         this.basePrice = basePrice;
     }
+
+    public Long getFakeId() {
+        return fakeId;
+    }
+
+    public void setFakeId(Long fakeId) {
+        this.fakeId = fakeId;
+    }
+
 }

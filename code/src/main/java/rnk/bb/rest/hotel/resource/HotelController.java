@@ -88,7 +88,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
         return entityManager().createQuery(q).getResultList();
     }
 
-    public Hotel createHotel(EditHotelBean hotelBean){
+    public Hotel createNewHotel(EditHotelBean hotelBean){
         Hotel hotel=new Hotel();
 
         hotel.setName(hotelBean.getName());

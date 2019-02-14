@@ -6,10 +6,8 @@ import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
-import rnk.bb.views.bean.order.EditFoodConceptBean;
-import rnk.bb.views.bean.hotel.EditHotelBean;
-import rnk.bb.views.bean.order.EditRoomFeatureBean;
-import rnk.bb.views.bean.order.EditRoomPoolBean;
+import rnk.bb.views.bean.hotel.*;
+import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -38,6 +36,9 @@ public class HotelService implements Serializable {
     @Inject
     RoomFeatureController roomFeatures;
 
+    @Inject
+    AddressService addressService;
+
     @PostConstruct
     private void init(){
         FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("hotelService",this);
@@ -59,7 +60,22 @@ public class HotelService implements Serializable {
     private EditHotelBean cleanHotelBean(EditHotelBean hotelBean){
         hotelBean.setId(null);
         hotelBean.setName("");
+        hotelBean.setEmail("");
+        hotelBean.setPhone("");
+        hotelBean.setFax("");
+        hotelBean.setDescr("");
+        hotelBean.setLongDescr("");
+        hotelBean.setVk("");
+        hotelBean.setFb("");
+        hotelBean.setSite("");
+        hotelBean.setStars(5);
+
+
         hotelBean.getFoodConcepts().clear();
+        hotelBean.getRoomPools().clear();
+        hotelBean.getRoomFeatures().clear();
+        addressService.cleanAddressBean(hotelBean.getAddress());
+        cleanPaymentPolicyBean(hotelBean.getPaymentPolicy());
         return hotelBean;
     }
 
@@ -75,6 +91,18 @@ public class HotelService implements Serializable {
         if (hotel!=null) {
             hotelBean.setId(hotel.getId());
             hotelBean.setName(hotel.getName());
+            hotelBean.setEmail(hotel.getEmail());
+            hotelBean.setPhone(hotel.getPhone());
+            hotelBean.setFax(hotel.getFax());
+            hotelBean.setDescr(hotel.getDescr());
+            hotelBean.setLongDescr(hotel.getLongDescr());
+            hotelBean.setVk(hotel.getVk());
+            hotelBean.setFb(hotel.getFb());
+            hotelBean.setSite(hotel.getSite());
+            hotelBean.setStars(hotel.getStars());
+
+            addressService.initAddressBean(hotelBean.getAddress(),hotel.getAddress());
+            initPaymentPolicyBean(hotelBean.getPaymentPolicy(),hotel.getPaymentPolicy());
 
             List<EditFoodConceptBean> list=hotelBean.getFoodConcepts();
             list.clear();
@@ -86,11 +114,27 @@ public class HotelService implements Serializable {
 
             List<EditRoomPoolBean> rplist=hotelBean.getRoomPools();
             rplist.clear();
-            hotel.getRoomPools().stream().forEach(rp->rplist.add(initRoomPoolBean(new EditRoomPoolBean(),rp)));
+            hotel.getRoomPools().stream().forEach(rp->rplist.add(initRoomPoolBean(new EditRoomPoolBean(Long.valueOf(rplist.size())),rp)));
 
             return hotelBean;
         }else{
             return cleanHotelBean(hotelBean);
+        }
+    }
+
+    public EditPaymentPolicyBean cleanPaymentPolicyBean(EditPaymentPolicyBean ppBean){
+        ppBean.setId(null);
+        ppBean.setPrePayPercent(0.);
+        return ppBean;
+    }
+
+    public EditPaymentPolicyBean initPaymentPolicyBean(EditPaymentPolicyBean ppBean, HotelPaymentPolicy pp){
+        if (pp!=null){
+            ppBean.setId(pp.getId());
+            ppBean.setPrePayPercent(pp.getPrePayPercent());
+            return ppBean;
+        }else{
+            return cleanPaymentPolicyBean(ppBean);
         }
     }
 
@@ -156,17 +200,6 @@ public class HotelService implements Serializable {
         }
     }
 
-    public void removeRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
-        hotelBean.getRoomFeatures().remove(rfBean);
-    }
-
-    public void saveRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
-        if (rfBean.getFakeId()==null){
-            rfBean.setFakeId(Long.valueOf(hotelBean.getRoomFeatures().size()));
-            hotelBean.getRoomFeatures().add(rfBean);
-        }
-    }
-
 
     private EditRoomPoolBean cleanRoomPoolBean(EditRoomPoolBean rpBean){
         rpBean.setId(null);
@@ -205,6 +238,17 @@ public class HotelService implements Serializable {
             return rpBean;
         }else{
             return cleanRoomPoolBean(rpBean);
+        }
+    }
+
+    public void removeRoomPoolBean(EditHotelBean hotelBean, EditRoomPoolBean rpBean){
+        hotelBean.getRoomPools().remove(rpBean);
+    }
+
+    public void saveRoomPoolBean(EditHotelBean hotelBean, EditRoomPoolBean rpBean){
+        if (rpBean.getFakeId()==null){
+            rpBean.setFakeId(Long.valueOf(hotelBean.getRoomPools().size()));
+            hotelBean.getRoomPools().add(rpBean);
         }
     }
 
@@ -247,5 +291,16 @@ public class HotelService implements Serializable {
         }
     }
 
-    
+    public void removeRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
+        hotelBean.getRoomFeatures().remove(rfBean);
+    }
+
+    public void saveRoomFeatureBean(EditHotelBean hotelBean, EditRoomFeatureBean rfBean){
+        if (rfBean.getFakeId()==null){
+            rfBean.setFakeId(Long.valueOf(hotelBean.getRoomFeatures().size()));
+            hotelBean.getRoomFeatures().add(rfBean);
+        }
+    }
+
+
 }

@@ -64,13 +64,13 @@
                         <p:inputText id="fcBasePriceInput" value="#{staffView.selectedFoodConcept.basePrice}" required="true" requiredMessage="Заполните поле" />
                     </div>
                     <div class="ui-g-3">
-                        <p:message for="fcBasePriceInput" id="basePricetInputMessage" display="both"/>
+                        <p:message for="fcBasePriceInput" id="fcBasePricetInputMessage" display="both"/>
                     </div>
                 </div>
 
                 <div class="ui-g">
                     <div class="ui-g-2">
-                        <h:outputLabel for="fcDescrInput" value="Улица,дом,квартира:" />
+                        <h:outputLabel for="fcDescrInput" value="Описание:" />
                     </div>
                     <div class="ui-g-4">
                         <p:inputText id="fcDescrInput" value="#{staffView.selectedFoodConcept.description}" />

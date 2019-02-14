@@ -5,9 +5,98 @@
         xmlns:p="http://primefaces.org/ui"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <p:panel header="#{staffView.editHotelHeaderTitle} : пулы номеров"  styleClass="ui-wizard-panel ui-panel">
-        <div class="ui-g">
-        </div>
+    <p:panel id="roomPoolsPanel" header="#{staffView.editHotelHeaderTitle} : пулы номеров"  styleClass="ui-wizard-panel ui-panel">
+        <p:dataTable rendered="#{hotel.roomPools.size()>0}"
+                     var="roomPool" id="roomPoolsTable" rowIndexVar="roomPoolRow"
+                     value="#{hotel.roomPools}" lazy="false" paginator="true" rows="6"
+                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     paginatorPosition="bottom"
+                     rowsPerPageTemplate="6"
+                     rowKey="#{roomPool.fakeId}"
+        >
+
+            <p:column headerText="Тип">
+                <h:outputText value="#{roomPool.roomType}" />
+            </p:column>
+
+            <p:column headerText="Название">
+                <h:outputText value="#{roomPool.name}" />
+            </p:column>
+
+            <p:column headerText="Базовая стоимость">
+                <h:outputText value="#{roomPool.basePrice}" />
+            </p:column>
+
+            <p:column style="width:32px">
+                <p:commandButton update=":staffForm:tabs:roomPoolsPanel" process="@this" action="#{staffView.editRoomPool}" icon="fa fa-edit">
+                    <f:setPropertyActionListener value="#{roomPool}" target="#{staffView.selectedRoomPool}" />
+                </p:commandButton>
+            </p:column>
+            <p:column style="width:32px">
+                <p:commandButton update=":staffForm:tabs:roomPoolsPanel" process="@this" action="#{staffView.removeRoomPool}" icon="fa fa-remove">
+                    <f:setPropertyActionListener value="#{roomPool}" target="#{staffView.selectedRoomPool}" />
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+
+        <p:panel >
+            <h:panelGroup rendered="#{staffView.editRoomPoolState}">
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="rpRoomTypeInput" value="Описание:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:selectOneMenu id="rpRoomTypeInput" value="#{staffView.selectedRoomPool.roomType}"
+                                         style="width:150px" required="true"
+                                         requiredMessage="Заполните поле"
+                                         converter="#{selectOneMenuConverter}"   >
+                            <f:selectItems value="#{cacheService.roomTypes}" var="rt"  itemValue="#{rt}" itemLabel="#{rt.name}"
+                            />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="rpRoomTypeInput" id="rpRoomTypeInputMessage" display="both"/>
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="rpNameInput" value="Название:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="rpNameInput" value="#{staffView.selectedRoomPool.name}" required="true" requiredMessage="Заполните поле" />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="rpNameInput" id="rpNameInputMessage" display="both" />
+                    </div>
+                </div>
+
+                <div class="ui-g">
+                    <div class="ui-g-2">
+                        <h:outputLabel for="rpBasePriceInput" value="Базовая стоимость:" />
+                    </div>
+                    <div class="ui-g-4">
+                        <p:inputText id="rpBasePriceInput" value="#{staffView.selectedRoomPool.basePrice}" required="true" requiredMessage="Заполните поле" />
+                    </div>
+                    <div class="ui-g-3">
+                        <p:message for="rpBasePriceInput" id="rpBasePricetInputMessage" display="both"/>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <p:toolbar styleClass="ui-noborder">
+                <f:facet name="left">
+                    <p:commandButton rendered="#{not staffView.editRoomPoolState}" value="Добавить"
+                                     action="#{staffView.editRoomPool()}" update=":staffForm:tabs:roomPoolsPanel" style="margin-left:20px;" />
+                    <p:commandButton rendered="#{staffView.editRoomPoolState}" value="Сохранить"
+                                     action="#{staffView.saveRoomPool()}" update=":staffForm:tabs:roomPoolsPanel" process="@this :staffForm:tabs:roomPoolsPanel"
+                                     style="margin-left:20px;"/>
+                    <p:commandButton rendered="#{staffView.editRoomPoolState}" value="Отменить"
+                                     action="#{staffView.cancelRoomPool()}" update=":staffForm:tabs:roomPoolsPanel" process="@this"
+                                     style="margin-left:20px;"/>
+                </f:facet>
+            </p:toolbar>
+        </p:panel>
 
     </p:panel>
 

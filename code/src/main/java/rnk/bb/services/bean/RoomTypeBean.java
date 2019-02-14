@@ -22,4 +22,8 @@ public class RoomTypeBean {
         this.name=roomType.getName();
         this.description=roomType.getDescription();
     }
+
+    public String toString(){
+        return name;
+    }
 }

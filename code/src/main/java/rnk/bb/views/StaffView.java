@@ -1,30 +1,24 @@
 package rnk.bb.views;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
-import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.StaffService;
 import rnk.bb.views.bean.hotel.EditHotelBean;
-import rnk.bb.views.bean.order.EditFoodConceptBean;
-import rnk.bb.views.bean.order.EditRoomFeatureBean;
+import rnk.bb.views.bean.hotel.EditFoodConceptBean;
+import rnk.bb.views.bean.hotel.EditRoomFeatureBean;
+import rnk.bb.views.bean.hotel.EditRoomPoolBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
-import rnk.bb.views.util.WizardButtonTitles;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Named("staffView")
@@ -35,10 +29,12 @@ public class StaffView implements Serializable {
     private StaffUserBean staffBean;
     private EditFoodConceptBean selectedFoodConcept;
     private EditRoomFeatureBean selectedRoomFeature;
+    private EditRoomPoolBean selectedRoomPool;
 
     private Boolean hotelEditState=false;
     private Boolean editFoodConceptState=false;
     private Boolean editRoomFeatureState=false;
+    private Boolean editRoomPoolState=false;
     private String hotelWizardCurrentState="";
 
     @Inject
@@ -92,6 +88,7 @@ public class StaffView implements Serializable {
 
     public String saveHotel(){
         hotelEditState=false;
+        staffService.doSaveStaff(staffBean,true);
         PrimeFaces.current().executeScript("PF('hotelWizardW').loadStep('hotelInfoTab', false)");
 //        PrimeFaces.current().ajax().update("tabs");
         return "#";
@@ -212,5 +209,46 @@ public class StaffView implements Serializable {
         this.editRoomFeatureState=false;
         this.selectedRoomFeature=null;
     }
+
+
+    public EditRoomPoolBean getSelectedRoomPool(){
+        return selectedRoomPool;
+    }
+
+    public void setSelectedRoomPool(EditRoomPoolBean fc){
+        this.selectedRoomPool=fc;
+    }
+
+    public Boolean getEditRoomPoolState(){
+        return this.editRoomPoolState;
+    }
+
+    public void setEditRoomPoolState(Boolean state){
+        this.editRoomPoolState=state;
+    }
+
+    public void editRoomPool(){
+        if (selectedRoomPool==null){
+            selectedRoomPool=new EditRoomPoolBean();
+        }
+        this.editRoomPoolState=true;
+    }
+
+    public void removeRoomPool(){
+        hotelService.removeRoomPoolBean(staffBean.getHotel(),selectedRoomPool);
+        this.selectedRoomPool=null;
+    }
+
+    public void cancelRoomPool(){
+        this.editRoomPoolState=false;
+        this.selectedRoomPool=null;
+    }
+
+    public void saveRoomPool(){
+        hotelService.saveRoomPoolBean(staffBean.getHotel(),selectedRoomPool);
+        this.editRoomPoolState=false;
+        this.selectedRoomPool=null;
+    }
+
 
 }

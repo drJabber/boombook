@@ -6,7 +6,7 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <p:panel id="roomFeaturesPanel"
-             header="#{staffView.editHotelHeaderTitle} : концепции питания"
+             header="#{staffView.editHotelHeaderTitle} : опции номеров"
              styleClass="ui-wizard-panel ui-panel">
         <p:dataTable rendered="#{hotel.roomFeatures.size()>0}"
                       var="feature" id="featuresTable" rowIndexVar="featureRow"
@@ -46,37 +46,37 @@
             <h:panelGroup rendered="#{staffView.editRoomFeatureState}">
                 <div class="ui-g">
                     <div class="ui-g-2">
-                        <h:outputLabel for="fcNameInput" value="Название:" />
+                        <h:outputLabel for="rfNameInput" value="Название:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcNameInput" value="#{staffView.selectedRoomFeature.name}" required="true" requiredMessage="Заполните поле" />
+                        <p:inputText id="rfNameInput" value="#{staffView.selectedRoomFeature.name}" required="true" requiredMessage="Заполните поле" />
                     </div>
                     <div class="ui-g-3">
-                        <p:message for="fcNameInput" id="fcNameInputMessage" display="both" />
+                        <p:message for="rfNameInput" id="rfNameInputMessage" display="both" />
                     </div>
                 </div>
 
                 <div class="ui-g">
                     <div class="ui-g-2">
-                        <h:outputLabel for="fcBasePriceInput" value="Базовая стоимость:" />
+                        <h:outputLabel for="rfBasePriceInput" value="Базовая стоимость:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcBasePriceInput" value="#{staffView.selectedRoomFeature.basePrice}" required="true" requiredMessage="Заполните поле" />
+                        <p:inputText id="rfBasePriceInput" value="#{staffView.selectedRoomFeature.price}" required="true" requiredMessage="Заполните поле" />
                     </div>
                     <div class="ui-g-3">
-                        <p:message for="fcBasePriceInput" id="basePricetInputMessage" display="both"/>
+                        <p:message for="rfBasePriceInput" id="rfBasePricetInputMessage" display="both"/>
                     </div>
                 </div>
 
                 <div class="ui-g">
                     <div class="ui-g-2">
-                        <h:outputLabel for="fcDescrInput" value="Улица,дом,квартира:" />
+                        <h:outputLabel for="rfDescrInput" value="Описание:" />
                     </div>
                     <div class="ui-g-4">
-                        <p:inputText id="fcDescrInput" value="#{staffView.selectedRoomFeature.description}" />
+                        <p:inputText id="rfDescrInput" value="#{staffView.selectedRoomFeature.description}" />
                     </div>
                     <div class="ui-g-3">
-                        <p:message for="fcDescrInput" id="fcDescrInputMessage" display="both"/>
+                        <p:message for="rfDescrInput" id="rfDescrInputMessage" display="both"/>
                     </div>
                 </div>
             </h:panelGroup>

@@ -1,0 +1,25 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <p:panel id="hotelPaymentPolicyPanel"
+             header="#{staffView.editHotelHeaderTitle} : политика оплаты"
+             styleClass="ui-wizard-panel ui-panel">
+        <div class="ui-g">
+            <div class="ui-g-2">
+                <h:outputLabel for="ppPrePayInput" value="Предоплата (%):" />
+            </div>
+            <div class="ui-g-4">
+                <p:inputText id="ppPrePayInput" value="#{hotel.paymentPolicy.prePayPercent}" required="true" requiredMessage="Заполните поле" />
+            </div>
+            <div class="ui-g-3">
+                <p:message for="ppPrePayInput" id="ppPrePayInputMessage" display="both" />
+            </div>
+        </div>
+
+    </p:panel>
+
+</ui:composition>

@@ -1,7 +1,6 @@
 package rnk.bb.rest.hotel.staff;
 
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
@@ -47,19 +46,36 @@ public class StaffController extends CustomController<Staff, Long> {
 
         Auth auth=auths.createUser(staffBean);
 
+        setStaffHotel(staffBean,staff,isManager);
+        staff.setLogin(auth);
+
+        return staff;
+    }
+
+
+    public void saveStaff(StaffUserBean staffBean, Boolean isManager){
+        EntityManager em=entityManager();
+
+        Staff staff=findById(staffBean.getStaffId());
+
+        staff.setName(staffBean.getName());
+        staff.setGender(staffBean.getGender());
+        staff.setBirthDate(staffBean.getBirthDate());
+
+        setStaffHotel(staffBean,staff,isManager);
+        em.merge(staff);
+    }
+
+    private void setStaffHotel(StaffUserBean staffBean, Staff staff, Boolean isManager){
         EditHotelBean hotelBean=staffBean.getHotel();
         if (hotelBean !=null ){
             Hotel hotel=hotels.findByLongId(hotelBean.getId());
             if (isManager){
-                Hotel awaitingHotel=hotels.createHotel(hotelBean);
+                Hotel awaitingHotel=hotels.createNewHotel(hotelBean);
                 createApproval(awaitingHotel, hotel,staff);
             }
             staff.setHotel(hotel);
         }
-
-        staff.setLogin(auth);
-
-        return staff;
     }
 
     private void createApproval(Hotel awaitingHotel,Hotel hotel, Staff staff){
@@ -83,6 +99,7 @@ public class StaffController extends CustomController<Staff, Long> {
         Staff staff=createStaff(staffBean, true);
         em.merge(staff);
     }
+
 
     public Staff findByLogin(String login){
         CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();

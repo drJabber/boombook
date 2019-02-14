@@ -1,4 +1,4 @@
-package rnk.bb.views.bean.order;
+package rnk.bb.views.bean.hotel;
 
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.util.Document;

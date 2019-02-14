@@ -11,6 +11,9 @@ import rnk.bb.rest.book.RoomOrderController;
 import rnk.bb.rest.util.AddressController;
 import rnk.bb.rest.util.DocumentController;
 import rnk.bb.services.bean.CountryBean;
+import rnk.bb.views.bean.hotel.EditFoodConceptBean;
+import rnk.bb.views.bean.hotel.EditRoomFeatureBean;
+import rnk.bb.views.bean.hotel.EditRoomPoolBean;
 import rnk.bb.views.bean.order.*;
 import rnk.bb.views.bean.util.EditAddressBean;
 
@@ -28,19 +31,17 @@ public class OrderService implements Serializable {
     GuestController guests;
 
     @Inject
-    AddressController addresses;
-    
-    @Inject
     DocumentController documents;
 
     @Inject
     RoomOrderController roomOrders;
 
     @Inject
-    CacheService cache;
+    HotelService hotelService;
 
     @Inject
-    HotelService hotelService;
+    AddressService addressService;
+
 
     public Order findById(Long id){
         return this.orders.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
@@ -96,7 +97,7 @@ public class OrderService implements Serializable {
         guestBean.setEmail("");
         guestBean.setGender("М");
         guestBean.setBirthDate(null);
-        initAddressBean(guestBean.getAddress(),(EditAddressBean)null);
+        addressService.initAddressBean(guestBean.getAddress(),(EditAddressBean)null);
         initDocumentBean(guestBean.getDocument(),(EditDocumentBean)null);
         hotelService.initFoodConceptBean(guestBean.getFoodConcept(),(EditFoodConceptBean)null);
 
@@ -112,7 +113,7 @@ public class OrderService implements Serializable {
             guestBean.setGender(guest.getGender());
             guestBean.setEmail(guest.getEmail());
 
-            initAddressBean(guestBean.getAddress(), guest.getAddress());
+            addressService.initAddressBean(guestBean.getAddress(), guest.getAddress());
             initDocumentBean(guestBean.getDocument(),guest.getDocument());
             hotelService.initFoodConceptBean(guestBean.getFoodConcept(),guest.getFoodConcept());
 
@@ -129,7 +130,7 @@ public class OrderService implements Serializable {
             guestBean.setGender(anotherBean.getGender());
             guestBean.setBirthDate(anotherBean.getBirthDate());
             guestBean.setEmail(anotherBean.getEmail());
-            initAddressBean(guestBean.getAddress(),anotherBean.getAddress());
+            addressService.initAddressBean(guestBean.getAddress(),anotherBean.getAddress());
             initDocumentBean(guestBean.getDocument(),anotherBean.getDocument());
             hotelService.initFoodConceptBean(guestBean.getFoodConcept(),anotherBean.getFoodConcept());
 
@@ -207,57 +208,6 @@ public class OrderService implements Serializable {
         }
     }
 
-    public EditAddressBean initAddressBean(EditAddressBean addressBean, Long addressId){
-        Address address=null;
-        if (addressId!=null){
-            address=addresses.findOptionalById(addressId).orElse(null);
-        }
-
-        return initAddressBean(addressBean,address);
-    }
-
-    private EditAddressBean cleanAddressBean(EditAddressBean addressBean){
-        addressBean.setId(null);
-        addressBean.setZip("");
-        addressBean.setCountryId(643);
-        addressBean.setCountry("Россия");
-        addressBean.setSettlementPart("");
-        addressBean.setStreetPart("");
-        return addressBean;
-    }
-
-    public EditAddressBean initAddressBean(EditAddressBean addressBean, Address address){
-        if (address!=null) {
-            addressBean.setId(address.getId());
-
-            addressBean.setCountryId(address.getCountry().getId());
-            addressBean.setCountry(address.getCountry().getNameRu());
-            addressBean.setZip(address.getZip());
-            addressBean.setSettlementPart(address.getSettlementPart());
-            addressBean.setStreetPart(address.getStreetPart());
-
-            return addressBean;
-        }else {
-            return cleanAddressBean(addressBean);
-        }
-    }
-
-    public EditAddressBean initAddressBean(EditAddressBean addressBean, EditAddressBean anotherBean){
-        if ((addressBean!=null)&&(anotherBean!=null)) {
-            addressBean.setId(anotherBean.getId());
-
-            addressBean.setCountryId(anotherBean.getCountryId());
-            CountryBean country=cache.getCountryById(anotherBean.getCountryId());
-            addressBean.setCountry(country.getName());
-            addressBean.setZip(anotherBean.getZip());
-            addressBean.setSettlementPart(anotherBean.getSettlementPart());
-            addressBean.setStreetPart(anotherBean.getStreetPart());
-
-            return addressBean;
-        }else{
-            return cleanAddressBean(addressBean);
-        }
-    }
 
 
     private EditDocumentBean cleanDocumentbean(EditDocumentBean documentBean){

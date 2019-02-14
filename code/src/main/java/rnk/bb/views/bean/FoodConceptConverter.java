@@ -1,6 +1,6 @@
 package rnk.bb.views.bean;
 
-import rnk.bb.views.bean.order.EditFoodConceptBean;
+import rnk.bb.views.bean.hotel.EditFoodConceptBean;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;

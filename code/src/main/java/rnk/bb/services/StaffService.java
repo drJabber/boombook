@@ -12,19 +12,20 @@ import rnk.bb.views.bean.registration.StaffUserBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Named("staffService")
 @ApplicationScoped
-public class StaffService {
+public class StaffService implements Serializable {
+    private static Logger log=Logger.getLogger(StaffService.class.getName());
 
     @Inject
     StaffController staff;
 
     @Inject
     HotelService hotelService;
-
-    @Inject
-    LoginService loginService;
 
     public Staff findByLogin(String login){
         return this.staff.findByLogin(login);
@@ -88,6 +89,13 @@ public class StaffService {
         }
     }
 
-    
+
+    public Boolean doSaveStaff(StaffUserBean user, Boolean isManager){
+        log.log(Level.INFO, "save hotel staff");
+        staff.saveStaff(user,isManager);
+        return true;
+    }
+
+
 
 }

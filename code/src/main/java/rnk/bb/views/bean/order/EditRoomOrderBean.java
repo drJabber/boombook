@@ -1,6 +1,8 @@
 package rnk.bb.views.bean.order;
 
 import rnk.bb.domain.book.Order;
+import rnk.bb.views.bean.hotel.EditRoomFeatureBean;
+import rnk.bb.views.bean.hotel.EditRoomPoolBean;
 
 import javax.enterprise.context.SessionScoped;
 import javax.validation.constraints.NotNull;

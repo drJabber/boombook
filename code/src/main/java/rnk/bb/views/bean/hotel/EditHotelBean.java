@@ -1,19 +1,10 @@
 package rnk.bb.views.bean.hotel;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
-import rnk.bb.domain.util.Address;
-import rnk.bb.views.bean.order.EditFoodConceptBean;
-import rnk.bb.views.bean.order.EditRoomFeatureBean;
-import rnk.bb.views.bean.order.EditRoomPoolBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.enterprise.context.SessionScoped;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -30,30 +21,30 @@ public class EditHotelBean implements Serializable {
     private String name="";
 
     @Size(max = 100)
-    private String email;
+    private String email="";
 
     @Size(max = 1024)
-    private String place;
+    private String place="";
 
     @Size(max=1024)
-    private String site;
+    private String site="";
 
     @Size(max=100)
-    private String phone;
+    private String phone="";
 
     @Size(max=100)
-    private String fax;
+    private String fax="";
 
     @Size(max=1024)
-    private String descr;
+    private String descr="";
 
     @Size(max = 1024)
-    private String vk;
+    private String vk="";
 
     @Size(max = 1024)
-    private String fb;
+    private String fb="";
 
-    private String longDescr;
+    private String longDescr="";
 
     @NotNull
     private Boolean published=false;
@@ -63,6 +54,8 @@ public class EditHotelBean implements Serializable {
 
     @NotNull
     private EditAddressBean address=new EditAddressBean();
+
+    private EditPaymentPolicyBean paymentPolicy=new EditPaymentPolicyBean();
 
     private List<EditFoodConceptBean> foodConcepts=new ArrayList<>();
     private List<EditRoomFeatureBean> roomFeatures=new ArrayList<>();
