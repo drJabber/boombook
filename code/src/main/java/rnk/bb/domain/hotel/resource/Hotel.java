@@ -108,8 +108,4 @@ public class Hotel extends AbstractEntity {
         return name;
     }
 
-    public int hashCode(){
-        return name.hashCode();
-    }
-
 }

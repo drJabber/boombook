@@ -16,41 +16,41 @@ import java.util.Date;
 @SessionScoped
 public class StaffUserBean implements Serializable {
 
-    private Long staffId=null;
+    private Long staffId = null;
 
     @NotNull
-    private String name="";
+    private String name = "";
 
-    private Date birthDate=null;
-
-    @NotNull
-    @Size(max=2)
-    private String gender="М";
+    private Date birthDate = null;
 
     @NotNull
-    @Size(max=100)
+    @Size(max = 2)
+    private String gender = "М";
+
+    @NotNull
+    @Size(max = 100)
     @Email(message = "Введите правильный email")
-    private String email="";
+    private String email = "";
 
     @NotNull
-    @Size(max=100)
-    private String phone="";
+    @Size(max = 100)
+    private String phone = "";
 
     @NotNull
-    private String login="";
+    private String login = "";
 
     @NotNull
-    private String password="";
+    private String password = "";
 
-    private EditHotelBean hotel=new EditHotelBean();
+    private EditHotelBean hotel = new EditHotelBean();
 
-    private ApprovalBean approval=new ApprovalBean();
+    private ApprovalBean approval = new ApprovalBean();
 
     @NotNull
     private RoleBean role;
 
 
-    public StaffUserBean(){
+    public StaffUserBean() {
 
     }
 
@@ -70,9 +70,8 @@ public class StaffUserBean implements Serializable {
         this.password = password;
     }
 
-    public StaffUserBean(String role_name)
-    {
-        role=new RoleBean(role_name);
+    public StaffUserBean(String role_name) {
+        role = new RoleBean(role_name);
     }
 
     public String getName() {
@@ -140,20 +139,26 @@ public class StaffUserBean implements Serializable {
     }
 
 
-    public ApprovalBean getApproval(){
+    public ApprovalBean getApproval() {
         return this.approval;
     }
 
-    public void setApproval(ApprovalBean approval){
-        this.approval=approval;
+    public void setApproval(ApprovalBean approval) {
+        this.approval = approval;
     }
 
-    public Boolean hasAwaitingHotel(){
-        return (approval!=null) && (approval.getAwaitingHotel()!=null) && (approval.getAwaitingHotel().getId()!=null);
+    public Boolean hasAwaitingHotel() {
+        return (approval != null) && (approval.getAwaitingHotel() != null) && (approval.getAwaitingHotel().getId() != null);
     }
 
-    public boolean getApproved(){
-        return (approval!=null)&&(approval.getState()==1);
+    public boolean getApprovedState() {
+        return (approval != null) && (approval.getApprovedState() == 2);
     }
 
+
+    public void setApprovedState(Integer state) {
+        if (approval != null) {
+            approval.setApprovedState(state);
+        }
+    }
 }

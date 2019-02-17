@@ -24,8 +24,8 @@ public class Approval extends AbstractEntity {
 
     private String someField;
 
-    @Column(name="isApproved", columnDefinition = "integer default 0 ", nullable = false)
-    private Integer approved=0;
+    @Column(name="approvedState", columnDefinition = "integer default 0 ", nullable = false)
+    private Integer approvedState=0;
 
     @Column(name = "approval_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -55,12 +55,12 @@ public class Approval extends AbstractEntity {
         approvalDate=date;
     }
 
-    public Integer getApproved(){
-        return this.approved;
+    public Integer getApprovedState(){
+        return this.approvedState;
     }
 
-    public void setApproved(Integer state){
-        this.approved=state;
+    public void setApprovedState(Integer state){
+        this.approvedState=state;
     }
 
     public String toString(){

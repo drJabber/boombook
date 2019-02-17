@@ -137,7 +137,7 @@ public class HotelService implements Serializable {
 
     public ApprovalBean cleanApprovalBean(ApprovalBean approvalBean, EditHotelBean hotelBean){
         approvalBean.setId(null);
-        approvalBean.setState(0);
+        approvalBean.setApprovedState(0);
         approvalBean.setApprovalDate(Calendar.getInstance().getTime());
         approvalBean.setHotel(hotelBean);
         approvalBean.setAwaitingHotel(new EditHotelBean());
@@ -150,7 +150,7 @@ public class HotelService implements Serializable {
         if (approval!=null){
             approvalBean.setId(approval.getId());
             approvalBean.setApprovalDate(approval.getApprovalDate());
-            approvalBean.setState(approval  .getApproved());
+            approvalBean.setApprovedState(approval.getApprovedState());
 
             approvalBean.setHotel(hotelBean);
             approvalBean.setAwaitingHotel(initAwaitingHotelBean(approvalBean.getAwaitingHotel(), approval.getAwaitingHotel()));

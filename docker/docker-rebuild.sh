@@ -2,4 +2,4 @@
 
 docker build --tag=rnk-otus-boombook .
 
-docker-compose up
+#docker-compose up

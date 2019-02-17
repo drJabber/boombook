@@ -16,7 +16,7 @@ public class ApprovalBean implements Serializable {
 
     private EditHotelBean awaitingHotel=new EditHotelBean();
 
-    private Integer state=0;
+    private Integer approvedState=0;
 
     private Date approvalDate;
 

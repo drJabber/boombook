@@ -104,7 +104,7 @@ public class StaffView implements Serializable {
     }
 
     public void publishHotel(){
-        if (staffBean.getApproved()){
+        if (hotelApproved()){
             staffService.publishHotel(staffBean.getApproval().getAwaitingHotel(), staffBean);
         }
     }
@@ -147,6 +147,9 @@ public class StaffView implements Serializable {
         }
     }
     public String requestApproval(){
+        if (hotelCanRequestApproval()){
+            staffBean.setApprovedState(1);
+        }
         return "";
     }
 
@@ -155,7 +158,7 @@ public class StaffView implements Serializable {
     }
 
     public boolean hotelApproved(){
-        return staffBean.getApproved();
+        return staffBean.getApprovedState();
     }
 
     public EditFoodConceptBean getSelectedFoodConcept(){

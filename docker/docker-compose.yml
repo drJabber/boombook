@@ -16,6 +16,7 @@ services:
     image: rnk-otus-boombook
     container_name: otus
     environment:
+      - PAYARA_DOMAIN=production
       - POSTBOOT_COMMANDS=/opt/payara/scripts/create-realm.sh
 
     ports:
@@ -26,4 +27,9 @@ services:
 
     volumes:
       - ~/projects/otus/rnk/deployments:/opt/payara/deployments
-        
+
+#    entrypoint:
+#      - /opt/payara/appserver/glassfish/bin/asadmin
+#      - start-domain production
+#      - -V
+#        
