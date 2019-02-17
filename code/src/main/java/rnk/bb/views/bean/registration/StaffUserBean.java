@@ -1,6 +1,7 @@
 package rnk.bb.views.bean.registration;
 
 import rnk.bb.services.bean.RoleBean;
+import rnk.bb.views.bean.hotel.ApprovalBean;
 import rnk.bb.views.bean.hotel.EditHotelBean;
 
 import javax.enterprise.context.SessionScoped;
@@ -42,6 +43,8 @@ public class StaffUserBean implements Serializable {
     private String password="";
 
     private EditHotelBean hotel=new EditHotelBean();
+
+    private ApprovalBean approval=new ApprovalBean();
 
     @NotNull
     private RoleBean role;
@@ -136,5 +139,21 @@ public class StaffUserBean implements Serializable {
         this.staffId = staffId;
     }
 
+
+    public ApprovalBean getApproval(){
+        return this.approval;
+    }
+
+    public void setApproval(ApprovalBean approval){
+        this.approval=approval;
+    }
+
+    public Boolean hasAwaitingHotel(){
+        return (approval!=null) && (approval.getAwaitingHotel()!=null) && (approval.getAwaitingHotel().getId()!=null);
+    }
+
+    public boolean getApproved(){
+        return (approval!=null)&&(approval.getState()==1);
+    }
 
 }

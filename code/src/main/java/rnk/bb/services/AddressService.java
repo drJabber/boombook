@@ -26,6 +26,14 @@ public class AddressService implements Serializable {
         return initAddressBean(addressBean,address);
     }
 
+    public Address createAddress(EditAddressBean addressBean){
+        return addresses.createAddress(addressBean);
+    }
+
+    public  Address createOrUpdateAddress(EditAddressBean addressBean){
+        return addresses.createOrUpdateAddress(addressBean);
+    }
+
     public EditAddressBean cleanAddressBean(EditAddressBean addressBean){
         addressBean.setId(null);
         addressBean.setZip("");

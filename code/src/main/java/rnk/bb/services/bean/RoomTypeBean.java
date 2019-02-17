@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 public class RoomTypeBean {
+    Long id;
+
     @NotNull
     @Size(max=200)
     private String name;
@@ -19,6 +21,7 @@ public class RoomTypeBean {
     private String description;
 
     public RoomTypeBean(RoomType roomType){
+        this.setId(roomType.getId());
         this.name=roomType.getName();
         this.description=roomType.getDescription();
     }

@@ -17,6 +17,8 @@ import java.util.List;
 public class EditHotelBean implements Serializable {
     private Long id=null;
 
+    private Boolean awaiting=false;
+
     @Size(max=500)
     private String name="";
 

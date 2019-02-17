@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(name="hotel", schema = "public")
 public class Hotel extends AbstractEntity {
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="manager_id")
     private Staff manager;
 
@@ -78,7 +78,7 @@ public class Hotel extends AbstractEntity {
     @JoinColumn(name="address_id")
     private Address address;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="approval_id")
     private Approval approval;
 
@@ -103,5 +103,13 @@ public class Hotel extends AbstractEntity {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders;
+
+    public String toString(){
+        return name;
+    }
+
+    public int hashCode(){
+        return name.hashCode();
+    }
 
 }

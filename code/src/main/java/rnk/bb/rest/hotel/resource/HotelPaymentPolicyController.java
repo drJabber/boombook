@@ -1,7 +1,9 @@
 package rnk.bb.rest.hotel.resource;
 
+import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.resource.HotelPaymentPolicy;
 import rnk.bb.rest.blank.CustomController;
+import rnk.bb.views.bean.hotel.EditPaymentPolicyBean;
 
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
@@ -16,6 +18,31 @@ import javax.ws.rs.core.Response;
 @DependsOn({"StartupController"})
 @Path("v1")
 public class HotelPaymentPolicyController   extends CustomController<HotelPaymentPolicy, Long> {
+
+    public HotelPaymentPolicy createOrUpdatePaymentPolicy(EditPaymentPolicyBean policyBean){
+        HotelPaymentPolicy policy=null;
+        if (policyBean.getId()!=null){
+            policy=findByLongId(policyBean.getId());
+        }
+        if (policy!=null){
+            return updatePaymentPolicy(policy, policyBean);
+        }else {
+            return createPaymentPolicy(policyBean);
+        }
+    }
+
+    public HotelPaymentPolicy createPaymentPolicy(EditPaymentPolicyBean policyBean){
+        HotelPaymentPolicy policy=new HotelPaymentPolicy();
+        return updatePaymentPolicy(new HotelPaymentPolicy(),policyBean);
+    }
+
+    public HotelPaymentPolicy updatePaymentPolicy(HotelPaymentPolicy policy, EditPaymentPolicyBean policyBean){
+        policy.setPrePayPercent(policyBean.getPrePayPercent());
+        return policy;
+    }
+
+
+
     @PUT
     @Path("hotel/resource/pp")
     @Consumes(MediaType.APPLICATION_JSON)

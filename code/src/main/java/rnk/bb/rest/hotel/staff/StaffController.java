@@ -17,12 +17,15 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Singleton
@@ -57,6 +60,18 @@ public class StaffController extends CustomController<Staff, Long> {
         EntityManager em=entityManager();
 
         Staff staff=findById(staffBean.getStaffId());
+        Approval approval=staff.getApproval();
+        if (approval!=null){
+            if (approval.getHotel()!=null){
+                approval.getHotel().setApproval(null);
+            }
+            if (approval.getAwaitingHotel()!=null){
+                approval.getAwaitingHotel().setApproval(null);
+                approval.getAwaitingHotel().setManager(null);
+            }
+            staff.setApproval(null);
+        }
+        Hotel hotel=approval==null?null:approval.getAwaitingHotel();
 
         staff.setName(staffBean.getName());
         staff.setGender(staffBean.getGender());
@@ -64,26 +79,35 @@ public class StaffController extends CustomController<Staff, Long> {
 
         setStaffHotel(staffBean,staff,isManager);
         em.merge(staff);
+        if (approval!=null){
+            em.remove(approval);
+        }
     }
 
     private void setStaffHotel(StaffUserBean staffBean, Staff staff, Boolean isManager){
         EditHotelBean hotelBean=staffBean.getHotel();
         if (hotelBean !=null ){
-            Hotel hotel=hotels.findByLongId(hotelBean.getId());
+            Hotel hotel=null;
+            if ((hotelBean.getId()!=null)&&(!hotelBean.getAwaiting())){
+                hotel=hotels.findByLongId(hotelBean.getId());
+            }
             if (isManager){
+                hotelBean.setManager(staffBean);
+
                 Hotel awaitingHotel=hotels.createNewHotel(hotelBean);
                 createApproval(awaitingHotel, hotel,staff);
             }
-            staff.setHotel(hotel);
         }
     }
 
     private void createApproval(Hotel awaitingHotel,Hotel hotel, Staff staff){
         Approval approval=new Approval();
+        approval.setApprovalDate(Calendar.getInstance().getTime());
         awaitingHotel.setManager(staff);
         awaitingHotel.setApproval(approval);
         approval.setAwaitingHotel(awaitingHotel);
         approval.setHotel(hotel);
+        staff.setApproval(approval);
     }
 
     public void registerStaff(StaffUserBean staffBean){
@@ -107,8 +131,10 @@ public class StaffController extends CustomController<Staff, Long> {
 
         Root<Staff> root = q.from(Staff.class);
         Join<Staff,Auth> authJoin=root.join("login", JoinType.INNER);
+//        Join<Staff,Approval> appJoin=root.join("approval",JoinType.LEFT);
         List<Predicate> predicates=new ArrayList<>();
         predicates.add(cb.equal(authJoin.get("login"),login));
+//        predicates.add(cb.equal(appJoin.get("id"),root.get("approval")));
         q.select(root).where(predicates.toArray(new Predicate[0]));
 
         return entityManager().createQuery(q).getSingleResult();

@@ -1,12 +1,14 @@
 package rnk.bb.services;
 
 import org.primefaces.model.LazyDataModel;
+import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.*;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
 import rnk.bb.views.bean.hotel.*;
+import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 @Named(value = "hotelService")
@@ -69,6 +72,7 @@ public class HotelService implements Serializable {
         hotelBean.setFb("");
         hotelBean.setSite("");
         hotelBean.setStars(5);
+        hotelBean.setPlace("");
 
 
         hotelBean.getFoodConcepts().clear();
@@ -100,6 +104,7 @@ public class HotelService implements Serializable {
             hotelBean.setFb(hotel.getFb());
             hotelBean.setSite(hotel.getSite());
             hotelBean.setStars(hotel.getStars());
+            hotelBean.setPlace(hotel.getPlace());
 
             addressService.initAddressBean(hotelBean.getAddress(),hotel.getAddress());
             initPaymentPolicyBean(hotelBean.getPaymentPolicy(),hotel.getPaymentPolicy());
@@ -116,9 +121,43 @@ public class HotelService implements Serializable {
             rplist.clear();
             hotel.getRoomPools().stream().forEach(rp->rplist.add(initRoomPoolBean(new EditRoomPoolBean(Long.valueOf(rplist.size())),rp)));
 
+
             return hotelBean;
         }else{
             return cleanHotelBean(hotelBean);
+        }
+    }
+
+    public EditHotelBean initAwaitingHotelBean(EditHotelBean hotelBean, Hotel hotel){
+        initHotelBean(hotelBean,hotel);
+        hotelBean.setAwaiting(true);
+
+        return hotelBean;
+    }
+
+    public ApprovalBean cleanApprovalBean(ApprovalBean approvalBean, EditHotelBean hotelBean){
+        approvalBean.setId(null);
+        approvalBean.setState(0);
+        approvalBean.setApprovalDate(Calendar.getInstance().getTime());
+        approvalBean.setHotel(hotelBean);
+        approvalBean.setAwaitingHotel(new EditHotelBean());
+
+        return approvalBean;
+    }
+
+
+    public ApprovalBean initApprovalBean(ApprovalBean approvalBean, Approval approval, EditHotelBean hotelBean){
+        if (approval!=null){
+            approvalBean.setId(approval.getId());
+            approvalBean.setApprovalDate(approval.getApprovalDate());
+            approvalBean.setState(approval  .getApproved());
+
+            approvalBean.setHotel(hotelBean);
+            approvalBean.setAwaitingHotel(initAwaitingHotelBean(approvalBean.getAwaitingHotel(), approval.getAwaitingHotel()));
+
+            return approvalBean;
+        }else{
+            return cleanApprovalBean(approvalBean, hotelBean);
         }
     }
 

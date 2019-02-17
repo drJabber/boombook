@@ -43,4 +43,8 @@ public class Country implements Serializable {
     @OneToMany(mappedBy = "country")
     private List<Address> addresses;
 
+    public int hashCode(){
+        return nameRu.hashCode();
+    }
+
 }

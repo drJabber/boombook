@@ -45,6 +45,10 @@ public class StaffView implements Serializable {
 
     @PostConstruct
     public void init(){
+        initInternal(false);
+    }
+
+    private void initInternal(Boolean reset){
         ExternalContext exContext=FacesContext.getCurrentInstance().getExternalContext();
 
         Principal principal=exContext.getUserPrincipal();
@@ -54,7 +58,7 @@ public class StaffView implements Serializable {
         if (principal!=null){
             String userName=principal.getName();
             Staff staff=staffService.findByLogin(userName);
-            staffService.initStaffBean(staffBean,staff);
+            staffService.initStaffBean(staffBean,staff,reset);
         }
     }
 
@@ -86,12 +90,23 @@ public class StaffView implements Serializable {
         return "";
     }
 
+    public void resetHotelBean(){
+        initInternal(true);
+        PrimeFaces.current().executeScript("PF('hotelWizardW').loadStep('hotelInfoTab', false)");
+    }
+
     public String saveHotel(){
         hotelEditState=false;
         staffService.doSaveStaff(staffBean,true);
+        initInternal(false);
         PrimeFaces.current().executeScript("PF('hotelWizardW').loadStep('hotelInfoTab', false)");
-//        PrimeFaces.current().ajax().update("tabs");
         return "#";
+    }
+
+    public void publishHotel(){
+        if (staffBean.getApproved()){
+            staffService.publishHotel(staffBean.getApproval().getAwaitingHotel(), staffBean);
+        }
     }
 
     public String onHotelFlow(FlowEvent event){
@@ -114,7 +129,11 @@ public class StaffView implements Serializable {
 
     public String getHotelWizardCurrentStep(){
         if (hotelEditState){
-            return "hotelEditGeneralTab";
+            if (staffBean.hasAwaitingHotel()){
+                return "hotelConfirmTab";
+            }else{
+                return "hotelEditGeneralTab";
+            }
         }else{
             return "hotelInfoTab";
         }
@@ -131,6 +150,13 @@ public class StaffView implements Serializable {
         return "";
     }
 
+    public Boolean hotelCanRequestApproval(){
+        return (staffBean.getApproval()!=null)&&(staffBean.getApproval().getAwaitingHotel()!=null)&&(staffBean.getApproval().getAwaitingHotel().getId()!=null);
+    }
+
+    public boolean hotelApproved(){
+        return staffBean.getApproved();
+    }
 
     public EditFoodConceptBean getSelectedFoodConcept(){
         return selectedFoodConcept;

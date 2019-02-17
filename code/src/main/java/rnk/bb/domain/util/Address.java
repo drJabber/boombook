@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Data
 @Table(name="address", schema = "public")
 public class Address extends AbstractEntity {
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="country_id")
     private Country country;
 
@@ -34,5 +34,8 @@ public class Address extends AbstractEntity {
     private Integer externalId=0;
 
 
+    public int hashCode(){
+        return getId().hashCode();
+    }
 
 }

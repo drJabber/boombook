@@ -11,23 +11,76 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name="staff", schema = "public")
+@Table(name="approval", schema = "public")
 @EqualsAndHashCode(callSuper = false)
 public class Approval extends AbstractEntity {
-    @Id
-    private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="awaiting_hotel_id")
     private Hotel awaitingHotel;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="hotel_id")
-    private Hotel Hotel;
+    private Hotel hotel;
 
-    private Boolean state=false;
+    private String someField;
+
+    @Column(name="isApproved", columnDefinition = "integer default 0 ", nullable = false)
+    private Integer approved=0;
 
     @Column(name = "approval_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date approvalDate=null;
+
+    public Hotel getAwaitingHotel(){
+        return awaitingHotel;
+    }
+
+    public void setAwaitingHotel(Hotel hotel){
+        awaitingHotel=hotel;
+    }
+
+    public Hotel getHotel(){
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel){
+        this.hotel=hotel;
+    }
+
+    public Date getApprovalDate(){
+        return approvalDate;
+    }
+
+    public void setApprovalDate(Date date){
+        approvalDate=date;
+    }
+
+    public Integer getApproved(){
+        return this.approved;
+    }
+
+    public void setApproved(Integer state){
+        this.approved=state;
+    }
+
+    public String toString(){
+        String result="Approval: ";
+        if (getId()!=null){
+            result.concat(getId().toString());
+        }
+        if (hotel!=null){
+            result.concat(" hotel:");
+            result.concat(hotel.getName());
+        }
+        if (awaitingHotel!=null){
+            result.concat(" awaitinghotel:");
+            result.concat(awaitingHotel.getName());
+        }
+
+        return result;
+    }
+
+//    public int hashCode(){
+//        return getId().hashCode();
+//    }
 }

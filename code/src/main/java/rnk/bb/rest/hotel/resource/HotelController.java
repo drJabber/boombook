@@ -76,6 +76,18 @@ public class HotelController  extends CustomController<Hotel, Long> {
     @Inject
     AddressController addresses;
 
+    @Inject
+    FoodConceptController concepts;
+
+    @Inject
+    HotelPaymentPolicyController policies;
+
+    @Inject
+    RoomFeatureController roomFeatures;
+
+    @Inject
+    RoomPoolController roomPools;
+
     public List<FoodConcept> getFoodConceptList(Long hotelId){
         CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
         CriteriaQuery<FoodConcept> q = cb.createQuery(FoodConcept.class);
@@ -88,9 +100,26 @@ public class HotelController  extends CustomController<Hotel, Long> {
         return entityManager().createQuery(q).getResultList();
     }
 
+    private void updateHotelStaff(Hotel hotel, EditHotelBean hotelBean){
+        StaffUserBean managerBean=hotelBean.getManager();
+        if ((managerBean!=null)&&(managerBean.getStaffId()!=null)){
+            Staff manager=staff.findById(managerBean.getStaffId());
+            hotel.setManager(manager);
+
+            List<Staff> staffList=new ArrayList<>();
+            staffList.add(manager);
+            hotel.setStaffList(staffList);
+        }
+
+    }
     public Hotel createNewHotel(EditHotelBean hotelBean){
         Hotel hotel=new Hotel();
 
+        return updateHotel(hotel,hotelBean);
+    }
+
+
+    public Hotel updateHotel(Hotel hotel, EditHotelBean hotelBean){
         hotel.setName(hotelBean.getName());
         hotel.setPhone(hotelBean.getPhone());
         hotel.setEmail(hotelBean.getEmail());
@@ -105,28 +134,23 @@ public class HotelController  extends CustomController<Hotel, Long> {
         hotel.setStars(hotelBean.getStars());
 
 
-        StaffUserBean managerBean=hotelBean.getManager();
-        if (managerBean!=null){
-            Staff manager=staff.findById(managerBean.getStaffId());
-            hotel.setManager(manager);
-        }
+        updateHotelStaff(hotel, hotelBean);
 
-        ///todo - fill empty fields
-        hotel.setAddress(null);
+        hotel.setAddress(addresses.createOrUpdateAddress(hotelBean.getAddress()));
 
         hotel.setApproval(null);
 
-        hotel.setFoodConcepts(null);
+        hotel.setFoodConcepts(concepts.createOrUpdateFoodConcepts(hotelBean.getFoodConcepts(),hotel));
 
-        hotel.setPaymentPolicy(null);
+        hotel.setPaymentPolicy(policies.createOrUpdatePaymentPolicy(hotelBean.getPaymentPolicy()));
 
-        hotel.setRoomFeatures(null);
+        hotel.setRoomFeatures(roomFeatures.createOrUpdateRoomFeatures(hotelBean.getRoomFeatures(),hotel));
 
-        hotel.setRoomPools(null);
+        hotel.setRoomPools(roomPools.createOrUpdateRoomPools(hotelBean.getRoomPools(), hotel));
 
+        ///todo - fill empty fields
         hotel.setScheduleItems(null);
 
-        hotel.setStaffList(null);
 
         return hotel;
     }

@@ -25,7 +25,10 @@
                     <f:facet name="actions" >
                         <p:commandButton value="#{staffView.editHotelButtonTitle}" actionListener="#{staffView.editHotel()}"
                                          update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
-                        <p:commandButton value="Запрос подтверждения" actionListener="#{staffView.requestApproval()}"
+                        <p:commandButton rendered="#{staffView.hotelCanRequestApproval()}" value="Запрос подтверждения" actionListener="#{staffView.requestApproval()}"
+                                         update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
+                        <p:commandButton rendered="#{staffView.hotelApproved()}"
+                                         value="Опубликовать отель" actionListener="#{staffView.publishHotel()}"
                                          update=":staffForm:tabs" process="@this" style="margin-right:20px;" />
                     </f:facet>
 
@@ -39,6 +42,12 @@
                         >
                             <p:tab title="Информация" id="hotelInfoTab" >
                                 <ui:include src="/WEB-INF/layout/hotel/hs_hotel_info.xhtml" />
+                            </p:tab>
+                            <p:tab title="Изменение данных отеля: подтвердите" id="hotelConfirmTab" rendered="#{user.hasAwaitingHotel()}">
+                                <p:panel styleClass="ui-wizard-panel ui-panel">
+                                    <h:outputText value="Загружен для изменения отель, ожидающий подтверждения изменений. Для сброса нажмите [Сброс] " />
+                                </p:panel>
+                                <p:commandButton value="Сброс" action="#{staffView.resetHotelBean()}" update="tabs" process="@form" />
                             </p:tab>
                             <p:tab title="Изменение данных отеля: общая информация" id="hotelEditGeneralTab" >
                                 <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_general.xhtml" />

@@ -25,6 +25,22 @@ public class AddressController extends CustomController<Address, Long> {
 
     public Address createAddress(EditAddressBean addressBean){
         Address address=new Address();
+        return updateAddress(new Address(),addressBean);
+    }
+
+    public Address createOrUpdateAddress(EditAddressBean addressBean){
+        Address address=null;
+        if (addressBean.getId()!=null){
+            address=findByLongId(addressBean.getId());
+        }
+        if (address!=null){
+            return updateAddress(address, addressBean);
+        }else {
+            return createAddress(addressBean);
+        }
+    }
+
+    public Address updateAddress(Address address, EditAddressBean addressBean){
         Country country=countries.findByIdCached(addressBean.getCountryId());
         address.setCountry(country);
         address.setStreetPart(addressBean.getStreetPart());

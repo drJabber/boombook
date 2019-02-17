@@ -2,8 +2,11 @@ package rnk.bb.services;
 
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.book.Order;
+import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
+import rnk.bb.rest.hotel.approval.ApprovalController;
+import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.staff.StaffController;
 import rnk.bb.services.auth.LoginService;
 import rnk.bb.views.bean.hotel.EditHotelBean;
@@ -25,10 +28,20 @@ public class StaffService implements Serializable {
     StaffController staff;
 
     @Inject
+    HotelController hotels;
+
+    @Inject
+    ApprovalController approvals;
+
+    @Inject
     HotelService hotelService;
 
+    @Inject
+    StaffService staffService;
+
     public Staff findByLogin(String login){
-        return this.staff.findByLogin(login);
+        Staff s=this.staff.findByLogin(login);
+        return s;
     }
 
     public StaffUserBean initStaffBean(StaffUserBean staffBean, Long staffId){
@@ -41,7 +54,7 @@ public class StaffService implements Serializable {
         {
             result=new StaffUserBean();
         }
-        return initStaffBean(result,staff);
+        return initStaffBean(result,staff,false);
     }
 
 
@@ -53,14 +66,28 @@ public class StaffService implements Serializable {
         staffBean.setBirthDate(null);
         staffBean.setGender("М");
 
+        hotelService.initApprovalBean(staffBean.getApproval(),(Approval)null,(EditHotelBean)null);
+
         return staffBean;
     }
 
-    public StaffUserBean initStaffBean(StaffUserBean staffBean, Staff staff){
+    public StaffUserBean initStaffBean(StaffUserBean staffBean, Staff staff, Boolean resetApproval){
         if (staff!=null) {
             staffBean.setStaffId(staff.getId());
             staffBean.setLogin(staff.getLogin().getLogin());
-            hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
+
+            Approval approval=null;
+            if (!resetApproval){
+                approval=staff.getApproval();
+            }
+
+            hotelService.initApprovalBean(staffBean.getApproval(),approval, staffBean.getHotel());
+            if (staff.hasAwaitingHotel() && !resetApproval){
+                hotelService.initAwaitingHotelBean(staffBean.getHotel(), staff.getApproval().getAwaitingHotel());
+            }else{
+                hotelService.initHotelBean(staffBean.getHotel(), staff.getHotel());
+            }
+
             staffBean.setName(staff.getName());
             staffBean.setBirthDate(staff.getBirthDate());
             staffBean.setGender(staff.getGender());
@@ -93,8 +120,21 @@ public class StaffService implements Serializable {
     public Boolean doSaveStaff(StaffUserBean user, Boolean isManager){
         log.log(Level.INFO, "save hotel staff");
         staff.saveStaff(user,isManager);
+
         return true;
     }
+
+    public void publishHotel(EditHotelBean hotelBean, StaffUserBean staffBean){
+        if ((hotelBean!=null) && (staffBean!=null)){
+            Hotel hotel = hotelService.findById(staffBean.getHotel().getId());
+            Staff staff = this.staff.findById(staffBean.getStaffId());
+            hotels.updateHotel(hotel,hotelBean);
+            hotel.setPublished(true);
+            hotel.setApproval(null);
+            hotels.save(hotel);
+        }
+    }
+
 
 
 

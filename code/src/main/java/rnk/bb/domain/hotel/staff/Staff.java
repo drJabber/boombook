@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import rnk.bb.domain.auth.Auth;
 import rnk.bb.domain.blank.AbstractHotelRefEntity;
+import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.util.json.DateAdapter;
 
@@ -38,11 +39,19 @@ public class Staff extends AbstractHotelRefEntity {
     @Column(nullable = false)
     private String gender;
 
-    @NotNull
-    @Column(nullable = false)
-    private Boolean approved=false;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="approval_id")
+    private Approval approval;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="hotel_id")
-    private Hotel hotel;
+    public String toString(){
+        return login.getLogin()+":"+name;
+    }
+
+    public int hashCode(){
+        return login.getLogin().hashCode();
+    }
+
+    public Boolean hasAwaitingHotel(){
+        return ((approval!=null)&&(approval.getAwaitingHotel()!=null)&&(approval.getAwaitingHotel().getId()!=null));
+    }
 }
