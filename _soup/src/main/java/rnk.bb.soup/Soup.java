@@ -5,13 +5,19 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.imageio.ImageIO;
 import javax.jws.WebService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +27,7 @@ import java.util.stream.Collectors;
 @WebServlet("/soup")
 public class Soup extends HttpServlet {
     private static String HOTELS_SERVLET="https://tophotels.ru";
+    private static String IMAGE_HOME="/opt/payara/appserver/glassfish/domains/img";
 
     @Override
     protected void doGet(HttpServletRequest rq, HttpServletResponse rsp) throws ServletException, IOException {
@@ -40,6 +47,7 @@ public class Soup extends HttpServlet {
                     Element title_text = element.selectFirst("a.catalogs-ttl-a");
                     Element title_geography = element.selectFirst("div.catalogs-desc > a");
                     Element title_desc = element.selectFirst("div.catalogs-info");
+                    Element title_img=element.selectFirst("a.catalogs-promo-more-pic > img");
 
                     Element stars7 = element.selectFirst("div > div > div > div.stars7");
                     Element stars6 = element.selectFirst("div > div > div > div.stars6");
@@ -77,6 +85,10 @@ public class Soup extends HttpServlet {
 
                     extract_info(result,title_href.attr("href"));
                     extract_long_descr(result,title_href.attr("href"));
+                    if (title_img!=null){
+
+                        extract_img(title_img.attr("src"), title_href.attr("href"));
+                    }
 
                     rsp.getWriter().println(result.stream().collect(Collectors.joining(";")));
 
@@ -87,6 +99,46 @@ public class Soup extends HttpServlet {
             throw new ServletException(ex);
         }
     }
+
+    private String extract_img(String src, String href){
+        String imagePath = null;
+        try {
+            String fileName=href.replaceAll("/hotel/al","")+".jpg";
+            byte[] bytes = Jsoup.connect("https:"+src).ignoreContentType(true).execute().bodyAsBytes();
+            ByteBuffer buffer = ByteBuffer.wrap(bytes);
+            String rootTargetDirectory = IMAGE_HOME;
+            imagePath = rootTargetDirectory + "/"+fileName  ;
+            saveByteBufferImage(buffer, rootTargetDirectory, fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imagePath;
+    }
+
+    public static void saveByteBufferImage(ByteBuffer imageDataBytes, String rootTargetDirectory, String savedFileName) {
+        String uploadInputFile = rootTargetDirectory + "/"+savedFileName;
+
+        File rootTargetDir = new File(rootTargetDirectory);
+        if (!rootTargetDir.exists()) {
+            boolean created = rootTargetDir.mkdirs();
+            if (!created) {
+                System.out.println("Error while creating directory for location- "+rootTargetDirectory);
+            }
+        }
+
+        File file = new File(uploadInputFile);
+        BufferedImage bufferedImage;
+
+        InputStream in = new ByteArrayInputStream(imageDataBytes.array());
+        try {
+            bufferedImage = ImageIO.read(in);
+//            /opt/payara/appserver/glassfish/domains/img
+            ImageIO.write(bufferedImage, "jpg", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void extract_long_descr(List<String> list, String href) throws IOException{
         Document document= Jsoup.connect(HOTELS_SERVLET+href+"/description").get();

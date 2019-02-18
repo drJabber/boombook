@@ -18,7 +18,48 @@
     <ui:define name="pageTitle">Администратор</ui:define>
     <ui:define name="pageContent">
         <h:form id="adminForm">
-            <h:outputText value="#{adminView.dummyTitle}" />
+            <p:panel id="hotelsPanel"
+                     header="#{adminView.approveHotelHeaderTitle}"
+                     styleClass="ui-wizard-panel ui-panel">
+                <h:outputText rendered="#{adminView.hotels.size()<=0}" value="Список отелей пуст" />
+                <p:dataTable rendered="#{adminView.hotels.size()>0}"
+                             var="hotel" id="hotelsTable" rowIndexVar="hotelRow"
+                             value="#{adminView.hotels}" lazy="false" paginator="true" rows="6"
+                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             paginatorPosition="bottom"
+                             rowsPerPageTemplate="6"
+                             rowKey="#{hotel.id}"
+                >
+    
+                    <p:column headerText="Название">
+                        <h:outputText value="#{hotel.name}" />
+                    </p:column>
+    
+                    <p:column headerText="Email">
+                        <h:outputText value="#{hotel.email}" />
+                    </p:column>
+    
+                    <p:column headerText="Телефон">
+                        <h:outputText value="#{hotel.phone}" />
+                    </p:column>
+
+                    <p:column headerText="Статус подтверждения">
+                        <h:outputText value="#{hotel.approvedState}" />
+                    </p:column>
+
+                    <p:column style="width:32px">
+                        <p:commandButton update=":adminForm:tabs:hotelsPanel" process="@this" action="#{adminView.approveHotel}" icon="fa fa-edit">
+                            <f:setPropertyActionListener value="#{hotel}" target="#{adminView.selectedHotel}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column style="width:32px">
+                        <p:commandButton update=":adminForm:tabs:hotelsPanel" process="@this" action="#{adminView.rejectHotel}" icon="fa fa-remove">
+                            <f:setPropertyActionListener value="#{hotel}" target="#{adminView.selectedHotel}" />
+                        </p:commandButton>
+                    </p:column>
+    
+                </p:dataTable>
+            </p:panel>
         </h:form>
     </ui:define>
 </ui:composition>

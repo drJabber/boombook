@@ -10,5 +10,7 @@ COPY boombook.war /opt/payara/appserver/glassfish/domains/production/autodeploy/
 #COPY boombook.war /opt/payara/appserver/glassfish/domains/production
 COPY rnkutils-0.1.jar /opt/payara/appserver/glassfish/domains/production/lib/rnkutils-0.1.jar
 COPY --chown=payara:payara create-realm.sh /opt/payara/scripts/create-realm.sh
-
 EXPOSE 42333
+USER payara
+RUN mkdir /opt/payara/appserver/glassfish/domains/img
+COPY img /opt

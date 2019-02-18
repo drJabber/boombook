@@ -7,6 +7,7 @@ import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
+import rnk.bb.views.AdminView;
 import rnk.bb.views.bean.hotel.*;
 import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.bean.util.EditAddressBean;
@@ -19,10 +20,12 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Named(value = "hotelService")
 @ApplicationScoped
 public class HotelService implements Serializable {
+    private static Logger log=Logger.getLogger(AdminView.class.getName());
 
     @Inject
     HotelController hotels;
@@ -59,6 +62,11 @@ public class HotelService implements Serializable {
         return this.hotels.findAll();
     }
 
+
+    public LazyDataModel<Hotel> getHotelsApprovalRequested(){
+
+        return null;
+    }
 
     private EditHotelBean cleanHotelBean(EditHotelBean hotelBean){
         hotelBean.setId(null);

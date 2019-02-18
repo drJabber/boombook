@@ -40,6 +40,11 @@
                     <h:panelGroup rendered="#{not empty hotel.phone}"><p>Телефон:<h:outputText value="#{hotel.phone}" /></p></h:panelGroup>
                     <h:panelGroup rendered="#{not empty hotel.fax}"><p>Факс:<h:outputText value="#{hotel.fax}" /></p></h:panelGroup>
                 </p:column>
+                <p:column>
+                    <p:graphicImage value="#{hotelImages.image}">
+                        <f:param name="hotelId" value="#{hotel.id}">
+                    </p:graphicImage>
+                </p:column>
             </p:dataTable>
         </h:form>
 

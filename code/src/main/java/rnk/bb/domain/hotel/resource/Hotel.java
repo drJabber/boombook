@@ -78,6 +78,10 @@ public class Hotel extends AbstractEntity {
     @JoinColumn(name="address_id")
     private Address address;
 
+    @Lob
+    @Column(nullable = true)
+    private byte[] picture;
+
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="approval_id")
     private Approval approval;
