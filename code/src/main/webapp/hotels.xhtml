@@ -15,6 +15,56 @@
     </ui:define>
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
+        <h:form id="searchForm">
+            <p:panel id="searchPanel" header="Поиск" toggleable="true"  >
+                <p:focus context="searchPanel"/>
+                <h:panelGrid columns="1">
+                    <h:panelGroup>
+                        <div>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="countryInput" value="Страна" />
+                                <p:inputText id="countryInput" value="boomHome.criteria.country" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="townInput" value="Город" />
+                                <p:inputText id="townInput" value="boomHome.criteria.town" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="nameInput" value="Название" />
+                                <p:inputText id="nameInput" value="boomHome.criteria.name" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="starsInput" value="Звезды" />
+                                <p:selectOneMenu id="starsInput" value="#{boomHome.criteria.stars}">
+                                    <f:selectItem itemLabel="Звезд" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="5*" itemValue="5"/>
+                                    <f:selectItem itemLabel="4*" itemValue="4"/>
+                                    <f:selectItem itemLabel="3*" itemValue="3"/>
+                                    <f:selectItem itemLabel="2*" itemValue="2"/>
+                                    <f:selectItem itemLabel="1*" itemValue="1"/>
+                                    <f:selectItem itemLabel="NO" itemValue="0"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <p:toolbar>
+                    <h:commandButton id="searchButton"
+                                     value="Искать"
+                                     actionListener="#{boomHome.search}"
+                                     update=":hotelForm:hotelTable searchPanel"
+                                     style="margin-right:20px;" />
+                    <h:commandButton id="clearButton"
+                                     value="Отменить"
+                                     actionListener="#{boomHome.clean}"
+                                     process="@this"
+                                     update="searchPanel"
+                                     style="margin-right:20px;" />
+                </p:toolbar>
+            </p:panel>
+        </h:form>
+
         <h:form id="hotelForm">
             <p:dataTable  var="hotel" id="hotelTable" rowIndexVar="hotelRow"
                           value="#{boomHome.hotelsModel}" lazy="true" paginator="true" rows="10"

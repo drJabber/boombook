@@ -132,3 +132,13 @@ dl dt{
     margin: 2px;
     min-height: 200px;
 }
+
+.ui-panel-images {
+    width: 100%;
+    height: 100%;
+}
+
+.ui-galleria-panel {
+    width: 100%;
+    height: 100%;
+}

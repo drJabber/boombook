@@ -5,6 +5,7 @@ import org.primefaces.model.StreamedContent;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.services.HotelService;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
@@ -12,6 +13,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Named("hotelImages") // Or @ManagedBean
 @ApplicationScoped
@@ -19,6 +22,20 @@ public class HotelImagesView {
 
     @Inject
     private HotelService hotels;
+
+    private List<String> topImages;
+
+    @PostConstruct
+    public void init(){
+        topImages =new ArrayList<>();
+        for (int i=1;i<12;i++){
+            topImages.add(String.format("gallery%02d.jpg", i));
+        }
+    }
+
+    public List<String> getTopImages(){
+        return topImages;
+    }
 
     public StreamedContent getImage() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();

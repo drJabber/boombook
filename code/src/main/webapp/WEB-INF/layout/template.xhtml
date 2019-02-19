@@ -31,6 +31,18 @@
             <main role="main" class="container">
                 <h:panelGroup layout="block" id="app-container" styleClass="ui-app-container">
                     <h:panelGroup layout="block" styleClass="page-header">
+                        <p:galleria value="#{hotelImages.topImages}"
+                                    var="image"
+                                    panelHeight="300"
+                                    panelWidth="2000"
+                                    showCaption="false"
+                                    autoPlay="true"
+                                    effect="explode"
+                                    showFilmstrip="false"
+                                    transitionInterval="5000">
+                            <p:graphicImage  name="img/#{image}" alt="Нет картинки" width="100%"/>
+                        </p:galleria>
+
                         <h1><ui:insert name="pageTitle"></ui:insert></h1>
                     </h:panelGroup>
                     <h:panelGroup layout="block" id="main-container" styleClass="ui-app-container">

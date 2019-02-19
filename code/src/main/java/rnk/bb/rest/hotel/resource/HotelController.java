@@ -3,9 +3,12 @@ package rnk.bb.rest.hotel.resource;
 import rnk.bb.domain.hotel.resource.FoodConcept;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
+import rnk.bb.rest.util.ServerUtils;
+import rnk.bb.rest.util.StringUtils;
 import rnk.bb.rest.blank.CustomController;
 import rnk.bb.rest.hotel.staff.StaffController;
 import rnk.bb.rest.util.AddressController;
+import rnk.bb.rest.util.HotelSearchCriteria;
 import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
@@ -15,6 +18,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.persistence.Query;
 import javax.persistence.criteria.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
@@ -24,12 +28,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
 public class HotelController  extends CustomController<Hotel, Long> {
+    private static Logger log=Logger.getLogger(HotelController.class.getName());
     @PUT
     @Path("hotel/resource/hotel")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -87,6 +94,12 @@ public class HotelController  extends CustomController<Hotel, Long> {
 
     @Inject
     RoomPoolController roomPools;
+
+    @Inject
+    StringUtils stringUtils;
+
+    @Inject
+    ServerUtils serverUtils;
 
     public List<FoodConcept> getFoodConceptList(Long hotelId){
         CriteriaBuilder cb = this.entityManager().getCriteriaBuilder();
@@ -156,8 +169,110 @@ public class HotelController  extends CustomController<Hotel, Long> {
     }
 
 
+    public List<Hotel> searchHotels(HotelSearchCriteria criteria){
+        log.log(Level.INFO,"search hotel...");
+
+        String query="from Hotel h left join Address a left join Country c where h.published=true ";
+        String countQuery="select count(h) ";
+
+        List<Hotel> hotels=new ArrayList<>();
+
+        try{
+            StringBuilder sb=new StringBuilder(query);
+
+            //Filters
+            Map params=new HashMap();
+
+            if (stringUtils.isNotBlank(criteria.getCountry())){
+                sb=sb.append("and c.nameRu like :country ");
+                params.put("country","%"+criteria.getCountry()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getTown())){
+                sb=sb.append("and a.settlementPart like :country ");
+                params.put("town","%"+criteria.getTown()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getHotelName())){
+                sb=sb.append("and h.name like :hotel ");
+                params.put("hotelname","%"+criteria.getHotelName()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getStars()) && Integer.parseInt(criteria.getStars(),-1)>=0){
+                sb=sb.append("and h.stars = :stars ");
+                params.put("hotelname",Integer.parseInt(criteria.getStars()));
+            }
+
+            countQuery+=sb.toString();
+            sb=sb.append("order by ");
+
+            if (stringUtils.isNotBlank(criteria.getSortField())){
+                sb=sb.append("lower(p.").append(criteria.getSortField()).append(")").append(criteria.getAscending()?" asc, ":" desc,");
+            }
+
+            sb.append("lower(c.name_ru), lower(h.name), lower(a.settlementpart) ");
+
+            Query q=entityManager().createQuery(countQuery);
+            params.keySet().stream().forEach(k->q.setParameter(k.toString(),params.get(k)));
+            int resultSize=((Long)q.getSingleResult()).intValue();
+            criteria.setResultSize(resultSize);
+
+            if (resultSize!=0){
+                int firstResult=criteria.getFirstResult();
+                int pageSize=criteria.getPageSize();
+
+                firstResult=serverUtils.computeFirstResult(firstResult,pageSize,resultSize);
+
+                Query qc=entityManager().createQuery(sb.toString());
+                params.keySet().stream().forEach(k->qc.setParameter(k.toString(),params.get(k)));
+                qc.setFirstResult(firstResult);
+                qc.setMaxResults(pageSize);
+
+                hotels=qc.getResultList();
+            }
+        }catch(Exception ex){
+            log.log(Level.SEVERE, ex.getMessage());
+        }
+
+        return hotels;
+    }
 
 
+    public Integer getHotelsCount(HotelSearchCriteria criteria){
+        Integer count=0;
+        String query="select count(h) from Hotel h left join Address a left join Country c where h.published=true ";
+        try{
+            StringBuilder sb=new StringBuilder(query);
 
+            //Filters
+            Map params=new HashMap();
+
+            if (stringUtils.isNotBlank(criteria.getCountry())){
+                sb=sb.append("and c.name_ru like :country ");
+                params.put("country","%"+criteria.getCountry()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getTown())){
+                sb=sb.append("and a.settlementPart like :country ");
+                params.put("town","%"+criteria.getTown()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getHotelName())){
+                sb=sb.append("and h.name like :hotel ");
+                params.put("hotelname","%"+criteria.getHotelName()+"%");
+            }
+            if (stringUtils.isNotBlank(criteria.getStars()) && Integer.parseInt(criteria.getStars(),-1)>=0){
+                sb=sb.append("and h.stars = :stars ");
+                params.put("hotelname",Integer.parseInt(criteria.getStars()));
+            }
+
+            query+=sb.toString();
+
+            Query q=entityManager().createQuery(query);
+            params.keySet().stream().forEach(k->q.setParameter(k.toString(),params.get(k)));
+            count=((Long)q.getSingleResult()).intValue();
+            criteria.setResultSize(count);
+
+        }catch(Exception ex){
+            log.log(Level.SEVERE, ex.getMessage());
+        }
+
+        return count;
+    }
 
 }

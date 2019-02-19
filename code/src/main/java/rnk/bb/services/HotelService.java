@@ -1,12 +1,14 @@
 package rnk.bb.services;
 
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.*;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
+import rnk.bb.rest.util.HotelSearchCriteria;
 import rnk.bb.views.AdminView;
 import rnk.bb.views.bean.hotel.*;
 import rnk.bb.views.bean.registration.StaffUserBean;
@@ -25,7 +27,7 @@ import java.util.logging.Logger;
 @Named(value = "hotelService")
 @ApplicationScoped
 public class HotelService implements Serializable {
-    private static Logger log=Logger.getLogger(AdminView.class.getName());
+    private static Logger log=Logger.getLogger(HotelService.class.getName());
 
     @Inject
     HotelController hotels;
@@ -45,17 +47,47 @@ public class HotelService implements Serializable {
     @Inject
     AddressService addressService;
 
+    private LazyDataModel<Hotel> hotelsLazy;
+
+    private HotelSearchCriteria criteria;
+
     @PostConstruct
     private void init(){
         FacesContext.getCurrentInstance().getExternalContext().getApplicationMap().put("hotelService",this);
+        this.criteria=new HotelSearchCriteria();
+        hotelsLazy=new LazyDataModel<Hotel>() {
+            public List<Hotel> load(int first, int pageSize, String sortField,
+                                    SortOrder sortOrder, java.util.Map<String, Object> filters) {
+                List<Hotel> result=null;
+
+                criteria.setFirstResult(first);
+                criteria.setPageSize(pageSize);
+                criteria.setSortField(sortField);
+                criteria.setAscending(SortOrder.ASCENDING.equals(sortOrder));
+
+                result=hotels.searchHotels(criteria);
+
+                return result;
+            }
+
+        };
     }
+
+    public void resetSearchCriteria(){
+        criteria=new HotelSearchCriteria();
+    }
+
+    public HotelSearchCriteria getSearchCriteria(){
+        return criteria;
+    }
+
 
     public Hotel findById(Long id){
         return this.hotels.findOptionalById(id).orElseThrow(()->new HotelNotFoundException(id));
     }
 
     public LazyDataModel<Hotel> getHotelsLazy(){
-        return this.hotels;
+        return this.hotelsLazy;
     }
 
     public List<Hotel> getHotels(){

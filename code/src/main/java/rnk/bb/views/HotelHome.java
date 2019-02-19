@@ -3,6 +3,7 @@ package rnk.bb.views;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.rest.util.HotelSearchCriteria;
 import rnk.bb.services.HotelService;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -22,6 +24,7 @@ public class HotelHome implements Serializable {
 
     @Inject
     HotelService hotelService;
+
 
     private LazyDataModel<Hotel> hotelsModel;
     private Hotel selectedHotel;
@@ -50,5 +53,18 @@ public class HotelHome implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect(String.format("hotel.xhtml?id=%d", hotel.getId()));
     }
 
+    public HotelSearchCriteria getCriteria(){
+        return hotelService.getSearchCriteria();
+    }
+
+
+    public String search(ActionEvent event){
+        return "hotels.xhtml?faces-redirect=true";
+    }
+
+    public String clean(ActionEvent event){
+        hotelService.resetSearchCriteria();
+        return "hotels.xhtml?faces-redirect=true";
+    }
 
 }
