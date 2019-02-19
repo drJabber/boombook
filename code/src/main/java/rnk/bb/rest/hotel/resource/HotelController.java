@@ -184,16 +184,16 @@ public class HotelController  extends CustomController<Hotel, Long> {
             Map params=new HashMap();
 
             if (stringUtils.isNotBlank(criteria.getCountry())){
-                sb=sb.append("and c.nameRu like :country ");
-                params.put("country","%"+criteria.getCountry()+"%");
+                sb=sb.append("and lower(c.nameRu) like :country ");
+                params.put("country","%"+criteria.getCountry().toLowerCase()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getTown())){
-                sb=sb.append("and a.settlementPart like :town ");
-                params.put("town","%"+criteria.getTown()+"%");
+                sb=sb.append("and (lower(a.settlementPart) like :town or lower(h.place) like :town)");
+                params.put("town","%"+criteria.getTown().toLowerCase()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getHotelName())){
-                sb=sb.append("and h.name like :hotelName ");
-                params.put("hotelName","%"+criteria.getHotelName()+"%");
+                sb=sb.append("and lower(h.name) like :hotelName ");
+                params.put("hotelName","%"+criteria.getHotelName().toLowerCase()+"%");
             }
             try
             {
@@ -251,16 +251,16 @@ public class HotelController  extends CustomController<Hotel, Long> {
             Map params=new HashMap();
 
             if (stringUtils.isNotBlank(criteria.getCountry())){
-                sb=sb.append("and c.nameRu like :country ");
-                params.put("country","%"+criteria.getCountry()+"%");
+                sb=sb.append("and lower(c.nameRu) like :country ");
+                params.put("country","%"+criteria.getCountry().toLowerCase()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getTown())){
-                sb=sb.append("and a.settlementPart like :town ");
-                params.put("town","%"+criteria.getTown()+"%");
+                sb=sb.append("and (lower(a.settlementPart) like :town or lower(h.place) like :town)");
+                params.put("town","%"+criteria.getTown().toLowerCase()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getHotelName())){
-                sb=sb.append("and h.name like :hotelName ");
-                params.put("hotelName","%"+criteria.getHotelName()+"%");
+                sb=sb.append("and lower(h.name) like :hotelName ");
+                params.put("hotelName","%"+criteria.getHotelName().toLowerCase()+"%");
             }
             try
             {
