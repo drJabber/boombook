@@ -172,7 +172,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
     public List<Hotel> searchHotels(HotelSearchCriteria criteria){
         log.log(Level.INFO,"search hotel...");
 
-        String query="from Hotel h left join Address a left join Country c where h.published=true ";
+        String query="from Hotel h left join Address a  on a=h.address left join Country c on c=a.country where h.published=true ";
         String countQuery="select count(h) ";
 
         List<Hotel> hotels=new ArrayList<>();
@@ -207,7 +207,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
                 sb=sb.append("lower(p.").append(criteria.getSortField()).append(")").append(criteria.getAscending()?" asc, ":" desc,");
             }
 
-            sb.append("lower(c.name_ru), lower(h.name), lower(a.settlementpart) ");
+            sb.append("lower(c.nameRu), lower(h.name), lower(a.settlementPart) ");
 
             Query q=entityManager().createQuery(countQuery);
             params.keySet().stream().forEach(k->q.setParameter(k.toString(),params.get(k)));
@@ -237,7 +237,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
 
     public Integer getHotelsCount(HotelSearchCriteria criteria){
         Integer count=0;
-        String query="select count(h) from Hotel h left join Address a left join Country c where h.published=true ";
+        String query="select count(h) from Hotel h left join Address a on a=h.address left join Country c on c=a.country where h.published=true ";
         try{
             StringBuilder sb=new StringBuilder(query);
 
@@ -245,7 +245,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
             Map params=new HashMap();
 
             if (stringUtils.isNotBlank(criteria.getCountry())){
-                sb=sb.append("and c.name_ru like :country ");
+                sb=sb.append("and c.nameRu like :country ");
                 params.put("country","%"+criteria.getCountry()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getTown())){

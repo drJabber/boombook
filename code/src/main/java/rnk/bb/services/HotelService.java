@@ -66,6 +66,7 @@ public class HotelService implements Serializable {
                 criteria.setAscending(SortOrder.ASCENDING.equals(sortOrder));
 
                 result=hotels.searchHotels(criteria);
+                this.setRowCount(criteria.getResultSize());
 
                 return result;
             }
