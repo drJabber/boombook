@@ -58,11 +58,11 @@ public class HotelHome implements Serializable {
     }
 
 
-    public String search(ActionEvent event){
+    public String search(){
         return "hotels.xhtml?faces-redirect=true";
     }
 
-    public String clean(ActionEvent event){
+    public String clean(){
         hotelService.resetSearchCriteria();
         return "hotels.xhtml?faces-redirect=true";
     }

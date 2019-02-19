@@ -16,23 +16,31 @@
     <ui:define name="pageTitle">Hotels</ui:define>
     <ui:define name="pageContent">
         <h:form id="searchForm">
-            <p:panel id="searchPanel" header="Поиск" toggleable="true"  >
+            <p:panel id="searchPanel" header="Поиск" toggleable="true"  toggleableHeader="Поиск" >
                 <p:focus context="searchPanel"/>
-                <h:panelGrid columns="1">
-                    <h:panelGroup>
+                <h:panelGrid columns="2">
+                    <h:panelGroup style="margin-right:50px;">
                         <div>
                             <h:panelGrid columns="2">
                                 <h:outputLabel for="countryInput" value="Страна" />
                                 <p:inputText id="countryInput" value="#{boomHome.criteria.country}" />
                             </h:panelGrid>
+                        </div>
+                        <div>
                             <h:panelGrid columns="2">
                                 <h:outputLabel for="townInput" value="Город" />
                                 <p:inputText id="townInput" value="#{boomHome.criteria.town}" />
                             </h:panelGrid>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup style="margin-right:50px;">
+                        <div>
                             <h:panelGrid columns="2">
                                 <h:outputLabel for="nameInput" value="Название" />
                                 <p:inputText id="nameInput" value="#{boomHome.criteria.hotelName}" />
                             </h:panelGrid>
+                        </div>
+                        <div>
                             <h:panelGrid columns="2">
                                 <h:outputLabel for="starsInput" value="Звезды" />
                                 <p:selectOneMenu id="starsInput" value="#{boomHome.criteria.stars}">
@@ -50,17 +58,19 @@
                 </h:panelGrid>
 
                 <p:toolbar>
-                    <h:commandButton id="searchButton"
-                                     value="Искать"
-                                     actionListener="#{boomHome.search}"
-                                     update=":hotelForm:hotelTable searchPanel"
-                                     style="margin-right:20px;" />
-                    <h:commandButton id="clearButton"
-                                     value="Отменить"
-                                     actionListener="#{boomHome.clean}"
-                                     process="@this"
-                                     update="searchPanel"
-                                     style="margin-right:20px;" />
+                    <f:facet name="left">
+                        <h:commandButton id="searchButton"
+                                         value="Искать"
+                                         actionListener="#{boomHome.search()}"
+                                         update=":hotelForm:hotelTable searchPanel"
+                                         style="margin-right:20px;" />
+                        <h:commandButton id="clearButton"
+                                         value="Отменить"
+                                         actionListener="#{boomHome.clean()}"
+                                         process="@this"
+                                         update="searchPanel"
+                                         style="margin-right:20px;" />
+                    </f:facet>
                 </p:toolbar>
             </p:panel>
         </h:form>

@@ -188,23 +188,29 @@ public class HotelController  extends CustomController<Hotel, Long> {
                 params.put("country","%"+criteria.getCountry()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getTown())){
-                sb=sb.append("and a.settlementPart like :country ");
+                sb=sb.append("and a.settlementPart like :town ");
                 params.put("town","%"+criteria.getTown()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getHotelName())){
-                sb=sb.append("and h.name like :hotel ");
-                params.put("hotelname","%"+criteria.getHotelName()+"%");
+                sb=sb.append("and h.name like :hotelName ");
+                params.put("hotelName","%"+criteria.getHotelName()+"%");
             }
-            if (stringUtils.isNotBlank(criteria.getStars()) && Integer.parseInt(criteria.getStars(),-1)>=0){
-                sb=sb.append("and h.stars = :stars ");
-                params.put("hotelname",Integer.parseInt(criteria.getStars()));
+            try
+            {
+                if (stringUtils.isNotBlank(criteria.getStars())){
+                    sb=sb.append("and h.stars = :stars ");
+                    params.put("stars",Integer.parseInt(criteria.getStars()));
+                }
+            }catch(Exception ex){
+                log.log(Level.INFO, "no stars");
+
             }
 
             countQuery+=sb.toString();
             sb=sb.append("order by ");
 
             if (stringUtils.isNotBlank(criteria.getSortField())){
-                sb=sb.append("lower(p.").append(criteria.getSortField()).append(")").append(criteria.getAscending()?" asc, ":" desc,");
+                sb=sb.append("lower(h.").append(criteria.getSortField()).append(")").append(criteria.getAscending()?" asc, ":" desc,");
             }
 
             sb.append("lower(c.nameRu), lower(h.name), lower(a.settlementPart) ");
@@ -249,16 +255,22 @@ public class HotelController  extends CustomController<Hotel, Long> {
                 params.put("country","%"+criteria.getCountry()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getTown())){
-                sb=sb.append("and a.settlementPart like :country ");
+                sb=sb.append("and a.settlementPart like :town ");
                 params.put("town","%"+criteria.getTown()+"%");
             }
             if (stringUtils.isNotBlank(criteria.getHotelName())){
-                sb=sb.append("and h.name like :hotel ");
-                params.put("hotelname","%"+criteria.getHotelName()+"%");
+                sb=sb.append("and h.name like :hotelName ");
+                params.put("hotelName","%"+criteria.getHotelName()+"%");
             }
-            if (stringUtils.isNotBlank(criteria.getStars()) && Integer.parseInt(criteria.getStars(),-1)>=0){
-                sb=sb.append("and h.stars = :stars ");
-                params.put("hotelname",Integer.parseInt(criteria.getStars()));
+            try
+            {
+                if (stringUtils.isNotBlank(criteria.getStars())){
+                    sb=sb.append("and h.stars = :stars ");
+                    params.put("stars",Integer.parseInt(criteria.getStars()));
+                }
+            }catch(Exception ex){
+                log.log(Level.INFO, "no stars");
+
             }
 
             query+=sb.toString();

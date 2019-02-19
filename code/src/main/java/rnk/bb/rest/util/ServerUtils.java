@@ -8,6 +8,6 @@ import java.io.Serializable;
 @ApplicationScoped
 public class ServerUtils implements Serializable {
     public Integer computeFirstResult(Integer firstResult, Integer pageSize, Integer totalResult){
-        return (firstResult+pageSize)>=totalResult?totalResult-pageSize:firstResult;
+        return (firstResult+pageSize)>=totalResult?(totalResult-pageSize)<0?0:totalResult-pageSize:firstResult;
     }
 }
