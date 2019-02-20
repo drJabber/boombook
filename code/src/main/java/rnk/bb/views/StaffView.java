@@ -1,7 +1,10 @@
 package rnk.bb.views;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import rnk.bb.domain.hotel.staff.Staff;
 import rnk.bb.services.HotelService;
 import rnk.bb.services.StaffService;
@@ -10,6 +13,7 @@ import rnk.bb.views.bean.hotel.EditFoodConceptBean;
 import rnk.bb.views.bean.hotel.EditRoomFeatureBean;
 import rnk.bb.views.bean.hotel.EditRoomPoolBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
+import rnk.bb.views.bean.util.HotelImagesView;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -37,11 +41,17 @@ public class StaffView implements Serializable {
     private Boolean editRoomPoolState=false;
     private String hotelWizardCurrentState="";
 
+    private UploadedFile uploaded;
+
     @Inject
     HotelService hotelService;
 
     @Inject
     StaffService staffService;
+
+    @Inject
+    HotelImagesView imagesView;
+
 
     @PostConstruct
     public void init(){
@@ -279,5 +289,20 @@ public class StaffView implements Serializable {
         this.selectedRoomPool=null;
     }
 
+    public UploadedFile getUploaded(){
+        return uploaded;
+    }
 
+    public void setUploaded(UploadedFile uploaded){
+        this.uploaded=uploaded;
+    }
+
+    public StreamedContent getUploadedHotelImage(){
+        return  imagesView.getStreamedContent(staffBean.getHotel().getPicture());
+    }
+
+
+    public void handleHotelPictureUpload(FileUploadEvent event){
+        staffBean.getHotel().setPicture(event.getFile().getContents());
+    }
 }

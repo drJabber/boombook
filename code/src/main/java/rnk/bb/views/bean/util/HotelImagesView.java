@@ -37,6 +37,21 @@ public class HotelImagesView {
         return topImages;
     }
 
+    public StreamedContent getStreamedContent(byte[] image){
+        FacesContext context = FacesContext.getCurrentInstance();
+
+//        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+//            // So, we're rendering the HTML. Return a stub StreamedContent so that it will generate right URL.
+//            return new DefaultStreamedContent();
+//        }
+//
+        if (image!=null){
+            return new DefaultStreamedContent(new ByteArrayInputStream(image));
+        }else{
+            return null;
+        }
+    }
+
     public StreamedContent getImage() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -48,12 +63,7 @@ public class HotelImagesView {
             // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
             String hotelId = context.getExternalContext().getRequestParameterMap().get("hotelId");
             Hotel hotel = hotels.findById(Long.valueOf(hotelId));
-            byte[] image=hotel.getPicture();
-            if (image!=null){
-                return new DefaultStreamedContent(new ByteArrayInputStream(hotel.getPicture()));
-            }else{
-                return null;
-            }
+            return getStreamedContent(hotel.getPicture());
         }
     }
 

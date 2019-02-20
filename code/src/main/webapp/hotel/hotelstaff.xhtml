@@ -19,7 +19,7 @@
     </ui:define>
     <ui:define name="pageTitle">#{request.isUserInRole("hotel-manager")?"Менеджер отеля":"Работник отеля"}</ui:define>
     <ui:define name="pageContent">
-        <h:form id="staffForm">
+        <h:form id="staffForm" enctype="multipart/form-data">
             <p:tabView id="tabs" dynamic="true" cache="false">
                 <p:tab id="hotelTab" title="Отель" rendered="#{request.isUserInRole('hotel-manager')}" >
                     <f:facet name="actions" >
@@ -51,6 +51,9 @@
                             </p:tab>
                             <p:tab title="Изменение данных отеля: общая информация" id="hotelEditGeneralTab" >
                                 <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_general.xhtml" />
+                            </p:tab>
+                            <p:tab title="Изменение данных отеля: адрес" id="hotelEditPictureTab" >
+                                <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_picture.xhtml" />
                             </p:tab>
                             <p:tab title="Изменение данных отеля: адрес" id="hotelEditAddressTab" >
                                 <ui:include src="/WEB-INF/layout/hotel/hs_hotel_edit_address.xhtml" />

@@ -146,7 +146,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
         hotel.setPlace(hotelBean.getPlace());
         hotel.setStars(hotelBean.getStars());
 
-
+        hotel.setPicture(hotelBean.getPicture());
         updateHotelStaff(hotel, hotelBean);
 
         hotel.setAddress(addresses.createOrUpdateAddress(hotelBean.getAddress()));

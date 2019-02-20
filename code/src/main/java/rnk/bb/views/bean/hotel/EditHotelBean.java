@@ -1,6 +1,7 @@
 package rnk.bb.views.bean.hotel;
 
 import lombok.Data;
+import org.primefaces.model.UploadedFile;
 import rnk.bb.views.bean.registration.StaffUserBean;
 import rnk.bb.views.bean.util.EditAddressBean;
 
@@ -53,6 +54,8 @@ public class EditHotelBean implements Serializable {
 
     @NotNull
     private Integer stars=5;
+
+    private byte[] picture;
 
     @NotNull
     private EditAddressBean address=new EditAddressBean();

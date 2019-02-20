@@ -9,10 +9,7 @@ import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
 import rnk.bb.rest.hotel.resource.RoomPoolController;
 import rnk.bb.rest.util.HotelSearchCriteria;
-import rnk.bb.views.AdminView;
 import rnk.bb.views.bean.hotel.*;
-import rnk.bb.views.bean.registration.StaffUserBean;
-import rnk.bb.views.bean.util.EditAddressBean;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -20,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -115,6 +113,7 @@ public class HotelService implements Serializable {
         hotelBean.setStars(5);
         hotelBean.setPlace("");
 
+        hotelBean.setPicture(null);
 
         hotelBean.getFoodConcepts().clear();
         hotelBean.getRoomPools().clear();
@@ -150,6 +149,8 @@ public class HotelService implements Serializable {
             addressService.initAddressBean(hotelBean.getAddress(),hotel.getAddress());
             initPaymentPolicyBean(hotelBean.getPaymentPolicy(),hotel.getPaymentPolicy());
 
+            initHotelPicture(hotelBean,hotel.getPicture());
+
             List<EditFoodConceptBean> list=hotelBean.getFoodConcepts();
             list.clear();
             hotel.getFoodConcepts().stream().forEach(fc->list.add(initFoodConceptBean(new EditFoodConceptBean(Long.valueOf(list.size())),fc)));
@@ -166,6 +167,13 @@ public class HotelService implements Serializable {
             return hotelBean;
         }else{
             return cleanHotelBean(hotelBean);
+        }
+    }
+
+    public void initHotelPicture(EditHotelBean hotel,byte[] picture){
+        if (picture!=null){
+            byte[] image= Arrays.copyOf(picture, picture.length);
+            hotel.setPicture(image);
         }
     }
 
