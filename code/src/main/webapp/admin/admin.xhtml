@@ -21,44 +21,72 @@
             <p:panel id="hotelsPanel"
                      header="#{adminView.approveHotelHeaderTitle}"
                      styleClass="ui-wizard-panel ui-panel">
-                <h:outputText rendered="#{adminView.hotels.size()<=0}" value="Список отелей пуст" />
-                <p:dataTable rendered="#{adminView.hotels.size()>0}"
-                             var="hotel" id="hotelsTable" rowIndexVar="hotelRow"
-                             value="#{adminView.hotels}" lazy="false" paginator="true" rows="6"
-                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             paginatorPosition="bottom"
-                             rowsPerPageTemplate="6"
-                             rowKey="#{hotel.id}"
-                >
-    
-                    <p:column headerText="Название">
-                        <h:outputText value="#{hotel.name}" />
-                    </p:column>
-    
-                    <p:column headerText="Email">
-                        <h:outputText value="#{hotel.email}" />
-                    </p:column>
-    
-                    <p:column headerText="Телефон">
-                        <h:outputText value="#{hotel.phone}" />
-                    </p:column>
+                <p:tabView id="tabs" >
+                    <p:tab id="approvalTab" title="Подтверждение отелей">
+                        <h:outputText rendered="#{adminView.approvals.size()<=0}" value="Список отелей пуст" />
+                        <p:dataTable rendered="#{adminView.approvals.size()>0}"
+                                     var="approval" id="hotelsTable" rowIndexVar="hotelRow"
+                                     value="#{adminView.approvals}" lazy="true" paginator="true" rows="6"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     paginatorPosition="bottom"
+                                     rowsPerPageTemplate="6"
+                                     rowKey="#{hotel.id}"
+                        >
+                            <p:column headerText="Старые данные">
+                                <h:panelGroup rendered="#{empty approval.hotel}">
+                                    <p><strong><h:outputText value="Регистрируется новый отель" /></strong></p>
+                                </h:panelGroup>
+                                <p><strong><h:outputText value="#{approval.hotel.name}" /></strong></p>
+                                <h:panelGroup rendered="#{not empty approval.hotel.place}"><p>Местонахождение:<h:outputText value="#{approval.hotel.place}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.descr}"><p>Описание:<h:outputText value="#{approval.hotel.descr}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.site}">
+                                    <p>Сайт:<h:outputLink value="#{approval.hotel.site} ">#{approval.hotel.site}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.vk}">
+                                    <p>VK:<h:outputLink value="#{approval.hotel.vk}">#{approval.hotel.vk}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.fb}">
+                                    <p>FB:<h:outputLink value="#{approval.hotel.fb}">#{approval.hotel.fb}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.phone}"><p>Телефон:<h:outputText value="#{approval.hotel.phone}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.fax}"><p>Факс:<h:outputText value="#{approval.hotel.fax}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.hotel.manager}"><p>Менеджер:<h:outputText value="#{approval.hotel.manager.name}" /></p></h:panelGroup>
+                                
+                            </p:column>
+                            <p:column headerText="Новые данные">
+                                <p><strong><h:outputText value="#{approval.awaitingHotel.name}" /></strong></p>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.place}"><p>Местонахождение:<h:outputText value="#{approval.awaitingHotel.place}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.descr}"><p>Описание:<h:outputText value="#{approval.awaitingHotel.descr}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.site}">
+                                    <p>Сайт:<h:outputLink value="#{approval.awaitingHotel.site} ">#{approval.awaitingHotel.site}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.vk}">
+                                    <p>VK:<h:outputLink value="#{approval.awaitingHotel.vk}">#{approval.awaitingHotel.vk}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.fb}">
+                                    <p>FB:<h:outputLink value="#{approval.awaitingHotel.fb}">#{approval.awaitingHotel.fb}</h:outputLink></p>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.phone}"><p>Телефон:<h:outputText value="#{approval.awaitingHotel.phone}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.fax}"><p>Факс:<h:outputText value="#{approval.awaitingHotel.fax}" /></p></h:panelGroup>
+                                <h:panelGroup rendered="#{not empty approval.awaitingHotel.manager}"><p>Менеджер:<h:outputText value="#{approval.awaitingHotel.manager.name}" /></p></h:panelGroup>
+                            </p:column>
+                            <p:column style="width:32px" headerText="Подтвердить">
+                                <p:commandButton update=":adminForm:tabs" process="@this" action="#{staffView.editFoodConcept}" icon="fa fa-edit">
+                                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                                </p:commandButton>
+                            </p:column>
+                            <p:column style="width:32px" headerText="Отвергнуть">
+                                <p:commandButton update=":staffForm:tabs" process="@this" action="#{staffView.removeFoodConcept}" icon="fa fa-remove">
+                                    <f:setPropertyActionListener value="#{concept}" target="#{staffView.selectedFoodConcept}" />
+                                </p:commandButton>
+                            </p:column>
 
-                    <p:column headerText="Статус подтверждения">
-                        <h:outputText value="#{hotel.approvedState}" />
-                    </p:column>
 
-                    <p:column style="width:32px">
-                        <p:commandButton update=":adminForm:tabs:hotelsPanel" process="@this" action="#{adminView.approveHotel}" icon="fa fa-edit">
-                            <f:setPropertyActionListener value="#{hotel}" target="#{adminView.selectedHotel}" />
-                        </p:commandButton>
-                    </p:column>
-                    <p:column style="width:32px">
-                        <p:commandButton update=":adminForm:tabs:hotelsPanel" process="@this" action="#{adminView.rejectHotel}" icon="fa fa-remove">
-                            <f:setPropertyActionListener value="#{hotel}" target="#{adminView.selectedHotel}" />
-                        </p:commandButton>
-                    </p:column>
-    
-                </p:dataTable>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab id="generalTab" title="Общие настройки">
+                    </p:tab>
+                </p:tabView>
             </p:panel>
         </h:form>
     </ui:define>

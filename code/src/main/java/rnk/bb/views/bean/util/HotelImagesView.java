@@ -40,11 +40,6 @@ public class HotelImagesView {
     public StreamedContent getStreamedContent(byte[] image){
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-//            // So, we're rendering the HTML. Return a stub StreamedContent so that it will generate right URL.
-//            return new DefaultStreamedContent();
-//        }
-//
         if (image!=null){
             return new DefaultStreamedContent(new ByteArrayInputStream(image));
         }else{

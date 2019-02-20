@@ -158,13 +158,17 @@ public class StaffView implements Serializable {
     }
     public String requestApproval(){
         if (hotelCanRequestApproval()){
-            staffBean.setApprovedState(1);
+            hotelService.requestApproval(staffBean.getApproval());
         }
         return "";
     }
 
     public Boolean hotelCanRequestApproval(){
-        return (staffBean.getApproval()!=null)&&(staffBean.getApproval().getAwaitingHotel()!=null)&&(staffBean.getApproval().getAwaitingHotel().getId()!=null);
+        return (!hotelEditState)
+                &&(staffBean.getApproval()!=null)
+                &&(staffBean.getApproval().getAwaitingHotel()!=null)
+                &&(staffBean.getApproval().getAwaitingHotel().getId()!=null)
+                &&(staffBean.getApproval().getApprovedState()==0);
     }
 
     public boolean hotelApproved(){

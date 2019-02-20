@@ -287,4 +287,7 @@ public class HotelController  extends CustomController<Hotel, Long> {
         return count;
     }
 
+
+
+
 }

@@ -1,7 +1,9 @@
 package rnk.bb.views;
 
 import org.primefaces.model.LazyDataModel;
+import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
+import rnk.bb.services.ApprovalService;
 import rnk.bb.services.HotelService;
 
 import javax.annotation.PostConstruct;
@@ -18,25 +20,21 @@ public class AdminView implements Serializable {
     private static Logger log=Logger.getLogger(AdminView.class.getName());
 
     @Inject
-    HotelService hotelService;
+    ApprovalService approvalService;
 
 
     private Hotel selectedHotel;
-    private LazyDataModel<Hotel> hotelsRequested;
+    private LazyDataModel<Approval> approvalsRequested;
 
     @PostConstruct
     public void init(){
         log.log(Level.INFO,"adminview started...");
-        this.hotelsRequested=hotelService.getHotelsApprovalRequested();
+        this.approvalsRequested=approvalService.getApprovalsLazy();
     }
 
 
     public void update(){
 
-    }
-
-    public String getDummyTitle(){
-        return "интерфейс админа";
     }
 
     public String getApproveHotelHeaderTitle(){
@@ -55,5 +53,9 @@ public class AdminView implements Serializable {
 
     public Hotel getSelectedHotel(){
         return selectedHotel;
+    }
+
+    public LazyDataModel<Approval> getApprovals(){
+        return approvalsRequested;
     }
 }

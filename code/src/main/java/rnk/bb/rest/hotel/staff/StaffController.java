@@ -71,8 +71,6 @@ public class StaffController extends CustomController<Staff, Long> {
             }
             staff.setApproval(null);
         }
-        Hotel hotel=approval==null?null:approval.getAwaitingHotel();
-
         staff.setName(staffBean.getName());
         staff.setGender(staffBean.getGender());
         staff.setBirthDate(staffBean.getBirthDate());
@@ -107,6 +105,7 @@ public class StaffController extends CustomController<Staff, Long> {
         awaitingHotel.setApproval(approval);
         approval.setAwaitingHotel(awaitingHotel);
         approval.setHotel(hotel);
+        approval.setApprovedState(0);
         staff.setApproval(approval);
     }
 

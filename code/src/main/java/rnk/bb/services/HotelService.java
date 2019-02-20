@@ -4,6 +4,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.*;
+import rnk.bb.rest.hotel.approval.approvalController;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
@@ -44,6 +45,10 @@ public class HotelService implements Serializable {
 
     @Inject
     AddressService addressService;
+
+    @Inject
+    approvalController approvals;
+
 
     private LazyDataModel<Hotel> hotelsLazy;
 
@@ -91,12 +96,6 @@ public class HotelService implements Serializable {
 
     public List<Hotel> getHotels(){
         return this.hotels.findAll();
-    }
-
-
-    public LazyDataModel<Hotel> getHotelsApprovalRequested(){
-
-        return null;
     }
 
     private EditHotelBean cleanHotelBean(EditHotelBean hotelBean){
@@ -208,6 +207,12 @@ public class HotelService implements Serializable {
         }else{
             return cleanApprovalBean(approvalBean, hotelBean);
         }
+    }
+
+    public void requestApproval(ApprovalBean approvalBean){
+        approvalBean.setApprovedState(1);
+        approvals.updateApprovalAtate(approvalBean);
+
     }
 
     public EditPaymentPolicyBean cleanPaymentPolicyBean(EditPaymentPolicyBean ppBean){

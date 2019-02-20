@@ -1,14 +1,11 @@
 package rnk.bb.services;
 
-import rnk.bb.domain.auth.Auth;
-import rnk.bb.domain.book.Order;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.Hotel;
 import rnk.bb.domain.hotel.staff.Staff;
-import rnk.bb.rest.hotel.approval.ApprovalController;
+import rnk.bb.rest.hotel.approval.approvalController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.staff.StaffController;
-import rnk.bb.services.auth.LoginService;
 import rnk.bb.views.bean.hotel.EditHotelBean;
 import rnk.bb.views.bean.registration.StaffUserBean;
 
@@ -31,7 +28,7 @@ public class StaffService implements Serializable {
     HotelController hotels;
 
     @Inject
-    ApprovalController approvals;
+    approvalController approvals;
 
     @Inject
     HotelService hotelService;
