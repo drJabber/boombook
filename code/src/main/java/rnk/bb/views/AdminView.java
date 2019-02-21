@@ -8,6 +8,7 @@ import rnk.bb.services.HotelService;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -15,15 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Named("adminView")
-@SessionScoped
+@ViewScoped
 public class AdminView implements Serializable {
     private static Logger log=Logger.getLogger(AdminView.class.getName());
 
     @Inject
-    ApprovalService approvalService;
+    private ApprovalService approvalService;
 
 
-    private Hotel selectedHotel;
+    private Approval selectedApproval;
     private LazyDataModel<Approval> approvalsRequested;
 
     @PostConstruct
@@ -34,7 +35,7 @@ public class AdminView implements Serializable {
 
 
     public void update(){
-
+        init();
     }
 
     public String getApproveHotelHeaderTitle(){
@@ -43,19 +44,25 @@ public class AdminView implements Serializable {
 
     public void approveHotel(){
         log.log(Level.INFO,"approve hotel");
+        approvalService.approveHotel(selectedApproval);
 
     }
 
     public void rejectHotel(){
         log.log(Level.INFO,"reject hotel");
+        approvalService.rejectHotel(selectedApproval);
     }
 
 
-    public Hotel getSelectedHotel(){
-        return selectedHotel;
+    public Approval getSelectedApproval(){
+        return selectedApproval;
+    }
+
+    public void setSelectedApproval(Approval approval){
+        this.selectedApproval=approval;
     }
 
     public LazyDataModel<Approval> getApprovals(){
-        return approvalsRequested;
+        return approvalsRequested ;
     }
 }

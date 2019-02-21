@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 @Startup
 @DependsOn({"StartupController"})
 @Path("v1")
-public class approvalController extends CustomController<Approval, Long> {
-    private static Logger log= Logger.getLogger(approvalController.class.getName());
+public class ApprovalController extends CustomController<Approval, Long> {
+    private static Logger log= Logger.getLogger(ApprovalController.class.getName());
 
     @PUT
     @Path("hotel/approval/approval")
@@ -63,11 +63,20 @@ public class approvalController extends CustomController<Approval, Long> {
     @Inject
     ServerUtils serverUtils;
 
-    public void updateApprovalAtate(ApprovalBean approvalBean){
+    public void updateApprovalState(ApprovalBean approvalBean){
         EntityManager em=entityManager();
 
         Approval approval=findById(approvalBean.getId());
         approval.setApprovedState(approvalBean.getApprovedState());
+
+        em.merge(approval);
+    }
+
+    public void updateApproval(Approval approval){
+        EntityManager em=entityManager();
+
+//        Approval approval=findById(approval.getId());
+//        approval.setApprovedState(approval.getApprovedState());
 
         em.merge(approval);
     }

@@ -24,12 +24,12 @@ body {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-    padding: 60px 15px 0;
+    padding: 10px 10px 0;
 }
 
 .footer,footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 code {
@@ -37,7 +37,7 @@ code {
 }
 
 .page-header{
-    margin: 2rem 0;
+    margin: 5px 0;
 }
 
 dl dt{

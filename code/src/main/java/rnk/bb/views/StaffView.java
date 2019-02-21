@@ -305,8 +305,9 @@ public class StaffView implements Serializable {
         return  imagesView.getStreamedContent(staffBean.getHotel().getPicture());
     }
 
-
     public void handleHotelPictureUpload(FileUploadEvent event){
-        staffBean.getHotel().setPicture(event.getFile().getContents());
+        byte [] contents=event.getFile().getContents();
+        String fileName=event.getFile().getFileName();
+        staffBean.getHotel().setPicture(contents);
     }
 }

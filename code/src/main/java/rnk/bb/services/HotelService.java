@@ -4,7 +4,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import rnk.bb.domain.hotel.approval.Approval;
 import rnk.bb.domain.hotel.resource.*;
-import rnk.bb.rest.hotel.approval.approvalController;
+import rnk.bb.rest.hotel.approval.ApprovalController;
 import rnk.bb.rest.hotel.resource.FoodConceptController;
 import rnk.bb.rest.hotel.resource.HotelController;
 import rnk.bb.rest.hotel.resource.RoomFeatureController;
@@ -29,25 +29,25 @@ public class HotelService implements Serializable {
     private static Logger log=Logger.getLogger(HotelService.class.getName());
 
     @Inject
-    HotelController hotels;
+    private HotelController hotels;
 
     @Inject
-    FoodConceptController foodConcepts;
+    private FoodConceptController foodConcepts;
 
     @Inject
-    CacheService cacheService;
+    private CacheService cacheService;
 
     @Inject
-    RoomPoolController roomPools;
+    private RoomPoolController roomPools;
 
     @Inject
-    RoomFeatureController roomFeatures;
+    private RoomFeatureController roomFeatures;
 
     @Inject
-    AddressService addressService;
+    private AddressService addressService;
 
     @Inject
-    approvalController approvals;
+    private ApprovalController approvals;
 
 
     private LazyDataModel<Hotel> hotelsLazy;
@@ -72,6 +72,13 @@ public class HotelService implements Serializable {
                 this.setRowCount(criteria.getResultSize());
 
                 return result;
+            }
+            public Hotel getRowData(String rowKey) {
+                return hotels.findByLongId(Long.parseLong(rowKey));
+            }
+
+            public Object getRowKey(Hotel hotel) {
+                return hotel.getId();
             }
 
         };
@@ -211,7 +218,7 @@ public class HotelService implements Serializable {
 
     public void requestApproval(ApprovalBean approvalBean){
         approvalBean.setApprovedState(1);
-        approvals.updateApprovalAtate(approvalBean);
+        approvals.updateApprovalState(approvalBean);
 
     }
 
